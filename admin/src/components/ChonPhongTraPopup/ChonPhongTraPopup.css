@@ -1,0 +1,93 @@
+.chon-phongtra-popup{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #00000090;
+    display: grid;
+}
+
+.chon-phongtra-popup-container{
+    place-self: center;
+    width: max(53vw, 330px);
+    color: #808080;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 25px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    animation: fadeIn 0.5s;
+}
+
+.chon-phongtra-popup-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+}
+
+.chon-phongtra-popup-title h2{
+    font-size: 30px;
+}
+
+.chon-phongtra-popup-title .close{
+    width: 16px;
+    cursor: pointer;
+}
+
+.chon-phongtra-popup-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.chon-phongtra-popup-inputs input,
+.chon-phongtra-popup-inputs select{
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+}
+.chon-phongtra-popup-container button{
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    background-color: var(--blue);
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.chon-phongtra-popup-condition{
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    margin-top: -15px;
+}
+
+.chon-phongtra-popup-condition input{
+    margin-top: 5px;
+}
+
+.chon-phongtra-popup p span{
+    color: tomato;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.chon-phongtra-popup-inputs table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.chon-phongtra-popup-inputs table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+.chon-phongtra-popup-inputs table td {
+	padding: 16px 0;
+}

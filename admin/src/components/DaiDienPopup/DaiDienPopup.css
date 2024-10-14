@@ -1,0 +1,102 @@
+.daidien-popup{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #00000090;
+    display: grid;
+}
+
+.daidien-popup-container{
+    place-self: center;
+    width: max(23vw, 330px);
+    color: #808080;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 25px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    animation: fadeIn 0.5s;
+}
+
+.daidien-popup-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+}
+
+.daidien-popup-title h4{
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.daidien-popup-title .close{
+    cursor: pointer;
+}
+
+.daidien-popup-title img{
+    width: 16px;
+    cursor: pointer;
+}
+
+.daidien-popup-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.daidien-popup-inputs input{
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+}
+.daidien-popup-container button{
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    background-color: tomato;
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.daidien-popup-condition{
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    margin-top: -15px;
+}
+
+.daidien-popup-condition input{
+    margin-top: 5px;
+}
+
+.daidien-popup p span{
+    color: tomato;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.daidien-popup .todo-list{
+    width: 100%;
+    padding-left: unset;
+}
+
+.daidien-popup .todo-list li{
+    width: 100%;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 20px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.daidien-popup .todo-list li p{
+    margin-bottom: unset;
+}

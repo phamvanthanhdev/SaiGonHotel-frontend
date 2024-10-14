@@ -1,0 +1,257 @@
+.bookContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.bookWrapper{
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    gap: 20px;
+}
+
+.book-list{
+    flex: 1;
+    padding: 15px 10px;
+    border: 1px solid lightgray;
+    height: max-content;
+    border-radius: 7px;
+    box-shadow: 0, 0, 20px rgba(0, 0, 0, 0.6);
+    display: grid;
+    gap: 20px;
+
+}
+
+.book-info{
+    flex: 3;
+    padding: 10px 20px;
+    border: 1px solid lightgray;
+    box-shadow: 0, 0, 20px rgba(0, 0, 0, 0.6);
+    border-radius: 7px;
+}
+
+.bookContainer .rooms{
+    display: grid;
+    gap: 15px;
+}
+
+.book-list .title p{
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.book-list .time p{
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+.book-list .time span{
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.book-list .night p{
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.book-list .night h4{
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.book-list hr{
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.book-list .totalPrice{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.book-list .totalPrice p{
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.bookContainer .bookWrapper .rooms .titleRoom p:nth-child(1){
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.bookContainer .bookWrapper .rooms .titleRoom p:nth-child(2){
+    font-weight: 500;
+}
+
+.bookContainer .bookWrapper .rooms .listRooms p{
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.bookContainer .bookWrapper .rooms a{
+    font-size: 15px;
+    color: #0071c2;
+}
+
+.place-order{
+    position: relative;
+}
+
+.place-order-left{
+    width: 100%;
+}
+
+.place-order-left .title{
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+
+.place-order-left input{
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
+    outline-color: tomato;
+}
+
+
+.place-order-left .multi-fields{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+
+.place-order button{
+    border: none;
+    outline: none;
+    padding: 10px 25px;
+    background-color: #0071c2;
+    color: white;
+    border-radius: 5px;
+    right: 0;
+    position: absolute;
+    cursor: pointer;
+}
+
+.formContainer .title{
+    text-align: center;
+    font-weight: 500;
+}
+
+
+.form .input-box{
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form .input-box input{
+    box-sizing: border-box;
+    position: relative;
+    outline: none;
+    width: 100%;
+    height: 45px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+    color: #707070;
+    margin-top: 8px;
+}
+
+.form .input-box label span{
+    color: red;
+}
+
+.form .select-box{
+    box-sizing: border-box;
+    position: relative;
+    outline: none;
+    width: 100%;
+    height: 45px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 15px;
+    color: #707070;
+    margin-top: 8px;
+}
+
+.form .select-box select{
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    color: #707070;
+    font-size: 1rem;
+}
+
+.form .column{
+    display: flex;
+    gap: 20px;
+}
+
+.form .bookBtn{
+    height: 50px;
+    width: 100%;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    margin-top: 30px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 400;
+    transition: all 0.2s ease;
+    background-color: #0071c2;
+}
+
+.form .search-user-btn{
+    width: 80px;
+    height: 45px;
+    margin-top: 46px;
+    border: none;
+    outline: none;
+    background: #0071c2;
+    border-radius: 4px;
+    color: white;
+}
+
+.form .input-checkbox{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form .input-checkbox input[type='checkbox']{
+    height: 20px;
+    width: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form .input-checkbox .label{
+    margin-left: 10px;
+}
+
+.form .input-box textarea{
+    box-sizing: border-box;
+    position: relative;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 15px;
+    color: #707070;
+    margin-top: 8px;
+    resize: none;
+    min-height: 80px;
+}
+

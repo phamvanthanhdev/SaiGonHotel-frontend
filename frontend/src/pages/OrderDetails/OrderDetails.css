@@ -1,0 +1,251 @@
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.detailsWrapper {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+}
+
+.bookNow {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    border: none;
+    padding: 10px 20px;
+    background-color: #0071c2;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.detailsTitle {
+    font-size: 24px;
+}
+
+.detailsAddress {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.detailsDistance {
+    color: #0071c2;
+    font-weight: 500;
+}
+
+.detailsPriceHighlight {
+    color: #008009;
+    font-weight: 500;
+}
+
+.detailsImages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.detailsImgWrapper {
+    width: 33%;
+}
+
+.detailsImg {
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.detailsDetails {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.detailsDetailsTexts {
+    flex: 3;
+}
+
+.detailsDesc {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.detailsDetailsPrice {
+    flex: 1;
+    background-color: #ebf3ff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detailsDetailsPrice>h1 {
+    font-size: 18px;
+    color: #555;
+}
+
+.detailsDetailsPrice>span {
+    font-size: 14px;
+}
+
+.detailsDetailsPrice>h2 {
+    font-weight: 300;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.detailsDetailsPrice>button {
+    border: none;
+    padding: 10px 20px;
+    background-color: #0071c2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.slider {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.613);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+}
+
+.sliderWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sliderImg {
+    width: 80%;
+    height: 80vh;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: lightgray;
+    cursor: pointer;
+}
+
+.arrow {
+    margin: 20px;
+    font-size: 50px;
+    color: lightgray;
+    cursor: pointer;
+}
+
+.detailsDetails .roomsContainer{
+    width: 100%;
+}
+
+.detailsDetails .roomsContainer .rooms{
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.detailsDetails .roomsContainer .rooms img{
+    border-radius: 4px;
+    width: 50px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.detailsDetails .roomsContainer .rooms p{
+    font-size: 0.75rem;
+}
+
+.detailsDetails .cancelBtn{
+    background-color: rgb(247, 48, 48);
+}
+
+.detailsDetails .table-responsive{
+    border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 0 0 0;
+    overflow: hidden;
+    width: 100%;
+    
+}
+
+
+.detailsDetails .table-responsive thead tr{
+    background-color: #003580;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+
+.detailsDetails .table-responsive th,
+.detailsDetails .table-responsive td{
+    padding: 12px 15px;
+}
+
+.detailsDetails .table-responsive tbody tr{
+    border: 1px solid #dddd;
+}
+
+.detailsDetails .upload{
+    margin-top: 30px;
+}
+
+.upload .form-control{
+    margin: 15px 0;
+}
+
+.upload button{
+    margin-left: 10px;
+    border: none;
+    padding: 10px 20px;
+    background-color: #0071c2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.errorMessage{
+    color: red;
+    margin-bottom: 10px;
+}
+
+.successMessage{
+    color: green;
+    margin-bottom: 10px;
+}
+
+.detailsDetails .invalid{
+    background-color: lightgray;
+    pointer-events: none;
+    color: #555;
+}
+
+.detailsDetails .viewer{
+    margin-top: 10px;
+}
+

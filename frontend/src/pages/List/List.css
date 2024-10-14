@@ -1,0 +1,180 @@
+.listContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.listWrapper {
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    gap: 20px;
+}
+
+.list-left{
+    flex: 1;
+    
+}
+
+.listSearch {
+    
+    /* background-color: #febb02; */
+    background-color: #0071c2;
+    padding: 10px;
+    border-radius: 10px;
+    
+}
+
+.lsTitle {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.lsItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.lsItem>label {
+    font-size: 12px;
+    color: white;
+}
+
+.lsItem>input {
+    height: 25px;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.lsItem>span {
+    height: 25px;
+    padding: 5px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.lsOptions {
+    padding: 10px;
+}
+
+.lsOptionItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 12px;
+}
+
+.lsOptionInput {
+    width: 50px;
+}
+
+.listSearch>button {
+    padding: 10px;
+    background-color: #003580;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    width: 100%;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.listResult {
+    flex: 3;
+}
+
+.listBooking {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    position: sticky;
+    top: 60px;
+    height: max-content;
+}
+
+.listBooking .title p{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.listBooking .hotel-info p{
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.listBooking hr{
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    margin: 10px 0;
+}
+
+.listBooking .list-rooms p{
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.listBooking .list-rooms .room{
+    position: relative;
+}
+
+.listBooking .list-rooms .room .name{
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.listBooking .list-rooms .room .price{
+    font-size: 13px;
+    font-weight: 600px;
+}
+
+.listBooking .list-rooms .room button{
+    border: none;
+    outline: none;
+    padding: 8px 10px;
+    background: #0071c2;
+    border-radius: 4px;
+    color: white;
+    width: 100%;
+    cursor: pointer;
+}
+
+.listBooking .list-rooms .room .remove{
+    right: 10px;
+    bottom: 0;
+    position: absolute;
+    color: white;
+    background-color: gray;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.listBooking .list-rooms .total{
+    display: flex;
+    justify-content: space-between;
+}
+
+.listBooking .list-rooms .total p{
+    font-size: 16px;
+}
+
+.listBooking .list-rooms .book-btn{
+    border: none;
+    outline: none;
+    padding: 8px 10px;
+    background: #0071c2;
+    border-radius: 4px;
+    color: white;
+    width: 100%;
+    cursor: pointer;
+}
+

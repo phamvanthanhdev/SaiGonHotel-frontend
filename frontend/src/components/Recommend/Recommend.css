@@ -1,0 +1,133 @@
+.recommend{
+    margin-top: 50px;
+    max-width: 1024px;
+    width: 100%;
+    text-align: start;
+}
+
+.recommend h2{
+    margin-bottom: 20px;
+}
+
+.recommend .pro-recommend{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.recommend .content-table{
+    border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 0 0 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+
+.recommend .table-left{
+    width: 80%;
+}
+
+.recommend .content-table thead tr{
+    background-color: #003580;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+
+.recommend .content-table th,
+.recommend .content-table td{
+    padding: 12px 15px;
+}
+
+.recommend .content-table tbody tr{
+    border: 1px solid #dddd;
+}
+
+.recommend .content-table .type span{
+    font-size: 16px;
+    color: #0071c2;
+    font-weight: bold;
+}
+
+.recommend .content-table .type p{
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.recommend .content-table .price del{
+    color: tomato;
+    font-size: 12px;
+}
+
+.recommend .content-table .price h3{
+    color: #003580;
+    font-size: 16px;
+}
+
+.recommend .content-table .price span{
+    font-size: 10px;
+    color: #465b52;
+}
+
+.recommend .content-table .info{
+    font-size: 10px;
+    color: #465b52;
+    line-height: 16px;
+}
+
+.recommend .content-table .info p{
+    margin: 0;
+}
+
+.recommend .content-table .select-quantity select{
+    width: 3.5em;
+}
+
+.recommend .pro-recommend .table-right{
+    background-color: rgb(235, 243, 255);
+    width: 20%;
+}
+
+.recommend .pro-recommend .table-right .fake-col{
+    height: 59px;
+    width: 100%;
+    background-color: #003580;
+    border-radius: 0 5px 0 0;
+}
+
+.recommend .booking{
+    height: 100%;
+    padding: 10px 8px;
+    line-height: 25px;
+}
+
+
+.recommend .booking p{
+    font-size: 12px;
+}
+
+.recommend .booking h3{
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.recommend .booking span{
+    font-size: 12px;
+    color: #465b52;
+}
+
+.recommend .booking button{
+    margin-top: 10px;
+    border: none;
+    outline: none;
+    color: white;
+    width: 100%;
+    height: 35px;
+    background-color: #0071c2;
+    border-radius: 5px;
+}
+
+
