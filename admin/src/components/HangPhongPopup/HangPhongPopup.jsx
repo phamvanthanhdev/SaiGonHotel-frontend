@@ -6,11 +6,11 @@ import { faXmark, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from 'react-router-dom';
 
-const HangPhongPopup = ({ setShowHangPhongPopup, ngayNhanPhong, ngayTraPhong, idPhieuDat, setPhieuDat }) => {
+const HangPhongPopup = ({ setShowHangPhongPopup, ngayNhanPhong, ngayTraPhong, idPhieuDat, setPhieuDat, trangThai }) => {
     const navigate = useNavigate();
     const { url, token, setToken } = useContext(StoreContext);
-    const [ hangPhongTrong, setHangPhongTrong ] = useState([]);
-    const [ errorMessage, setErrorMessage] = useState("");
+    const [hangPhongTrong, setHangPhongTrong] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const config = {
         params: {
@@ -24,8 +24,9 @@ const HangPhongPopup = ({ setShowHangPhongPopup, ngayNhanPhong, ngayTraPhong, id
         try {
             const response = await axios.get(url + "/api/thong-tin-hang-phong/thoi-gian-admin", config);
             setHangPhongTrong(response.data);
-            console.log(response.data);
-            
+            for (let i = 0; i < response.data.length; i++) {
+                setCartItems((prev) => ({ ...prev, [response.data[i].idHangPhong]: response.data[i].soLuongTrong }))
+            }
         } catch (error) {
             console.log(error.message);
         }
@@ -55,7 +56,7 @@ const HangPhongPopup = ({ setShowHangPhongPopup, ngayNhanPhong, ngayTraPhong, id
                 };
             }
         }).filter(item => item !== undefined);
-    
+
         return data;
     };
 
@@ -69,23 +70,27 @@ const HangPhongPopup = ({ setShowHangPhongPopup, ngayNhanPhong, ngayTraPhong, id
         }
     }
 
-    const sendDataToServer = async() => {
-        const dataRequest = createDataRequest();
-        try {
-            const response = await axios.post(url + "/api/phieu-dat/chi-tiet/bo-sung", dataRequest, { headers: { Authorization: `Bearer ${token}` } });
-            if(response.data.code === 200){
-                refreshPhieuDat();
-                setShowHangPhongPopup(false);
-            }else{
-                setErrorMessage(response.data.message);
+    const sendDataToServer = async () => {
+        if (trangThai !== 0) {
+            setErrorMessage("Phiếu đặt đã hoàn tất hoặc được hủy")
+        } else {
+            const dataRequest = createDataRequest();
+            try {
+                const response = await axios.post(url + "/api/phieu-dat/chi-tiet/bo-sung", dataRequest, { headers: { Authorization: `Bearer ${token}` } });
+                if (response.data.code === 200) {
+                    refreshPhieuDat();
+                    setShowHangPhongPopup(false);
+                } else {
+                    setErrorMessage(response.data.message);
+                }
+            } catch (error) {
+                console.log(error.message);
+                setErrorMessage(error.response.data.message);
             }
-        } catch (error) {
-            console.log(error.message);
-            setErrorMessage(error.response.data.message);
         }
     }
 
-    
+
 
 
     return (
@@ -96,23 +101,23 @@ const HangPhongPopup = ({ setShowHangPhongPopup, ngayNhanPhong, ngayTraPhong, id
                     <FontAwesomeIcon onClick={() => setShowHangPhongPopup(false)} className="close" icon={faXmark} />
                 </div>
                 {hangPhongTrong && <>
-                <ul className="todo-list">
-                    {errorMessage && <p className='error'>{errorMessage}</p>}
-                    {hangPhongTrong.map((item, index) => {
+                    <ul className="todo-list">
+                        {errorMessage && <p className='error'>{errorMessage}</p>}
+                        {hangPhongTrong.map((item, index) => {
 
-                        return (
-                            <li key={index} className="completed">
-                                <p>{item.tenHangPhong}</p>
-                                <p>{item.giaKhuyenMai > 0 
-                                    ? item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) 
-                                    : item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}
-                                </p>
-                                <input onChange={(e) => addToCart(e, item.idHangPhong)} min={0} max={item.soLuongTrong} type="number" className="form-control" placeholder='0'/>
-                            </li>
-                        )
-                    })}
-                </ul>
-                <button onClick={sendDataToServer} type="button" className="btn btn-primary">Xác nhận</button>
+                            return (
+                                <li key={index} className="completed">
+                                    <p>{item.tenHangPhong}</p>
+                                    <p>{item.giaKhuyenMai > 0
+                                        ? item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
+                                        : item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}
+                                    </p>
+                                    <input onChange={(e) => addToCart(e, item.idHangPhong)} min={0} max={item.soLuongTrong} value={cartItems[item.idHangPhong]} type="number" className="form-control" placeholder='0' />
+                                </li>
+                            )
+                        })}
+                    </ul>
+                    <button onClick={sendDataToServer} type="button" className="btn btn-primary">Xác nhận</button>
                 </>
                 }
             </form>

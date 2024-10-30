@@ -141,8 +141,10 @@
 }
 
 .formContainer .title{
+    font-size: 25px;
     text-align: center;
     font-weight: 500;
+    margin-bottom: 20px;
 }
 
 
@@ -255,3 +257,6 @@
     min-height: 80px;
 }
 
+.error{
+    color: red;
+}

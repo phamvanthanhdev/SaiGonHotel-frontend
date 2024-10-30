@@ -44,12 +44,12 @@ const FeaturedBestSeller = () => {
             <span className="fpName">{item.tenHangPhong}</span>
             <span className="fpCity">{item.tenKieuPhong}</span>
             <span className="fpPrice">
-              {item.giaKhuyenMai
+              {item.phanTramGiam > 0
                 ? item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
                 : item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
               }
               &nbsp;
-              {item.giaKhuyenMai !== 0 &&
+              {item.phanTramGiam > 0 &&
                 <del>{item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</del>
               }
             </span>

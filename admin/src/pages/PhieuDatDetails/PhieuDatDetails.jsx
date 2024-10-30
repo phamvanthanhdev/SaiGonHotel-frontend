@@ -10,13 +10,15 @@ import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HangPhongPopup from '../../components/HangPhongPopup/HangPhongPopup'
 import DaiDienPopup from '../../components/DaiDienPopup/DaiDienPopup'
+import HuyPhongPopup from '../../components/HuyPhongPopup/HuyPhongPopup'
 
 const PhieuDatDetails = () => {
     const id = useParams().id;
-    const { url, token, isExpand } = useContext(StoreContext);
+    const { url, token, isExpand, convertDateShow } = useContext(StoreContext);
     const [phieuDat, setPhieuDat] = useState();
     const [showHangPhongPopup, setShowHangPhongPopup] = useState(false);
     const [showDaiDienPopup, setShowDaiDienPopup] = useState(false);
+    const [showHuyPhongPopup, setShowHuyPhongPopup] = useState(false);
     const [idNguoiDaiDien, setIdNguoiDaiDien] = useState();
     const [tenNguoiDaiDien, setTenNguoiDaiDien] = useState();
     const [errorMessage, setErrorMessage] = useState("");
@@ -79,7 +81,10 @@ const PhieuDatDetails = () => {
             try {
                 const response = await axios.post(url + "/api/phieu-thue/", phieuThueRequest, { headers: { Authorization: `Bearer ${token}` } });
                 if(response.data.code === 200){
-                    navigate(`/phieu-thue`,{ state: { idPhieuDat: id, idPhieuThue: response.data.result.idPhieuThue } })
+                    navigate(`/phieu-thue`,{ state: { idPhieuDat: id, idPhieuThue: response.data.result.idPhieuThue ,
+                        ngayNhanPhong: response.data.result.ngayDen,
+                        ngayTraPhong: response.data.result.ngayDi
+                    } })
                 }else{
                     setErrorMessage(response.data.message)
                 }
@@ -102,11 +107,18 @@ const PhieuDatDetails = () => {
                         ngayNhanPhong={phieuDat.ngayBatDau}
                         ngayTraPhong={phieuDat.ngayTraPhong}
                         idPhieuDat={phieuDat.idPhieuDat}
-                        setPhieuDat={setPhieuDat}/>:<></>}
+                        setPhieuDat={setPhieuDat}
+                        trangThai={phieuDat.trangThaiHuy}/>:<></>}
                     
                     {showDaiDienPopup ? <DaiDienPopup setShowDaiDienPopup={setShowDaiDienPopup} 
                     setIdNguoiDaiDien={setIdNguoiDaiDien}
                     setTenNguoiDaiDien={setTenNguoiDaiDien}/>: <></>}
+                    
+                    {showHuyPhongPopup ? <HuyPhongPopup 
+                    setShowHuyPhongPopup={setShowHuyPhongPopup} 
+                    idPhieuDat={phieuDat.idPhieuDat}
+                    tienTamUng={phieuDat.tienTamUng}
+                    setPhieuDat={setPhieuDat}/>: <></>}
                     <main>
                         {phieuDat &&
                         <div className="table-data">
@@ -115,7 +127,7 @@ const PhieuDatDetails = () => {
                                     <h3>Chi tiết phiếu đặt phòng - {phieuDat.idPhieuDat}</h3>
                                 </div>
                                 <div className='content'>
-                                    <p>Thời gian: {phieuDat.ngayBatDau} đến {phieuDat.ngayTraPhong}</p>
+                                    <p>Thời gian: {convertDateShow(phieuDat.ngayBatDau)} đến {convertDateShow(phieuDat.ngayTraPhong)}</p>
                                     <p>Người đặt phòng: {phieuDat.hoTen}</p>
                                     <p>Tiền tạm ứng: {phieuDat.tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                     <p>Tổng giá trị: {phieuDat.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
@@ -123,14 +135,17 @@ const PhieuDatDetails = () => {
                                                     {phieuDat.trangThaiHuy === 1 && "Hoàn thành"}
                                                     {phieuDat.trangThaiHuy === 2 && "Đã hủy"}
                                     </p>
+                                    {phieuDat.trangThaiHuy === 2 && 
+                                        <p>Tiền hoàn trả: {phieuDat.tienTra.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>}
                                     <p>Lưu ý của khách hàng: {phieuDat.ghiChu}</p>
-                                    <p>Thời gian đặt: {phieuDat.ngayTao}</p>
+                                    <p>Thời gian đặt: {convertDateShow(phieuDat.ngayTao)}</p>
                                     <p>Người đại diện: {tenNguoiDaiDien}</p>
                                     {errorMessage && <p className='error'>{errorMessage}</p>}
                                     <div className="btn">
                                         <button onClick={() => setShowDaiDienPopup(true)} className='btn btn-primary'>Chọn khách hàng đại diện</button>
                                     </div>
                                     <button onClick={taoPhieuThue} className='btn btn-primary' >Xác nhận và chọn phòng</button>
+                                    <button onClick={() => setShowHuyPhongPopup(true)} className='btn btn-danger' >Hủy đặt phòng</button>
                                    
                                 </div>
                             </div>
@@ -143,10 +158,11 @@ const PhieuDatDetails = () => {
                                 <ul className="todo-list">
                                     {phieuDat.chiTietResponses.map((item, index) => {
                                         return(
-                                            <li key={index} className="completed">
+                                            <li key={index} className="completed phieudat-details">
                                                 <p>{item.tenHangPhong}</p>
                                                 <p>x{item.soLuong}</p>
                                                 <p>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                                                <p>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                                 <FontAwesomeIcon onClick={()=>handleRemove(item.idHangPhong)} className='bx' icon={faXmark} />
                                             </li>
                                         )

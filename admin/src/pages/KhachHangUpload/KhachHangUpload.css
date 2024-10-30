@@ -1,0 +1,236 @@
+/* CONTENT */
+#content {
+	position: relative;
+	width: calc(100% - 280px);
+	left: 280px;
+	transition: .3s ease;
+}
+#content.expand {
+	width: calc(100% - 60px);
+	left: 60px;
+}
+
+
+/* .khach-hang-upload */
+#content .khach-hang-upload {
+	width: 100%;
+	padding: 36px 24px;
+	font-family: var(--poppins);
+	max-height: calc(100vh - 56px);
+	overflow-y: auto;
+	/* height: 100vh; */
+}
+#content .khach-hang-upload .head-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	grid-gap: 16px;
+	flex-wrap: wrap;
+}
+#content .khach-hang-upload .head-title .left h1 {
+	font-size: 36px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: var(--dark);
+}
+#content .khach-hang-upload .head-title .left .breadcrumb {
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+}
+#content .khach-hang-upload .head-title .left .breadcrumb li {
+	color: var(--dark);
+}
+#content .khach-hang-upload .head-title .left .breadcrumb li a {
+	color: var(--dark-grey);
+	pointer-events: none;
+}
+#content .khach-hang-upload .head-title .left .breadcrumb li a.active {
+	color: var(--blue);
+	pointer-events: unset;
+}
+#content .khach-hang-upload .head-title .btn-download {
+	height: 36px;
+	padding: 0 16px;
+	border-radius: 36px;
+	background: var(--blue);
+	color: var(--light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+}
+
+
+
+
+#content .khach-hang-upload .box-info {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-gap: 24px;
+	margin-top: 36px;
+}
+#content .khach-hang-upload .box-info li {
+	padding: 24px;
+	background: var(--light);
+	border-radius: 20px;
+	display: flex;
+	align-items: center;
+	grid-gap: 24px;
+}
+#content .khach-hang-upload .box-info li .bx {
+	width: 80px;
+	height: 80px;
+	border-radius: 10px;
+	font-size: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#content .khach-hang-upload .box-info li:nth-child(1) .bx {
+	background: var(--light-blue);
+	color: var(--blue);
+}
+#content .khach-hang-upload .box-info li:nth-child(2) .bx {
+	background: var(--light-yellow);
+	color: var(--yellow);
+}
+#content .khach-hang-upload .box-info li:nth-child(3) .bx {
+	background: var(--light-orange);
+	color: var(--orange);
+}
+#content .khach-hang-upload .box-info li .text h3 {
+	font-size: 24px;
+	font-weight: 600;
+	color: var(--dark);
+}
+#content .khach-hang-upload .box-info li .text p {
+	color: var(--dark);	
+}
+
+
+
+
+
+#content .khach-hang-upload .table-data {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 14px;
+	margin-top: 24px;
+	width: 100%;
+	color: var(--dark);
+}
+#content .khach-hang-upload .table-data > div {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+#content .khach-hang-upload .table-data .head {
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+	margin-bottom: 24px;
+}
+#content .khach-hang-upload .table-data .head h3 {
+	margin-right: auto;
+	font-size: 24px;
+	font-weight: 600;
+}
+#content .khach-hang-upload .table-data .head .bx {
+	cursor: pointer;
+}
+
+#content .khach-hang-upload .table-data .order {
+	flex-grow: 1;
+	flex-basis: 850px;
+}
+#content .khach-hang-upload .table-data .order table {
+	width: 100%;
+	border-collapse: collapse;
+}
+#content .khach-hang-upload .table-data .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+#content .khach-hang-upload .table-data .order table td {
+	padding: 20px 0;
+    font-size: 14px;
+}
+#content .khach-hang-upload .table-data .order table tr td:first-child {
+	/* display: flex; */
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
+}
+#content .khach-hang-upload .table-data .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+#content .khach-hang-upload .table-data .order table tbody tr:hover {
+	background: var(--grey);
+}
+#content .khach-hang-upload .table-data .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+#content .khach-hang-upload .table-data .order table tr td .status.completed {
+	background: var(--blue);
+}
+#content .khach-hang-upload .table-data .order table tr td .status.process {
+	background: var(--yellow);
+}
+#content .khach-hang-upload .table-data .order table tr td .status.pending {
+	background: var(--orange);
+}
+
+
+#content .khach-hang-upload .table-data .todo {
+	flex-grow: 1;
+	flex-basis: 200px;
+}
+#content .khach-hang-upload .table-data .todo .todo-list {
+	width: 100%;
+    padding-left: unset;
+}
+#content .khach-hang-upload .table-data .todo .todo-list li {
+	width: 100%;
+	margin-bottom: 16px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 10px 20px;
+	display: block;
+	/* display: unset; */
+	/* display: flex; */
+	/* justify-content: space-between; */
+	/* align-items: center; */
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#content .khach-hang-upload .table-data .todo .todo-list li p {
+    margin-bottom: unset;
+}
+
+#content .khach-hang-upload .table-data .todo .todo-list li .bx {
+	cursor: pointer;
+}
+#content .khach-hang-upload .table-data .todo .todo-list li.completed {
+	border-left: 10px solid var(--blue);
+}
+#content .khach-hang-upload .table-data .todo .todo-list li.not-completed {
+	border-left: 10px solid var(--orange);
+}
+#content .khach-hang-upload .table-data .todo .todo-list li:last-child {
+	margin-bottom: 0;
+}
+/* .khach-hang-upload */
+/* CONTENT */

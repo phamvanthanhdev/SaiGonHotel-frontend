@@ -1,0 +1,43 @@
+#content main.them-phong {
+	width: 100%;
+	padding: 20px 20px;
+    font-size: 14px;
+}
+
+#content main .them-phong-container {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 14px;
+	width: 100%;
+	color: var(--dark);
+}
+#content main .them-phong-container > div {
+	border-radius: 10px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+
+#content main .them-phong-container .order {
+	flex-grow: 1;
+	flex-basis: 700px;
+}
+
+#content main .them-phong-container .order .head {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-bottom: 15px;
+}
+
+#content main .them-phong-container .order form{
+    width: 1024px;
+    padding: 20px 50px;
+    margin: auto;
+}
+
+#content main .them-phong-container .order form .image-preview img{
+    margin: 10px 0;
+    width: 120px;
+}
+

@@ -4,22 +4,22 @@ import Header from '../../components/Header/Header'
 import axios from 'axios'
 import { StoreContext } from '../../context/StoreContext'
 import { format } from "date-fns";
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 const Book = () => {
-    const {url, hangPhong, cartItems, setCartItems, getTotalCartAmount, ngayNhanPhong, ngayTraPhong} = useContext(StoreContext);
+    const { url, hangPhong, cartItems, setCartItems, getTotalCartAmount, ngayNhanPhong, ngayTraPhong, calculateDateDifference } = useContext(StoreContext);
     const [dataKhachHang, setDataKhachHang] = useState({
         idKhachHang: 0,
         cmnd: "",
         diaChi: "",
         email: "",
         hoTen: "",
-        sdt:"",
-        ghiChu:"",
+        sdt: "",
+        ghiChu: "",
     })
     const [isDisabled, setIsDisabled] = useState(true);
     const [typePayment, setTypePayment] = useState("pay-after");
-    const [tienTamUng, setTienTamUng] = useState(getTotalCartAmount() * 10/100);
+    const [tienTamUng, setTienTamUng] = useState(getTotalCartAmount() * 10 / 100);
     const [dataDatPhong, setDataDatPhong] = useState({
         "ngayBatDau": format(ngayNhanPhong, "yyyy-MM-dd"),
         "ngayTraPhong": format(ngayTraPhong, "yyyy-MM-dd"),
@@ -30,12 +30,14 @@ const Book = () => {
         "tienTamUng": 0,
         chiTietRequests: []
     })
+    const [errorMessage, setErrorMessage] = useState("");
+    const [cccd, setCccd] = useState();
 
     const handleCheckboxChange = (e) => {
         setTypePayment(e.target.value);
-        if(e.target.value === 'pay-some'){
+        if (e.target.value === 'pay-some') {
             setIsDisabled(false);
-        }else{
+        } else {
             setIsDisabled(true);
         }
     };
@@ -43,17 +45,19 @@ const Book = () => {
     const onChangeHandle = (event) => {
         const name = event.target.name;
         const value = event.target.value;
+        if(name === 'cmnd')
+            setCccd(value);
         setDataKhachHang(data => ({ ...data, [name]: value }))
     }
 
     const placeOrder = async (event) => {
         event.preventDefault();
 
-        if(typePayment === "pay-all"){
+        if (typePayment === "pay-all") {
             dataDatPhong.tienTamUng = getTotalCartAmount();
-        }else if(typePayment === "pay-some"){
+        } else if (typePayment === "pay-some") {
             dataDatPhong.tienTamUng = tienTamUng;
-        }else{
+        } else {
             dataDatPhong.tienTamUng = 0;
         }
 
@@ -63,44 +67,44 @@ const Book = () => {
         }));
         dataDatPhong.chiTietRequests = chiTietRequests;
         dataDatPhong.ghiChu = dataKhachHang.ghiChu;
-        
+
 
         const formData = {
             khachHang: dataKhachHang,
             phieuDat: dataDatPhong
         }
 
-        if(typePayment === "pay-after"){
+        if (typePayment === "pay-after") {
             datPhongKhachSan(formData);
-        }else{
+        } else {
             datPhongKhachSanPayment(formData);
         }
     }
 
-    
 
-    const datPhongKhachSanPayment = async(formData) => {
+
+    const datPhongKhachSanPayment = async (formData) => {
         try {
-            const response = await axios.post(url+"/api/payment/create_payment", formData);
-            if(response.data.status === "OK"){
+            const response = await axios.post(url + "/api/payment/create_payment", formData);
+            if (response.data.status === "OK") {
                 setCartItems([]);
                 window.location.href = response.data.url;
             }
             console.log(response);
-            
+
         } catch (error) {
             console.log(error.message);
             toast.error("Lỗi đặt phòng. Vui lòng thử lại!");
         }
     }
 
-    const datPhongKhachSan = async(formData) => {
+    const datPhongKhachSan = async (formData) => {
         try {
-            const response = await axios.post(url+"/api/phieu-dat/dat-phong", formData)
-            if(response.data.code === 200){
+            const response = await axios.post(url + "/api/phieu-dat/dat-phong", formData)
+            if (response.data.code === 200) {
                 setCartItems([]);
                 toast.success(response.data.message);
-            }else{
+            } else {
                 toast.error("Lỗi đặt phòng. Vui lòng thử lại!");
             }
         } catch (error) {
@@ -109,20 +113,51 @@ const Book = () => {
         }
     }
 
-    const findUserByCmnd = async(event) => {
+    const findUserByCmnd = async (event) => {
         event.preventDefault();
 
-        axios.get(url + "/api/khach-hang/tim-kiem-cccd", {params : {cccd: dataKhachHang.cmnd}})
-        .then(response => {
-            return response.data
-        })
-        .then(data => {
-            console.log(data)
-            setDataKhachHang(data)
-        })
-        .catch(error => {
-            console.log(error.response.data.error)
-        })
+        try {
+            const response = await axios.get(url + "/api/khach-hang/tim-kiem-cccd", { params: { cccd: dataKhachHang.cmnd } });
+            if (response.data.code === 200) {
+                setDataKhachHang(response.data.result);
+                setErrorMessage("");
+            } else {
+                setDataKhachHang({
+                    idKhachHang: 0,
+                    cmnd: "",
+                    diaChi: "",
+                    email: "",
+                    hoTen: "",
+                    sdt: "",
+                    ghiChu: "",
+                })
+                setErrorMessage(response.data.message);
+            }
+        } catch (error) {
+            setDataKhachHang({
+                idKhachHang: 0,
+                cmnd: "",
+                diaChi: "",
+                email: "",
+                hoTen: "",
+                sdt: "",
+                ghiChu: "",
+            })
+            console.log(error.message);
+            setErrorMessage(error.response.data.message);
+        }
+
+        // axios.get(url + "/api/khach-hang/tim-kiem-cccd", {params : {cccd: dataKhachHang.cmnd}})
+        // .then(response => {
+        //     return response.data
+        // })
+        // .then(data => {
+        //     console.log(data)
+        //     setDataKhachHang(data)
+        // })
+        // .catch(error => {
+        //     console.log(error.response.data.error)
+        // })
     }
 
     return (
@@ -142,7 +177,7 @@ const Book = () => {
                         </div>
                         <div className='night'>
                             <p>Tổng thời gian lưu trú:</p>
-                            <h4>1 đêm</h4>
+                            <h4>{calculateDateDifference()} đêm</h4>
                         </div>
                         <hr />
                         <div className='rooms'>
@@ -151,9 +186,9 @@ const Book = () => {
                             </div>
                             <div className='listRooms'>
                                 {
-                                    hangPhong.map((item, index)=>{
+                                    hangPhong.map((item, index) => {
                                         if (cartItems[item.idHangPhong] > 0) {
-                                            return(
+                                            return (
                                                 <p key={index}>{cartItems[item.idHangPhong]} x {item.tenHangPhong}</p>
                                             )
                                         }
@@ -172,75 +207,81 @@ const Book = () => {
                     <div className="book-info">
                         <div className='formContainer'>
                             <h3 className="title">Nhập thông tin chi tiết của bạn</h3>
-                            <form onSubmit={(e)=>placeOrder(e)} className='form'>
+                            <form onSubmit={(e) => placeOrder(e)} className='form'>
+
+                                {errorMessage &&
+                                    <div className="column">
+                                        <p className='error'>{errorMessage}</p>
+                                    </div>
+                                }
                                 <div className="column">
                                     <div className="input-box">
                                         <label>CMND/CCCD<span>*</span></label>
-                                        <input onChange={(e)=>onChangeHandle(e)} name='cmnd' value={dataKhachHang.cmnd} type="number" placeholder='Nhập số CCCD/CMND' required/>
+                                        <input onChange={(e) => onChangeHandle(e)} name='cmnd' value={cccd} type="number" placeholder='Nhập số CCCD/CMND' required />
                                     </div>
-                                    <button onClick={(e)=>findUserByCmnd(e)} className='search-user-btn'>Tìm kiếm</button>
-                                    
+                                    <button onClick={(e) => findUserByCmnd(e)} className='search-user-btn'>Tìm kiếm</button>
+
                                 </div>
                                 <div className="input-box">
                                     <label>Họ tên<span>*</span></label>
-                                    <input onChange={(e)=>onChangeHandle(e)} name='hoTen' value={dataKhachHang.hoTen} type="text" placeholder='Nhập họ tên' required/>
+                                    <input onChange={(e) => onChangeHandle(e)} name='hoTen' value={dataKhachHang.hoTen} type="text" placeholder='Nhập họ tên' required />
                                 </div>
                                 <div className="column">
                                     <div className="input-box">
-                                        <label>Email<span>*</span></label>                                    
-                                        <input onChange={(e)=>onChangeHandle(e)} name='email' value={dataKhachHang.email} type="email" placeholder='Nhập email' required/>
+                                        <label>Email<span>*</span></label>
+                                        <input onChange={(e) => onChangeHandle(e)} name='email' value={dataKhachHang.email} type="email" placeholder='Nhập email' required />
                                     </div>
 
                                     <div className="input-box">
                                         <label>Số điện thoại<span>*</span></label>
-                                        <input onChange={(e)=>onChangeHandle(e)} name='sdt' value={dataKhachHang.sdt} type="number" placeholder='Nhập số điện thoại' required/>
+                                        <input onChange={(e) => onChangeHandle(e)} name='sdt' value={dataKhachHang.sdt} type="number" placeholder='Nhập số điện thoại' required />
                                     </div>
                                 </div>
                                 <div className="input-box">
-                                    <label>Địa chỉ<span>*</span></label>                                    
-                                    <input onChange={(e)=>onChangeHandle(e)} name='diaChi' value={dataKhachHang.diaChi} type="text" placeholder='Nhập địa chỉ' required/>
+                                    <label>Địa chỉ<span>*</span></label>
+                                    <input onChange={(e) => onChangeHandle(e)} name='diaChi' value={dataKhachHang.diaChi} type="text" placeholder='Nhập địa chỉ' required />
                                 </div>
 
                                 <div className="input-checkbox">
-                                    <input  
-                                            // checked
-                                            onChange={handleCheckboxChange} 
-                                            id="payAfter" 
-                                            type="radio" name="pay" value="pay-after" required/>
+                                    <input
+                                        // checked
+                                        onChange={handleCheckboxChange}
+                                        id="payAfter"
+                                        type="radio" name="pay" value="pay-after" required />
                                     <label htmlFor="payAfter"> Thanh toán khi nhận phòng</label>
                                 </div>
 
                                 <div className="input-checkbox">
-                                    <input  
+                                    <input
                                         // checked={isDisabled} 
-                                            onChange={handleCheckboxChange}  
-                                            id="payAll"
-                                            type="radio"  name="pay" value="pay-all" required/>
+                                        onChange={handleCheckboxChange}
+                                        id="payAll"
+                                        type="radio" name="pay" value="pay-all" required />
                                     <label htmlFor="payAll"> Thanh toán toàn bộ</label>
                                 </div>
 
                                 <div className="input-checkbox">
-                                    <input  
+                                    <input
                                         // checked={isDisabled} 
-                                            onChange={handleCheckboxChange}  
-                                            id="paySome"
-                                            type="radio"  name="pay" value="pay-some" required/>
+                                        onChange={handleCheckboxChange}
+                                        id="paySome"
+                                        type="radio" name="pay" value="pay-some" required />
                                     <label htmlFor="paySome"> Thanh toán một phần</label>
                                 </div>
 
                                 <div className="input-box">
-                                    <label>Tạm ứng trước <small>(Lớn hơn 10% giá trị đơn hàng)</small></label>                                    
-                                    <input disabled={isDisabled} 
-                                        style={{backgroundColor: isDisabled ? '#e0e0e0' : 'white'}}
+                                    <label>Tạm ứng trước <small>(Lớn hơn 10% giá trị đơn hàng)</small></label>
+                                    <input disabled={isDisabled}
+                                        style={{ backgroundColor: isDisabled ? '#e0e0e0' : 'white' }}
                                         value={tienTamUng}
-                                        onChange={(e)=>setTienTamUng(e.target.value)}
-                                        min={getTotalCartAmount() * 10/100}
-                                        type="number" placeholder='Nhập số tiền trả trước' required/>
+                                        onChange={(e) => setTienTamUng(e.target.value)}
+                                        min={getTotalCartAmount() * 10 / 100}
+                                        type="number" placeholder='Nhập số tiền trả trước' required />
                                 </div>
 
                                 <div className="input-box">
-                                    <label>Lưu ý cho nhân viên</label>                                    
-                                    <textarea onChange={(e)=>onChangeHandle(e)} name='ghiChu' value={dataKhachHang.ghiChu} type="text" placeholder='Nhập lưu ý' required/>
+                                    <label>Lưu ý cho nhân viên</label>
+                                    <textarea onChange={(e) => onChangeHandle(e)} name='ghiChu' value={dataKhachHang.ghiChu} type="text" placeholder='Nhập lưu ý' required />
                                 </div>
                                 <button type='submit' className='bookBtn'>Bước tiếp theo</button>
                             </form>

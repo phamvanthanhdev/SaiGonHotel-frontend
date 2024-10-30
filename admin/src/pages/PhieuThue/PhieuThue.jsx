@@ -13,17 +13,36 @@ const PhieuThue = () => {
 	const location = useLocation();
 	const [idPhieuThue, setIdPhieuThue] = useState(location.state.idPhieuThue);
 	const [idPhieuDat, setIdPhieuDat] = useState(location.state.idPhieuDat);
-	const { url, token, isExpand } = useContext(StoreContext);
+	const [ngayNhanPhong, setNgayNhanPhong] = useState(location.state.ngayNhanPhong);
+	const [ngayTraPhong, setNgayTraPhong] = useState(location.state.ngayTraPhong);
+	const { url, token, isExpand, convertDateShow } = useContext(StoreContext);
 	const [phieuDat, setPhieuDat] = useState();
 	const [showSodoPopup, setShowSodoPopup] = useState(false);
 	const [idHangPhong, setIdHangPhong] = useState();
 	const [donGia, setDonGia] = useState();
 	const [chiTietPhieuThues, setChiTietPhieuThues] = useState([]);
+	const [hangPhongs, setHangPhongs] = useState([]);
 
 	const getPhieuDat = async () => {
 		try {
 			const response = await axios.get(url + `/api/phieu-dat/details/${idPhieuDat}`, { headers: { Authorization: `Bearer ${token}` } });
 			setPhieuDat(response.data);
+			setHangPhongs(response.data.chiTietResponses);
+			
+		} catch (error) {
+			console.log(error.message);
+			toast.error(error.message);
+		}
+	}
+
+	const getHangPhong = async () => {
+		try {
+			const config = {
+				params: { ngayDenDat: ngayNhanPhong, ngayDiDat: ngayTraPhong },
+				headers: { Authorization: `Bearer ${token}` }
+			}
+			const response = await axios.get(url + "/api/thong-tin-hang-phong/thoi-gian", config);
+			setHangPhongs(response.data);
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);
@@ -43,7 +62,11 @@ const PhieuThue = () => {
 
 	useEffect(() => {
 		if (token) {
-			getPhieuDat();
+			if (idPhieuDat) {
+				getPhieuDat();
+			} else {
+				getHangPhong();
+			}
 			fetchChiTietPhieuThue();
 		}
 	}, [idPhieuThue, token])
@@ -54,14 +77,16 @@ const PhieuThue = () => {
 		setDonGia(donGia);
 	}
 
-	const removeChiTietPhieuThue = async(idChiTiet)=>{
+	const removeChiTietPhieuThue = async (idChiTiet) => {
 		try {
 			const response = await axios.delete(url + `/api/chi-tiet/${idChiTiet}`, { headers: { Authorization: `Bearer ${token}` } });
-			if(response.data.code === 200){
+			if (response.data.code === 200) {
 				toast.success("Xóa chi tiết phiếu thuê thành công");
 				// refresh data
 				fetchChiTietPhieuThue();
-			}else{
+				if(!phieuDat)
+					getHangPhong();
+			} else {
 				toast.error("Lỗi xóa chi tiết phiếu thuê");
 			}
 		} catch (error) {
@@ -70,19 +95,19 @@ const PhieuThue = () => {
 		}
 	}
 
-	const thayDoiThoiGianTraPhong = async(idChiTiet, ngayTraPhong)=>{		
+	const thayDoiThoiGianTraPhong = async (idChiTiet, ngayTraPhong) => {
 		const config = {
-			params: {ngayTraPhong: format(ngayTraPhong, "yyyy-MM-dd")},
-			headers: { Authorization: `Bearer ${token}` } 
+			params: { ngayTraPhong: format(ngayTraPhong, "yyyy-MM-dd") },
+			headers: { Authorization: `Bearer ${token}` }
 		}
 
 		try {
-			const response = await axios.put(url + `/api/chi-tiet/thay-doi-ngay-tra/${idChiTiet}`,{} , config );
-			if(response.data.code === 200){
+			const response = await axios.put(url + `/api/chi-tiet/thay-doi-ngay-tra/${idChiTiet}`, {}, config);
+			if (response.data.code === 200) {
 				toast.success("Cập nhật thời gian thành công");
 				// refresh data
 				fetchChiTietPhieuThue();
-			}else{
+			} else {
 				toast.error("Lỗi cập nhật thời gian");
 			}
 		} catch (error) {
@@ -99,18 +124,20 @@ const PhieuThue = () => {
 				<section id="content" className={isExpand && 'expand'}>
 					{showSodoPopup ? <SoDoPopup setShowSodoPopup={setShowSodoPopup}
 						idPhieuThue={idPhieuThue}
-						ngayBatDau={phieuDat.ngayBatDau}
-						ngayTraPhong={phieuDat.ngayTraPhong}
+						ngayBatDau={ngayNhanPhong}
+						ngayTraPhong={ngayTraPhong}
 						donGia={donGia}
 						idHangPhong={idHangPhong}
 						setChiTietPhieuThues={setChiTietPhieuThues}
+						daDatTruoc={phieuDat ? true : false}
+						setHangPhongs={setHangPhongs}
 					/> : <></>}
 					<Navbar />
 					<main className='phieu-thue'>
 						<div className="table-data">
 							<div className="order">
 								<div className="head">
-									<h3>Chi tiết phiếu đặt</h3>
+									<h3>{phieuDat ? 'Chi tiết phiếu đặt' : 'Danh sách hạng phòng'}</h3>
 									<i className='bx bx-search' ></i>
 									<i className='bx bx-filter' ></i>
 								</div>
@@ -125,7 +152,7 @@ const PhieuThue = () => {
 									</thead>
 									<tbody>
 
-										{phieuDat && phieuDat.chiTietResponses.map((item, index) => {
+										{phieuDat && hangPhongs.map((item, index) => {
 											return (
 												<tr key={index}>
 													<td>
@@ -138,6 +165,30 @@ const PhieuThue = () => {
 													<td>
 														<button
 															onClick={() => openSoDoPopup(item.idHangPhong, item.donGia)}
+															className='btn btn-primary'>
+															Chọn phòng
+														</button>
+													</td>
+												</tr>
+											)
+										})}
+
+										{!phieuDat && hangPhongs.map((item, index) => {
+											return (
+												<tr key={index}>
+													<td>
+														{item.tenHangPhong}
+													</td>
+													<td>
+														{item.soLuongTrong} phòng trống
+													</td>
+													<td>{item.phanTramGiam > 0 
+														? item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
+														: item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
+														}</td>
+													<td>
+														<button
+															onClick={() => openSoDoPopup(item.idHangPhong, item.phanTramGiam > 0 ? item.giaKhuyenMai : item.giaGoc)}
 															className='btn btn-primary'>
 															Chọn phòng
 														</button>
@@ -159,45 +210,47 @@ const PhieuThue = () => {
 									<i className='bx bx-search' ></i>
 									<i className='bx bx-filter' ></i>
 								</div>
-									<table>
-										<thead>
-											<tr>
-												<th>Hạng phòng</th>
-												<th>Mã phòng</th>
-												<th>Ngày nhận phòng</th>
-												<th>Ngày trả phòng</th>
-												<th>Giá phòng</th>
-												<th>Tổng tiền</th>
-												<th>Hành động</th>
-											</tr>
-										</thead>
-										<tbody>
-											{chiTietPhieuThues.map((item, index) => {
-												// const [ngayTraPhong, setNgayTraPhong] = useState(item.ngayDi);
-												return(
-													<tr key={index}>
-														<td>{item.tenHangPhong}</td>
-														<td>{item.maPhong}</td>
-														<td>{item.ngayDen}</td>
-														<td><input className='form-control' type="date" 
-																onChange={(e)=>thayDoiThoiGianTraPhong(item.idChiTietPhieuThue, e.target.value)}
-																value={item.ngayDi}/>
-														</td>
-														<td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-														<td>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-														<td>
-															<button
-																onClick={()=>removeChiTietPhieuThue(item.idChiTietPhieuThue)}
-																className='btn btn-primary'>
-																Xóa
-															</button>
-														</td>
-													</tr>
-												)
-											})}
-										</tbody>
-									</table>
-								
+								<table>
+									<thead>
+										<tr>
+											<th>Hạng phòng</th>
+											<th>Mã phòng</th>
+											<th>Ngày nhận phòng</th>
+											<th>Ngày trả phòng</th>
+											<th>Giá phòng</th>
+											<th>Giảm giá</th>
+											<th>Tổng tiền</th>
+											<th>Hành động</th>
+										</tr>
+									</thead>
+									<tbody>
+										{chiTietPhieuThues.map((item, index) => {
+											// const [ngayTraPhong, setNgayTraPhong] = useState(item.ngayDi);
+											return (
+												<tr key={index}>
+													<td>{item.tenHangPhong}</td>
+													<td>{item.maPhong}</td>
+													<td>{convertDateShow(item.ngayDen)}</td>
+													<td><input className='form-control' type="date"
+														onChange={(e) => thayDoiThoiGianTraPhong(item.idChiTietPhieuThue, e.target.value)}
+														value={item.ngayDi} />
+													</td>
+													<td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+													<td>{item.tienGiamGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+													<td>{item.tongTienPhong.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+													<td>
+														<button
+															onClick={() => removeChiTietPhieuThue(item.idChiTietPhieuThue)}
+															className='btn btn-primary'>
+															Xóa
+														</button>
+													</td>
+												</tr>
+											)
+										})}
+									</tbody>
+								</table>
+
 							</div>
 							{/* <div className="todo">
 								<div className="head">

@@ -11,6 +11,23 @@ import PhieuThue from './pages/PhieuThue/PhieuThue';
 import SoDoPhong from './pages/SoDoPhong/SoDoPhong';
 import ChiTietPhieuThue from './pages/ChiTietPhieuThue/ChiTietPhieuThue';
 import TraPhong from './pages/TraPhong/TraPhong';
+import PhieuDatTheoNgay from './pages/PhieuDatTheoNgay/PhieuDatTheoNgay';
+import HoaDon from './pages/HoaDon/HoaDon';
+import DoanhThu from './pages/DoanhThu/DoanhThu';
+import TaoPhieuThue from './pages/TaoPhieuThue/TaoPhieuThue';
+import InHoaDon from './pages/InHoaDon/InHoaDon';
+import KhachHangUpload from './pages/KhachHangUpload/KhachHangUpload';
+import KhachThue from './pages/KhachThue/KhachThue';
+import ChuongTrinhKhuyenMai from './pages/ChuongTrinhKhuyenMai/ChuongTrinhKhuyenMai';
+import HangPhong from './pages/HangPhong/HangPhong';
+import ThemHangPhong from './pages/ThemHangPhong/ThemHangPhong';
+import CapNhatHangPhong from './pages/CapNhatHangPhong/CapNhatHangPhong';
+import ChiTietThayDoiGiaPhong from './pages/ChiTietThayDoiGiaPhong/ChiTietThayDoiGiaPhong';
+import QuanLyPhong from './pages/QuanLyPhong/QuanLyPhong';
+import ThemPhong from './pages/ThemPhong/ThemPhong';
+import CapNhatPhong from './pages/CapNhatPhong/CapNhatPhong';
+import QuanLyDichVu from './pages/QuanLyDichVu/QuanLyDichVu';
+import QuanLyPhuThu from './pages/QuanLyPhuThu/QuanLyPhuThu';
 
 function App() {
  
@@ -30,6 +47,23 @@ function App() {
             <Route path="/so-do-phong" element={<SoDoPhong />} />
             <Route path="/chi-tiet-phieu-thue" element={<ChiTietPhieuThue />} />
             <Route path="/tra-phong" element={<TraPhong />} />
+            <Route path="/phieu-dat-theo-ngay" element={<PhieuDatTheoNgay />} />
+            <Route path="/hoa-don" element={<HoaDon />} />
+            <Route path="/doanh-thu" element={<DoanhThu />} />
+            <Route path="/tao-phieu-thue" element={<TaoPhieuThue />} />
+            <Route path="/in-hoa-don" element={<InHoaDon />} />
+            <Route path="/khach-hang-upload" element={<KhachHangUpload />} />
+            <Route path='/khach-thue' element={<KhachThue />}/>
+            <Route path='/chuong-trinh-khuyen-mai' element={<ChuongTrinhKhuyenMai />}/>
+            <Route path='/hang-phong' element={<HangPhong />}/>
+            <Route path='/them-hang-phong' element={<ThemHangPhong />}/>
+            <Route path='/cap-nhat-hang-phong/:id' element={<CapNhatHangPhong />}/>
+            <Route path='/chi-tiet-thay-doi-gia-phong' element={<ChiTietThayDoiGiaPhong />}/>
+            <Route path='/quan-ly-phong' element={<QuanLyPhong />}/>
+            <Route path='/them-phong' element={<ThemPhong />}/>
+            <Route path='/cap-nhat-phong/:maPhong' element={<CapNhatPhong />}/>
+            <Route path='/quan-ly-dich-vu' element={<QuanLyDichVu />}/>
+            <Route path='/quan-ly-phu-thu' element={<QuanLyPhuThu />}/>
           </Routes>
         {/* </section> */}
       {/* </div> */}

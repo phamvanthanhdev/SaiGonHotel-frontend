@@ -11,12 +11,13 @@ import axios from 'axios'
 import { format } from "date-fns";
 import ThemDichVuPhuThuPopup from '../../components/ThemDichVuPhuThuPopup/ThemDichVuPhuThuPopup'
 import ChonPhongTraPopup from '../../components/ChonPhongTraPopup/ChonPhongTraPopup'
+import ThueThemPopup from '../../components/ThueThemPopup/ThueThemPopup'
 
 const ChiTietPhieuThue = () => {
 	// const idPhieuThue = useParams().id;
 	const location = useLocation();
 	const [idPhieuThue, setIdPhieuThue] = useState(location.state.idPhieuThue);
-	const { url, token, isExpand } = useContext(StoreContext);
+	const { url, token, isExpand, convertDateShow } = useContext(StoreContext);
 	const [phieuThue, setPhieuThue] = useState();
 	const [chiTietPhieuThues, setChiTietPhieuThues] = useState([]);
 	const [chiTiet, setChiTiet] = useState();
@@ -26,6 +27,8 @@ const ChiTietPhieuThue = () => {
 	const [chiTietPhuThus, setChiTietPhuThus] = useState([]);
 	const [showDichVuPhuThuPopup, setShowDichVuPhuThuPopup] = useState(false);
 	const [showChonPhongTraPopup, setShowChonPhongTraPopup] = useState(false);
+	const [tienGiamGia, setTienGiamGia] = useState();
+	const [showThueThemPopup, setShowThueThemPopup] = useState(false);
 
 	const fetchPhieuThue = async () => {
 		try {
@@ -84,13 +87,14 @@ const ChiTietPhieuThue = () => {
 			fetchPhuThus();
 			fetchPhieuThue();
 		}
-	}, [idPhieuThue, token])
+	}, [token])
 
 	const fetchChiTietPhieuThueById = async (idChiTiet) => {
 		try {
 			const response = await axios.get(url + `/api/chi-tiet/${idChiTiet}`,
 				{ headers: { Authorization: `Bearer ${token}` } });
 			setChiTiet(response.data);
+			setTienGiamGia(response.data.tienGiamGia)
 			// Fetch DichVu - Phu Thu
 			fetchChiTietDichVus(idChiTiet);
 			fetchChiTietPhuThus(idChiTiet);
@@ -140,6 +144,9 @@ const ChiTietPhieuThue = () => {
 
 			toast.success("Xóa chi tiết dịch vụ thành công")
 			setChiTietDichVus(response.data);
+			//refresh
+			refreshChiTietPhieuThue(chiTiet.idChiTietPhieuThue);
+			refreshChiTietPhieuThues();
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);
@@ -160,6 +167,9 @@ const ChiTietPhieuThue = () => {
 
 			toast.success("Xóa chi tiết phụ thu thành công")
 			setChiTietPhuThus(response.data);
+			//refresh
+			refreshChiTietPhieuThue(chiTiet.idChiTietPhieuThue);
+			refreshChiTietPhieuThues();
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);
@@ -178,6 +188,7 @@ const ChiTietPhieuThue = () => {
 				toast.success("Cập nhật thời gian thành công");
 				// refresh data
 				fetchChiTietPhieuThueById(chiTiet.idChiTietPhieuThue);
+				refreshChiTietPhieuThues();
 			}else{
 				toast.error("Lỗi cập nhật thời gian");
 			}
@@ -204,6 +215,55 @@ const ChiTietPhieuThue = () => {
 		}
 	}
 
+	const capNhatTienGiamGia = async()=>{
+		const config = {
+			params: {tienGiamGia: tienGiamGia},
+			headers: { Authorization: `Bearer ${token}` } 
+		}
+
+		try {
+			const response = await axios.put(url + `/api/chi-tiet/thay-doi-tien-giam/${chiTiet.idChiTietPhieuThue}`,{} , config );
+			if(response.data.code === 200){
+				toast.success("Cập nhật tiền giảm giá thành công");
+				// refresh data
+				setChiTiet(response.data.result);
+				refreshChiTietPhieuThues();
+			}else{
+				toast.error("Lỗi cập nhật tiền giảm giá");
+			}
+		} catch (error) {
+			console.log(error.message);
+			toast.error(error.response.data.message);
+		}
+	}
+
+	const refreshChiTietPhieuThue = async (idChiTiet) => {
+		try {
+			const response = await axios.get(url + `/api/chi-tiet/${idChiTiet}`,
+				{ headers: { Authorization: `Bearer ${token}` } });
+			setChiTiet(response.data);
+			setTienGiamGia(response.data.tienGiamGia);
+		} catch (error) {
+			console.log(error.message);
+			toast.error(error.message);
+		}
+	}
+
+	const refreshChiTietPhieuThues = async () => {
+		try {
+			const response = await axios.get(url + `/api/chi-tiet/phieu-thue/${idPhieuThue}`,
+				{ headers: { Authorization: `Bearer ${token}` } });
+			setChiTietPhieuThues(response.data);
+		} catch (error) {
+			console.log(error.message);
+			toast.error(error.message);
+		}
+	}
+
+	const onClickThueThem = ()=>{
+		setShowThueThemPopup(true);
+	}
+
 	return (
 		<>
 			<Sidebar />
@@ -219,6 +279,9 @@ const ChiTietPhieuThue = () => {
 						idChiTiet={chiTiet.idChiTietPhieuThue}
 						setChiTietDichVus={setChiTietDichVus}
 						setChiTietPhuThus={setChiTietPhuThus}
+						setChiTietPhieuThue={setChiTiet}
+						idPhieuThue={idPhieuThue}
+						setChiTietPhieuThues={setChiTietPhieuThues}
 					/>
 					:<></>}
 
@@ -228,6 +291,16 @@ const ChiTietPhieuThue = () => {
 						setShowPhongTraPopup={setShowChonPhongTraPopup}
 					/>
 					:<></>}
+
+					{showThueThemPopup ? 
+					<ThueThemPopup
+						setShowThueThemPopup={setShowThueThemPopup}
+						ngayDi={phieuThue.ngayDi}
+						idPhieuThue={idPhieuThue}
+						setChiTietPhieuThues={setChiTietPhieuThues}
+					/>
+					:<></>}
+
 					<Navbar />
 					<main className='chitiet'>
 						{phieuThue &&
@@ -235,13 +308,13 @@ const ChiTietPhieuThue = () => {
 							<div className="todo">
 								<div className="phongdoan">
 									<div className="head">
-										<h3>Phòng đoàn</h3>
+										<h3>Quản lý phiếu thuê - {idPhieuThue}</h3>
 										<i className='bx bx-plus' ></i>
 										<i className='bx bx-filter' ></i>
 									</div>
 									<div className="information">
-										<h6>Thông tin đoàn</h6>
-										<p>Lưu trú: {phieuThue.ngayDen} đến {phieuThue.ngayDi}</p>
+										<h6>Thông tin</h6>
+										<p>Lưu trú: {convertDateShow(phieuThue.ngayDen)} đến {convertDateShow(phieuThue.ngayDi)}</p>
 									</div>
 									<ul className="todo-list">
 										{chiTietPhieuThues.map((item, index) => {
@@ -249,18 +322,19 @@ const ChiTietPhieuThue = () => {
 												<li key={index} onClick={() => handleClickChiTiet(item.idChiTietPhieuThue)} className="completed">
 													<div className="content">
 														<p>{item.maPhong} - {item.tenHangPhong}</p>
-														<p><small>Thời gian: {item.ngayDen} đến {item.ngayDi}</small></p>
+														<p><small>Thời gian: {convertDateShow(item.ngayDen)} đến {convertDateShow(item.ngayDi)}</small></p>
 													</div>
 													<div className="content">
 														<p>{item.daThanhToan ? "Đã trả phòng": "Đang thuê"}</p>
 													</div>
 													<div className="price">
-														<p>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+														<p>{item.tongTienTatCa.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
 													</div>
 												</li>
 											)
 										})}
 									</ul>
+									<FontAwesomeIcon onClick={()=>onClickThueThem()} className='btnThueThem' icon={faPlus} />
 								</div>
 								<div className="dichvu">
 									<div className="head">
@@ -315,7 +389,7 @@ const ChiTietPhieuThue = () => {
 									<div className='left'>
 										<p>{phieuThue.hoTenKhach}</p>
 										<div className="info">
-											<p>{phieuThue.cmnd}</p>
+											<p>CCCD: {phieuThue.cmnd}</p>
 											<p>Tạm ứng: {phieuThue.tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
 										</div>
 									</div>
@@ -328,14 +402,22 @@ const ChiTietPhieuThue = () => {
 										<div className='chitiet-phieuthue'>
 											<h5>{chiTiet.tenHangPhong}</h5>
 											<p>Mã phòng: {chiTiet.maPhong}</p>
-											<p>Ngày nhận phòng: {chiTiet.ngayDen}</p>
+											<p>Ngày nhận phòng: {convertDateShow(chiTiet.ngayDen)}</p>
 											<div className="date">
 												<p>Ngày trả phòng: </p>
 												<input className='form-control' type='date' value={chiTiet.ngayDi} onChange={thayDoiThoiGianTraPhong}/>
 											</div>
 											{/* <p>Thời gian: 5 ngày</p> */}
 											<p>Đơn giá: {chiTiet.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-											<p>Tổng tiền phòng: {chiTiet.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+											<div className="tienGiamGia">
+												<p>Tiền giảm giá: </p>
+												<input className='form-control' type='number' value={tienGiamGia} onChange={(e)=>setTienGiamGia(e.target.value)}/>
+												<button onClick={()=>capNhatTienGiamGia()} className='btn btn-primary'>Cập nhật</button>
+											</div>
+											<p>Tổng tiền phòng: {chiTiet.tongTienPhong.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+											<p>Tổng tiền dịch vụ: {chiTiet.tongTienDichVu.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+											<p>Tổng tiền phụ thu: {chiTiet.tongTienPhuThu.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+											<p>Tiền khách phải trả: {chiTiet.tongTienTatCa.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
 										</div>
 
 
@@ -354,7 +436,9 @@ const ChiTietPhieuThue = () => {
 														<p>{item.soLuong}</p>
 														<p>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
 														<p>{(item.donGia * item.soLuong).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+														<p>{convertDateShow(item.ngayTao)}</p>
 														<p>{item.daThanhToan ? 'Đã thanh toán':'Chưa thanh toán'}</p>
+														
 													</li>
 												)
 											})}
@@ -374,6 +458,7 @@ const ChiTietPhieuThue = () => {
 														<p>{item.soLuong}</p>
 														<p>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
 														<p>{(item.donGia * item.soLuong).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+														<p>{convertDateShow(item.ngayTao)}</p>
 														<p>{item.daThanhToan ? 'Đã thanh toán':'Chưa thanh toán'}</p>
 													</li>
 												)

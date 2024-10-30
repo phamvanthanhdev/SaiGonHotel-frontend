@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ChonPhongTraPopup = ({ idPhieuThue, setShowPhongTraPopup }) => {
   const navigate = useNavigate();
-  const { url, token, setToken } = useContext(StoreContext);
+  const { url, token, setToken,convertDateShow } = useContext(StoreContext);
   const [chiTietPhieuThues, setChiTietPhieuThues] = useState([]);
   const [idChiTietPhieuThues, setIdChiTietPhieuThues] = useState([]);
 
@@ -69,7 +69,7 @@ const ChonPhongTraPopup = ({ idPhieuThue, setShowPhongTraPopup }) => {
                 <th>Phòng</th>
                 <th>Ngày nhận phòng</th>
                 <th>Ngày trả phòng</th>
-                <th>Tiền phòng</th>
+                <th>Tiền phải trả</th>
               </tr>
             </thead>
             <tbody>
@@ -83,9 +83,9 @@ const ChonPhongTraPopup = ({ idPhieuThue, setShowPhongTraPopup }) => {
                     </td>
                     <td>{item.tenHangPhong}</td>
                     <td>{item.maPhong}</td>
-                    <td>{item.ngayDen}</td>
-                    <td>{item.ngayDi}</td>
-                    <td>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+                    <td>{convertDateShow(item.ngayDen)}</td>
+                    <td>{convertDateShow(item.ngayDi)}</td>
+                    <td>{item.tongTienTatCa.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                   </tr>
                 )
               })}

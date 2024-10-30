@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 const OrderDetails = () => {
   const id = useParams().id;
 
-  const { url, token } = useContext(StoreContext);
+  const { url, token, convertDateShow } = useContext(StoreContext);
   const [order, setOrder] = useState();
 
   const fetchOrder = async () => {
@@ -151,6 +151,7 @@ const OrderDetails = () => {
 
     const formData = new FormData();
     formData.append('file', file);  // Thêm file vào form data
+    formData.append('idPhieuDat', id)
 
     try {
       const response = await axios.post(url + '/api/khach-hang/upload-excel', formData, {
@@ -227,8 +228,8 @@ const OrderDetails = () => {
               <div className="detailsDetailsTexts">
                 <h1 className="detailsTitle">Chi tiết đơn đặt phòng</h1>
                 <p className="detailsDesc">Mã đơn đặt phòng: {order.idPhieuDat}</p>
-                <p className="detailsDesc">Ngày nhận phòng: {order.ngayBatDau}</p>
-                <p className="detailsDesc">Ngày trả phòng: {order.ngayTraPhong}</p>
+                <p className="detailsDesc">Ngày nhận phòng: {convertDateShow(order.ngayBatDau)}</p>
+                <p className="detailsDesc">Ngày trả phòng: {convertDateShow(order.ngayTraPhong)}</p>
                 <p className="detailsDesc">Đã thanh toán trước: {order.tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                 <p className="detailsDesc">Đại diện đặt phòng: {order.hoTen}</p>
                 <p className="detailsDesc">Trạng thái:
@@ -237,19 +238,10 @@ const OrderDetails = () => {
                   {order.trangThaiHuy === 2 && <span> Đã hủy</span>}
                 </p>
                 <p className="detailsDesc">Lưu ý tới nhân viên: {order.ghiChu}</p>
-                <p className="hotelDesc">Thời gian đặt phòng: {order.ngayTao}</p>
+                <p className="hotelDesc">Thời gian đặt phòng: {convertDateShow(order.ngayTao)}</p>
 
-                <div className="upload">
+                <div className={` ${order.trangThaiHuy !== 0 ? 'disable' : 'upload'}`}>
                   <h3>Cập nhật thông tin khách hàng</h3>
-                  {/* form */}
-                  {/* <form className="form-group custom-form" onSubmit={handleFileSubmit}>
-                    <input type="file" className="form-control" required onChange={handleFile} />
-                    <button type="submit" className="btnUpload">Xem trước</button>
-                    <button onClick={handleUploadFile} type='button' className="btnUpdate">Upload</button>
-                    {typeError && (
-                      <div className="alert alert-danger" role="alert">{typeError}</div>
-                    )}
-                  </form> */}
                   <form onSubmit={handleSubmit}>
                     <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} />
                     <button type="button" onClick={handleFileSubmit}>Xem trước</button>

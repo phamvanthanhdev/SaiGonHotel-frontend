@@ -1,24 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './TraPhong.css'
 import { StoreContext } from '../../context/StoreContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Navbar from '../../components/Navbar/Navbar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 
 const TraPhong = () => {
-    const { url, token, isExpand } = useContext(StoreContext);
+    const navigate = useNavigate();
+    const { url, token, isExpand, convertDateShow } = useContext(StoreContext);
     const location = useLocation();
     const [phongTra, setPhongTra] = useState(location.state.phongTra);
     const [data, setData] = useState();
     const [phanTramGiamGia, setPhanTramGiamGia] = useState(0);
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     const fetchDataTraPhong = async () => {
         try {
@@ -39,7 +34,11 @@ const TraPhong = () => {
     }, [token])
 
     const tinhTienKhachTra = () => {
-        return (data.tongTien - data.tienTamUng) * (100 - phanTramGiamGia) / 100;
+        return (data.tongTien - data.tienTamUng) - (data.tongTienPhong * phanTramGiamGia / 100);
+    }
+
+    const tinhTienGiamGia = ()=>{
+        return (data.tongTienPhong * phanTramGiamGia / 100);
     }
 
     const traPhong = async () => {
@@ -57,7 +56,23 @@ const TraPhong = () => {
             )
             console.log(response.data);
             if(response.data.code === 200){
-                handleShow();
+                // handleShow();
+                navigate("/in-hoa-don", {state: {
+                    idPhieuThue: response.data.result.idPhieuThue, 
+                    ngayNhanPhong: response.data.result.ngayNhanPhong, 
+                    ngayTraPhong: response.data.result.ngayTraPhong,
+                    hoTenKhach: response.data.result.hoTenKhach,
+                    hoTenNhanVien: response.data.result.hoTenNhanVien,
+                    tienTamUng: response.data.result.tienTamUng,
+                    phanTramGiam: response.data.result.phanTramGiam,
+                    tongThu: response.data.result.tongThu,
+                    thucThu: response.data.result.thucThu,
+                    soHoaDon: response.data.result.soHoaDon,
+                    ngayTaoHoaDon: response.data.result.ngayTaoHoaDon,
+                    chiTietPhieuThues: response.data.result.chiTietPhieuThues,
+                    chiTietDichVus: response.data.result.chiTietDichVus,
+                    chiTietPhuThus: response.data.result.chiTietPhuThus
+                }})
             }
 
         } catch (error) {
@@ -90,6 +105,7 @@ const TraPhong = () => {
                                                     <th>Phòng</th>
                                                     <th>Thời gian</th>
                                                     <th>Đơn giá</th>
+                                                    <th>Giảm giá</th>
                                                     <th>Thành tiền</th>
                                                 </tr>
                                             </thead>
@@ -99,9 +115,10 @@ const TraPhong = () => {
                                                         <tr key={index}>
                                                             <td>{index + 1}.</td>
                                                             <td>{item.tenHangPhong} - {item.maPhong}</td>
-                                                            <td>{item.ngayDen} đến {item.ngayDi}</td>
+                                                            <td>{convertDateShow(item.ngayDen)} đến {convertDateShow(item.ngayDi)}</td>
                                                             <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+                                                            <td>{item.tienGiamGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+                                                            <td>{item.tongTienPhong.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                         </tr>
                                                     )
                                                 })}
@@ -120,6 +137,7 @@ const TraPhong = () => {
                                                     <th>Đơn giá</th>
                                                     <th>Thành tiền</th>
                                                     <th>Trạng thái</th>
+                                                    <th>Ngày sử dụng</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -132,6 +150,7 @@ const TraPhong = () => {
                                                             <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{item.daThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
+                                                            <td>{convertDateShow(item.ngayTao)}</td>
                                                         </tr>
                                                     )
                                                 })}
@@ -149,6 +168,7 @@ const TraPhong = () => {
                                                     <th>Đơn giá</th>
                                                     <th>Thành tiền</th>
                                                     <th>Trạng thái</th>
+                                                    <th>Ngày sử dụng</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -161,6 +181,7 @@ const TraPhong = () => {
                                                             <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{item.daThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
+                                                            <td>{convertDateShow(item.ngayTao)}</td>
                                                         </tr>
                                                     )
                                                 })}
@@ -171,7 +192,7 @@ const TraPhong = () => {
                                 <div className="todo">
                                     <ul className="todo-list">
                                         <li>
-                                            <p>Tổng tiền hàng</p>
+                                            <p>Tổng tiền</p>
                                             <p>{data.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                         </li>
                                         <li>
@@ -179,8 +200,16 @@ const TraPhong = () => {
                                             <p>{data.tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                         </li>
                                         <li>
-                                            <p>Giảm giá(%)</p>
+                                            <p>Tổng tiền phòng</p>
+                                            <p>{data.tongTienPhong.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                                        </li>
+                                        <li>
+                                            <p>Giảm giá tiền phòng(%)</p>
                                             <input onChange={(e) => setPhanTramGiamGia(e.target.value)} value={phanTramGiamGia} className='form-control giam-gia' type="number" placeholder='%' />
+                                        </li>
+                                        <li>
+                                            <p>Tiền được giảm</p>
+                                            <p>{tinhTienGiamGia().toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                         </li>
                                         <li>
                                             <p>Khách phải trả</p>
@@ -204,20 +233,6 @@ const TraPhong = () => {
                                     </ul>
 
                                 </div>
-                                <Modal show={show} onHide={handleClose}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Thông tin trả phòng</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>Trả phòng thành công, bạn có muốn in hóa đơn không?</Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleClose}>
-                                            Hủy
-                                        </Button>
-                                        <Button variant="primary" onClick={handleClose}>
-                                            In hóa đơn
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
                             </div>
                             : <><p>Loading...</p></>}
                     </main>

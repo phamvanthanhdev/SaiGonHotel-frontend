@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Checkin = () => {
     const navigate = useNavigate();
-    const {url, token, setToken} = useContext(StoreContext);
+    const {url, token, isExpand, convertDateShow} = useContext(StoreContext);
     const [phieuDat, setPhieuDat] = useState();
     const [data, setData] = useState({
         cccd: ""
@@ -46,7 +46,7 @@ const Checkin = () => {
         <>
             <Sidebar />
             <div className='app'>
-                <section id="content">
+                <section id="content" className={isExpand && 'expand'}>
                     <Navbar />
                     <main>
                         <div className="checkinContainer">
@@ -84,7 +84,7 @@ const Checkin = () => {
                                             return(
                                                 <tr key={index} onClick={()=>handleOnclick(item.idPhieuDat)}>
                                                     <td>{item.idPhieuDat}</td>
-                                                    <td>{item.ngayBatDau} đến {item.ngayTraPhong}</td>
+                                                    <td>{convertDateShow(item.ngayBatDau)} đến {convertDateShow(item.ngayTraPhong)}</td>
                                                     <td>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                     <td>
                                                         {item.trangThaiHuy === 0 && <span className="status process"> Chờ xử lý</span>}

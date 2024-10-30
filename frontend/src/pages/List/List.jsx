@@ -96,7 +96,7 @@ const List = () => {
             <h1 className="lsTitle">Tìm kiếm</h1>
             <div className="lsItem">
               <label>Nội dung tìm kiếm</label>
-              <input onChange={onChangeHandle} name='noiDung' placeholder={destination} type="text" />
+              <input onChange={onChangeHandle} name='noiDung' value={data.noiDung} type="text" />
             </div>
             <div className="lsItem">
               <label>Ngày nhận phòng</label>
@@ -152,7 +152,7 @@ const List = () => {
                     <div key={index} className='room'>
                       <p className='name'>Phòng: {cartItems[item.idHangPhong]} {item.tenHangPhong}</p>
                       <p className='price'>
-                        {item.giaKhuyenMai
+                        {item.phanTramGiam > 0
                           ? item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
                           : item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
                         } /đêm

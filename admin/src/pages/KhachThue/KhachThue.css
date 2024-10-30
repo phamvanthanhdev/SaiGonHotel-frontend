@@ -1,0 +1,180 @@
+/* CONTENT */
+#content {
+	position: relative;
+	width: calc(100% - 280px);
+	left: 280px;
+	transition: .3s ease;
+	height: 100vh;
+}
+#content.expand {
+	width: calc(100% - 60px);
+	left: 60px;
+}
+
+
+/* .khach-thue */
+#content .khach-thue {
+	width: 100%;
+	padding: 10px 20px;
+	font-family: var(--poppins);
+	max-height: calc(100vh - 56px);
+	overflow-y: auto;
+	/* height: 100vh; */
+}
+
+#content .khach-thue .table-data {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 15px;
+	width: 100%;
+	color: var(--dark);
+}
+#content .khach-thue .table-data > div {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+#content .khach-thue .table-data .head {
+	display: flex;
+	align-items: center;
+    /* display: unset;
+	grid-gap: 0; */
+	margin-bottom: 24px;
+}
+
+#content .khach-thue .table-data .note{
+	margin-bottom: 20px;
+	font-size: 13px;
+}
+
+#content .khach-thue .table-data .head h3 {
+	margin-right: auto;
+	font-size: 24px;
+	font-weight: 600;
+}
+#content .khach-thue .table-data .head p{
+    font-style: italic;
+}
+
+#content .khach-thue .table-data .head .bx {
+	cursor: pointer;
+}
+
+#content .khach-thue .table-data .order {
+	flex-grow: 1;
+	flex-basis: 800px;
+}
+#content .khach-thue .table-data .order table {
+	width: 100%;
+	border-collapse: collapse;
+}
+#content .khach-thue .table-data .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+#content .khach-thue .table-data .order table td {
+    
+	padding: 20px 0;
+}
+
+#content .khach-thue .table-data .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+#content .khach-thue .table-data .order table tbody tr:hover {
+	background: var(--grey);
+}
+#content .khach-thue .table-data .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+#content .khach-thue .table-data .order table tr td .status.completed {
+	background: var(--blue);
+}
+#content .khach-thue .table-data .order table tr td .status.process {
+	background: var(--green);
+}
+#content .khach-thue .table-data .order table tr td .status.pending {
+	background: var(--orange);
+}
+
+
+#content .khach-thue .table-data .todo {
+	flex-grow: 1;
+	flex-basis: 100px;
+}
+
+#content .khach-thue .table-data .todo .button-search{
+    margin-top: 20px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+#content .khach-thue .table-data .todo .options{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+#content .khach-thue .table-data .todo .khach-thue-quy select{
+	margin: 10px 0;
+}
+
+#content .khach-thue .table-data .todo .todo-list {
+	width: 100%;
+}
+#content .khach-thue .table-data .todo .todo-list li {
+	width: 100%;
+	margin-bottom: 16px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 20px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#content .khach-thue .table-data .todo .todo-list li p {
+    margin-bottom: unset;
+}
+
+#content .khach-thue .table-data .todo .todo-list li .bx {
+	cursor: pointer;
+}
+#content .khach-thue .table-data .todo .todo-list li.completed {
+	border-left: 10px solid var(--blue);
+}
+#content .khach-thue .table-data .todo .todo-list li.not-completed {
+	border-left: 10px solid var(--orange);
+}
+#content .khach-thue .table-data .todo .todo-list li:last-child {
+	margin-bottom: 0;
+}
+
+#content .khach-thue .inBaoCao{
+	width: 100%;
+	position: relative;
+}
+
+#content .khach-thue .inBaoCao .btnBaoCao{
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: end;
+	gap: 10px;
+	margin: 10px 0;
+}
+
+/* .khach-thue */
+/* CONTENT */

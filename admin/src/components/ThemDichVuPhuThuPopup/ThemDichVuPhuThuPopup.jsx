@@ -7,7 +7,9 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const ThemDichVuPhuThuPopup = ({ setShowDichVuPhuThuPopup, idDichVuPhuThu, tenDichVuPhuThu, donGia, type, 
-                                idChiTiet, setChiTietDichVus, setChiTietPhuThus }) => {
+                                idChiTiet, setChiTietDichVus, setChiTietPhuThus, setChiTietPhieuThue,
+                            idPhieuThue,
+                            setChiTietPhieuThues }) => {
     const { url, token, setToken } = useContext(StoreContext);
 
     const [data, setData] = useState({
@@ -46,7 +48,10 @@ const ThemDichVuPhuThuPopup = ({ setShowDichVuPhuThuPopup, idDichVuPhuThu, tenDi
 
 			toast.success("Thêm chi tiết dịch vụ thành công")
 			setChiTietDichVus(response.data);
+            //refresh data phiếu thuê
+            fetchChiTietPhieuThueById(idChiTiet);
             setShowDichVuPhuThuPopup(false);
+            refreshChiTietPhieuThues();
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);
@@ -68,7 +73,32 @@ const ThemDichVuPhuThuPopup = ({ setShowDichVuPhuThuPopup, idDichVuPhuThu, tenDi
 
 			toast.success("Thêm chi tiết phụ thu thành công")
 			setChiTietPhuThus(response.data);
+            //refresh data phiếu thuê
+            fetchChiTietPhieuThueById(idChiTiet);
             setShowDichVuPhuThuPopup(false);
+            refreshChiTietPhieuThues();
+		} catch (error) {
+			console.log(error.message);
+			toast.error(error.message);
+		}
+	}
+
+    const fetchChiTietPhieuThueById = async (idChiTiet) => {
+		try {
+			const response = await axios.get(url + `/api/chi-tiet/${idChiTiet}`,
+				{ headers: { Authorization: `Bearer ${token}` } });
+			setChiTietPhieuThue(response.data);
+		} catch (error) {
+			console.log(error.message);
+			toast.error(error.message);
+		}
+	}
+
+    const refreshChiTietPhieuThues = async () => {
+		try {
+			const response = await axios.get(url + `/api/chi-tiet/phieu-thue/${idPhieuThue}`,
+				{ headers: { Authorization: `Bearer ${token}` } });
+			setChiTietPhieuThues(response.data);
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);

@@ -116,10 +116,21 @@
     border-radius: 5px;
     box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.1);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 }   
+
+.login-popup .login-popup-container .rooms .room .maPhong{
+    font-size: 18px;
+    margin-bottom: unset;
+}
+
+.login-popup .login-popup-container .rooms .room .tang{
+    font-size: 13px;
+    margin-bottom: unset;
+}
 
 .login-popup .login-popup-container .rooms .not-clear{
     background-color: rgb(249, 199, 34);

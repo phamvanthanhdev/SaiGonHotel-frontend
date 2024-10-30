@@ -35,7 +35,13 @@ const Cart = () => {
                                         <div className="cart-items-title cart-items-item">
                                             <img src={`data:image/png;base64, ${item.hinhAnh}`} alt="" />
                                             <p>{item.tenHangPhong}</p>
-                                            <p>{item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                                            <p>
+                                            {
+                                                item.phanTramGiam > 0
+                                                ? <p>{(item.giaKhuyenMai).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                                                :<p>{(item.giaGoc).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                                            }
+                                            </p>
                                             <p>{cartItems[item.idHangPhong]}</p>
                                             {
                                                 item.phanTramGiam > 0

@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './OrderItem.css'
 import { useNavigate } from 'react-router-dom'
+import { StoreContext } from '../../context/StoreContext'
 
 const OrderItem = ({id, ngayBatDau, ngayTraPhong, ghiChu, tienTamUng, idNhanVien, trangThaiHuy, tongTien}) => {
+  const { convertDateShow } = useContext(StoreContext);
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/order-details/${id}`)
@@ -18,7 +20,7 @@ const OrderItem = ({id, ngayBatDau, ngayTraPhong, ghiChu, tienTamUng, idNhanVien
       />
       <div className="oiDesc">
         <h1 className="oiTitle">SAIGON HOTEL</h1>
-        <span className="oiDistance">{ngayBatDau} đến {ngayTraPhong}</span>
+        <span className="oiDistance">{convertDateShow(ngayBatDau)} đến {convertDateShow(ngayTraPhong)}</span>
         <span className="oiFeatures">
           Mã đặt phòng: {id}
         </span>
@@ -42,7 +44,7 @@ const OrderItem = ({id, ngayBatDau, ngayTraPhong, ghiChu, tienTamUng, idNhanVien
           <span className="oiPrice">{tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</span>
           <span className="oiTaxOp">Bao gồm tất cả thuế và phí</span>
           
-          <button onClick={handleClick} className={`oiCheckButton ${trangThaiHuy ? 'btnCancel' : ''}`}>Chi tiết đặt phòng</button>
+          <button onClick={handleClick} className={`oiCheckButton`}>Chi tiết đặt phòng</button>
         </div>
       </div>
     </div>

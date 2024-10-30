@@ -104,6 +104,24 @@
 	margin-bottom: 0;
 }
 
+#content main .chitiet-container .todo .phongdoan{
+	position: relative;
+	padding-bottom: 30px;
+}
+
+#content main .chitiet-container .todo .phongdoan .btnThueThem{
+	font-size: 15px;
+	/* border: 1px solid lightgray; */
+	padding: 12px;
+	background-color: var(--grey);
+	border-radius: 50%;
+	position: absolute;
+	right: 50%;
+	bottom: 0;
+	cursor: pointer;
+	color: gray;
+}
+
 #content main .chitiet-container .order .head {
 	display: flex;
 	justify-content: space-between;
@@ -140,6 +158,24 @@
 #content main .chitiet-container .order .chitiet-phieuthue .date p{
 	margin: auto 0;
 }
+
+#content main .chitiet-container .order .chitiet-phieuthue .tienGiamGia{
+	width: 100%;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: 20px;
+	margin-bottom: 1rem;
+}
+
+#content main .chitiet-container .order .chitiet-phieuthue .tienGiamGia input{
+	width: max-content;
+}
+
+#content main .chitiet-container .order .chitiet-phieuthue .tienGiamGia p{
+	margin: auto 0;
+}
+
 
 #content main .chitiet-container .order .dichvu-list{
 	border: 1px solid lightgray;
@@ -213,14 +249,15 @@
 
 #content main .chitiet-container .order .phuthu-list li p:nth-child(3),
 #content main .chitiet-container .order .phuthu-list li p:nth-child(4),
-#content main .chitiet-container .order .phuthu-list li p:nth-child(5) {
-	width: 100px;
+#content main .chitiet-container .order .phuthu-list li p:nth-child(5),
+#content main .chitiet-container .order .phuthu-list li p:nth-child(6) {
+	width: 80px;
 	text-align: right;
 }
 
-#content main .chitiet-container .order .phuthu-list li p:nth-child(6){
+#content main .chitiet-container .order .phuthu-list li p:nth-child(7){
 	width: 150px;
-	text-align: right;
+	text-align: center;
 }
 
 
@@ -239,14 +276,15 @@
 
 #content main .chitiet-container .order .dichvu-list li p:nth-child(3),
 #content main .chitiet-container .order .dichvu-list li p:nth-child(4),
-#content main .chitiet-container .order .dichvu-list li p:nth-child(5) {
-	width: 100px;
+#content main .chitiet-container .order .dichvu-list li p:nth-child(5),
+#content main .chitiet-container .order .dichvu-list li p:nth-child(6) {
+	width: 80px;
 	text-align: right;
 }
 
-#content main .chitiet-container .order .dichvu-list li p:nth-child(6){
+#content main .chitiet-container .order .dichvu-list li p:nth-child(7){
 	width: 150px;
-	text-align: right;
+	text-align: center;
 }
 
 /* */

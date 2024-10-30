@@ -13,13 +13,13 @@ const Sidebar = () => {
 		<section id="sidebar" className={isExpand ? 'hide' : ''}>
 			<a href="#" className="brand">
 				<i className='bx'><FontAwesomeIcon icon={faFaceSmile} /></i>
-				<span className="text">AdminHub</span>
+				<span className="text">Trang quản trị</span>
 			</a>
 			<ul className="side-menu top">
 				<li onClick={() => navigate("/")} className="active">
 					<a className=''>
 						<FontAwesomeIcon className='bx' icon={faGauge} />
-						<span className="text">Dashboard</span>
+						<span className="text">Trang chủ</span>
 					</a>
 				</li>
 				<li onClick={() => navigate("/so-do-phong")}>
@@ -35,15 +35,71 @@ const Sidebar = () => {
 					</a>
 				</li>
 				<li>
-					<a className=''>
+					<a onClick={() => navigate("/phieu-dat-theo-ngay")} className=''>
 						<FontAwesomeIcon className='bx' icon={faGauge} />
-						<span className="text">Phiếu đặt phòng</span>
+						<span className="text">Phiếu đặt theo ngày</span>
 					</a>
 				</li>
 				<li>
+					<a onClick={() => navigate("/hoa-don")} className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Hóa đơn</span>
+					</a>
+				</li>
+				<li>
+					<a onClick={() => navigate("/doanh-thu")} className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Doanh thu</span>
+					</a>
+				</li>
+				<li>
+					<a onClick={() => navigate("/khach-hang-upload")} className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Khách hàng tải lên</span>
+					</a>
+				</li>
+				<li>
+					<a onClick={() => navigate("/khach-thue")} className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Khách lưu trú</span>
+					</a>
+				</li>
+			</ul>
+			<ul className="side-menu top">
+				<li onClick={() => navigate("/chuong-trinh-khuyen-mai")}>
 					<a className=''>
 						<FontAwesomeIcon className='bx' icon={faGauge} />
-						<span className="text">Team</span>
+						<span className="text">Khuyến mãi</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/hang-phong")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý hạng phòng</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/chi-tiet-thay-doi-gia-phong")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý giá phòng</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/quan-ly-phong")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý phòng</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/quan-ly-dich-vu")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý dịch vụ</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/quan-ly-phu-thu")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý phụ thu</span>
 					</a>
 				</li>
 			</ul>

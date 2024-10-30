@@ -1,0 +1,95 @@
+.chi-tiet-khuyen-mai-popup{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #00000090;
+    display: grid;
+}
+
+.chi-tiet-khuyen-mai-popup-container{
+    place-self: center;
+    width: max(25vw, 330px);
+    color: #808080;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 35px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    animation: fadeIn 0.5s;
+}
+
+.chi-tiet-khuyen-mai-popup-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+}
+
+.chi-tiet-khuyen-mai-popup-title h2{
+    font-size: 25px;
+}
+
+.chi-tiet-khuyen-mai-popup-title .close{
+    width: 16px;
+    cursor: pointer;
+}
+
+.chi-tiet-khuyen-mai-popup-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.chi-tiet-khuyen-mai-popup-inputs input,
+.chi-tiet-khuyen-mai-popup-inputs select{
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+}
+.chi-tiet-khuyen-mai-popup-container button{
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    background-color: var(--blue);
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.chi-tiet-khuyen-mai-popup-condition{
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    margin-top: -15px;
+}
+
+.chi-tiet-khuyen-mai-popup-container .capNhat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.chi-tiet-khuyen-mai-popup-container .capNhat button{
+    width: 100%;
+    
+}
+
+.chi-tiet-khuyen-mai-popup-container .capNhat .btnXoa{
+    background-color: tomato;
+}
+
+.chi-tiet-khuyen-mai-popup-condition input{
+    margin-top: 5px;
+}
+
+.chi-tiet-khuyen-mai-popup p span{
+    color: var(--blue);
+    font-weight: 500;
+    cursor: pointer;
+}

@@ -32,7 +32,7 @@ const StoreContextProvider = (props) => {
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
                 let itemInfo = hangPhong.find((hp) => hp.idHangPhong == item);                
-                if(itemInfo.giaKhuyenMai > 0){
+                if(itemInfo.phanTramGiam > 0){
                     totalAmount += itemInfo.giaKhuyenMai * cartItems[item] * calculateDateDifference();
                 }else{
                     totalAmount += itemInfo.giaGoc * cartItems[item] * calculateDateDifference();
@@ -44,7 +44,7 @@ const StoreContextProvider = (props) => {
 
     const fetchHangPhong = async() => {
         const response = await axios.get(url+"/api/thong-tin-hang-phong/all");
-        setHangPhong(response.data);
+        setHangPhong(response.data.result);
     }
 
     const calculateDateDifference = () => {
@@ -52,6 +52,11 @@ const StoreContextProvider = (props) => {
         const dayDifference = timeDifference / (1000 * 3600 * 24);
         return Math.round(dayDifference);
     };
+
+    const convertDateShow = (date)=>{
+        const dateArray = date.split("-");
+        return dateArray[2] + "/" + dateArray[1] + "/" + dateArray[0];
+    }
 
     useEffect(()=>{
         ngayTraPhong.setDate(ngayTraPhong.getDate() + 1);
@@ -80,7 +85,8 @@ const StoreContextProvider = (props) => {
         getTotalCartAmount,
         calculateDateDifference,
         token,
-        setToken
+        setToken,
+        convertDateShow
     }
 
 

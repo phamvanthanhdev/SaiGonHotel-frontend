@@ -1,0 +1,110 @@
+.hoadon-popup{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #00000090;
+    display: grid;
+}
+
+.hoadon-popup-container{
+    place-self: center;
+    width: max(70vw, 330px);
+    color: #808080;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 25px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    animation: fadeIn 0.5s;
+    max-height: 80vh; /* Đặt chiều cao tối đa cho popup */
+    overflow: auto; /* Bật cuộn khi nội dung vượt quá max-height */
+}
+
+.hoadon-popup-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+}
+
+.hoadon-popup-title h4{
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.hoadon-popup-title .close{
+    cursor: pointer;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data{
+	width: 100%;
+	color: var(--dark);
+}
+
+.hoadon-popup .hoadon-popup-container .table-data > div {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 10px 24px;
+	overflow-x: auto;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .order{
+    flex-grow: 1;
+	flex-basis: 500px;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .order table {
+    /* margin-top: 20px; */
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .order .head{
+    margin-top: 30px;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+.hoadon-popup .hoadon-popup-container .table-data .order table td {
+	padding: 16px 0;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .todo .todo-list {
+	width: 100%;
+    padding-left: unset;
+    display: flex;
+    gap: 100px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .todo .todo-list .todo-left{
+    width: 100%;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .todo .todo-list .todo-right{
+    width: 100%;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .todo .todo-list li {
+	width: 100%;
+	margin-bottom: 10px;
+	/* background: var(--grey); */
+	border-radius: 10px;
+	padding: 20px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.hoadon-popup .hoadon-popup-container .table-data .todo .todo-list li p {
+    margin-bottom: unset;
+}
+
