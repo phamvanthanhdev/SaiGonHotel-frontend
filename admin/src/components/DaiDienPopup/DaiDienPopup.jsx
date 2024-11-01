@@ -21,7 +21,7 @@ const DaiDienPopup = ({ setShowDaiDienPopup, setIdNguoiDaiDien, setTenNguoiDaiDi
 
         await axios.get(url + "/api/khach-hang/tim-kiem-cccd", config)
         .then(response => {
-            return response.data
+            return response.data.result
         })
         .then(data => {
             setKhachHang(data)

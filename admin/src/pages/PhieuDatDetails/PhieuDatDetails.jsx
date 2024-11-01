@@ -23,6 +23,7 @@ const PhieuDatDetails = () => {
     const [tenNguoiDaiDien, setTenNguoiDaiDien] = useState();
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+    const [phanTramGiam, setPhanTramGiam] = useState(0);
 
     const getPhieuDat = async () => {
         try {
@@ -71,13 +72,18 @@ const PhieuDatDetails = () => {
         if(phieuDat.trangThaiHuy !== 0){
             setErrorMessage("Phiếu đặt đã hoàn tất hoặc đã hủy trước đó");
         }else{
+            if(phanTramGiam < 0 || phanTramGiam > 100){
+                setErrorMessage("Phần trăm giảm giá chưa hợp lệ")
+            }
             const phieuThueRequest = {
                 ngayDen: phieuDat.ngayBatDau,
                 ngayDi: phieuDat.ngayTraPhong,
                 idKhachHang: idNguoiDaiDien,
                 idPhieuDat: phieuDat.idPhieuDat,
+                phanTramGiam: phanTramGiam,
                 chiTietRequests: []
             }
+            
             try {
                 const response = await axios.post(url + "/api/phieu-thue/", phieuThueRequest, { headers: { Authorization: `Bearer ${token}` } });
                 if(response.data.code === 200){
@@ -93,6 +99,15 @@ const PhieuDatDetails = () => {
                 setErrorMessage(error.response.data.message)
             }
         }
+    }
+
+    const tinhTienGiamGia = ()=>{
+        return phieuDat.tongTien * (phanTramGiam/100);
+    }
+
+    const tinhTienPhaiTra = ()=>{
+        let tienPhaiTra = phieuDat.tongTien - phieuDat.tienTamUng - tinhTienGiamGia();
+        return tienPhaiTra > 0 ? tienPhaiTra : 0;
     }
     
 
@@ -119,7 +134,7 @@ const PhieuDatDetails = () => {
                     idPhieuDat={phieuDat.idPhieuDat}
                     tienTamUng={phieuDat.tienTamUng}
                     setPhieuDat={setPhieuDat}/>: <></>}
-                    <main>
+                    <main className='phieu-dat'>
                         {phieuDat &&
                         <div className="table-data">
                             <div className="order">
@@ -139,11 +154,18 @@ const PhieuDatDetails = () => {
                                         <p>Tiền hoàn trả: {phieuDat.tienTra.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>}
                                     <p>Lưu ý của khách hàng: {phieuDat.ghiChu}</p>
                                     <p>Thời gian đặt: {convertDateShow(phieuDat.ngayTao)}</p>
+                                    <div className='input-phan-tram-giam'>
+                                        <label htmlFor="exampleFormControlInputPhanTramGiam" className="form-label">Giảm giá tiền phòng(%): </label>
+                                        <input value={phanTramGiam} onChange={(e)=>setPhanTramGiam(e.target.value)} name='phanTramGiam' type="number" className="form-control" id="exampleFormControlInputPhanTramGiam" placeholder="%" />
+                                    </div>
+                                    <p>Tiền được giảm: {tinhTienGiamGia().toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                                    <p>Tiền phải trả: {tinhTienPhaiTra().toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                     <p>Người đại diện: {tenNguoiDaiDien}</p>
                                     {errorMessage && <p className='error'>{errorMessage}</p>}
                                     <div className="btn">
-                                        <button onClick={() => setShowDaiDienPopup(true)} className='btn btn-primary'>Chọn khách hàng đại diện</button>
+                                        
                                     </div>
+                                    <button onClick={() => setShowDaiDienPopup(true)} className='btn btn-primary'>Chọn khách hàng đại diện</button>
                                     <button onClick={taoPhieuThue} className='btn btn-primary' >Xác nhận và chọn phòng</button>
                                     <button onClick={() => setShowHuyPhongPopup(true)} className='btn btn-danger' >Hủy đặt phòng</button>
                                    

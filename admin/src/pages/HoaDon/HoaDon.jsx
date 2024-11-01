@@ -79,7 +79,7 @@ const HoaDon = () => {
                             </div>
                             <div className="order">
                                 <div className="head">
-                                    <h3>Phiếu đặt theo ngày</h3>
+                                    <h3>Hóa đơn theo ngày</h3>
                                     <button className='btn btn-primary'>Tạo báo cáo</button>
                                 </div>
                                 <div className="note">

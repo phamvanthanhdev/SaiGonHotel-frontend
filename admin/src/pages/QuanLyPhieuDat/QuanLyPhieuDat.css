@@ -1,0 +1,95 @@
+#content main .quan-ly-phieu-dat {
+	width: 100%;
+	padding: 20px 20px;
+    font-size: 14px;
+}
+
+#content main .quan-ly-phieu-dat-container {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 14px;
+	width: 100%;
+	color: var(--dark);
+}
+#content main .quan-ly-phieu-dat-container > div {
+	border-radius: 10px;
+	background: var(--light);
+	padding: 14px;
+	overflow-x: auto;
+}
+
+#content main .quan-ly-phieu-dat-container .order {
+	flex-grow: 1;
+	flex-basis: 700px;
+}
+
+#content main .quan-ly-phieu-dat-container .order .head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#content main .quan-ly-phieu-dat-container .order table {
+    margin-top: 30px;
+	width: 100%;
+	border-collapse: collapse;
+}
+#content main .quan-ly-phieu-dat-container .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+#content main .quan-ly-phieu-dat-container .order table td {
+	padding: 20px 0;
+	cursor: pointer;
+} 
+
+#content main .quan-ly-phieu-dat-container .order table tr td:first-child {
+	padding-left: 26px;
+}
+
+#content main .quan-ly-phieu-dat-container .order table tr th:first-child {
+	padding-left: 26px;
+}
+
+#content main .quan-ly-phieu-dat-container .order table td img {
+	width: 56px;
+	height: 56px;
+	border-radius: 5px;
+	object-fit: cover;
+}
+#content main .quan-ly-phieu-dat-container .order table tbody tr:hover {
+	background: var(--grey);
+}
+#content main .quan-ly-phieu-dat-container .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+#content main .quan-ly-phieu-dat-container .order table tr td .status.completed {
+	background: var(--blue);
+}
+#content main .quan-ly-phieu-dat-container .order table tr td .status.process {
+	background: var(--yellow);
+}
+#content main .quan-ly-phieu-dat-container .order table tr td .status.pending {
+	background: var(--orange);
+}
+
+.nav-paging{
+    margin-top: 20px;
+}
+
+.nav-paging li{
+    cursor: pointer;
+}
+
+.nav-paging .selected{
+    color: white !important;
+    background-color: var(--blue);
+}
+
+

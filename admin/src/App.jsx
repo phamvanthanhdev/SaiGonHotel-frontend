@@ -28,6 +28,10 @@ import ThemPhong from './pages/ThemPhong/ThemPhong';
 import CapNhatPhong from './pages/CapNhatPhong/CapNhatPhong';
 import QuanLyDichVu from './pages/QuanLyDichVu/QuanLyDichVu';
 import QuanLyPhuThu from './pages/QuanLyPhuThu/QuanLyPhuThu';
+import ThongKeTanSuat from './pages/ThongKeTanSuat/ThongKeTanSuat';
+import QuanLyPhieuDat from './pages/QuanLyPhieuDat/QuanLyPhieuDat';
+import QuanLyPhieuThue from './pages/QuanLyPhieuThue/QuanLyPhieuThue';
+import CapNhatPhieuThue from './pages/CapNhatPhieuThue/CapNhatPhieuThue';
 
 function App() {
  
@@ -64,6 +68,10 @@ function App() {
             <Route path='/cap-nhat-phong/:maPhong' element={<CapNhatPhong />}/>
             <Route path='/quan-ly-dich-vu' element={<QuanLyDichVu />}/>
             <Route path='/quan-ly-phu-thu' element={<QuanLyPhuThu />}/>
+            <Route path='/quan-ly-phieu-dat' element={<QuanLyPhieuDat />}/>
+            <Route path='/quan-ly-phieu-thue' element={<QuanLyPhieuThue />}/>
+            <Route path="/cap-nhat-phieu-thue/:id" element={<CapNhatPhieuThue />} />
+            <Route path='/thong-ke-tan-suat' element={<ThongKeTanSuat />}/>
           </Routes>
         {/* </section> */}
       {/* </div> */}

@@ -8,8 +8,7 @@ import axios from 'axios';
 
 const ThemDichVuPhuThuPopup = ({ setShowDichVuPhuThuPopup, idDichVuPhuThu, tenDichVuPhuThu, donGia, type, 
                                 idChiTiet, setChiTietDichVus, setChiTietPhuThus, setChiTietPhieuThue,
-                            idPhieuThue,
-                            setChiTietPhieuThues }) => {
+                            idPhieuThue, setChiTietPhieuThues, setPhieuThue }) => {
     const { url, token, setToken } = useContext(StoreContext);
 
     const [data, setData] = useState({
@@ -52,6 +51,7 @@ const ThemDichVuPhuThuPopup = ({ setShowDichVuPhuThuPopup, idDichVuPhuThu, tenDi
             fetchChiTietPhieuThueById(idChiTiet);
             setShowDichVuPhuThuPopup(false);
             refreshChiTietPhieuThues();
+            refreshPhieuThue();
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);
@@ -77,6 +77,7 @@ const ThemDichVuPhuThuPopup = ({ setShowDichVuPhuThuPopup, idDichVuPhuThu, tenDi
             fetchChiTietPhieuThueById(idChiTiet);
             setShowDichVuPhuThuPopup(false);
             refreshChiTietPhieuThues();
+            refreshPhieuThue();
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);
@@ -99,6 +100,17 @@ const ThemDichVuPhuThuPopup = ({ setShowDichVuPhuThuPopup, idDichVuPhuThu, tenDi
 			const response = await axios.get(url + `/api/chi-tiet/phieu-thue/${idPhieuThue}`,
 				{ headers: { Authorization: `Bearer ${token}` } });
 			setChiTietPhieuThues(response.data);
+		} catch (error) {
+			console.log(error.message);
+			toast.error(error.message);
+		}
+	}
+
+    const refreshPhieuThue = async () => {
+		try {
+			const response = await axios.get(url + `/api/phieu-thue/${idPhieuThue}`,
+				{ headers: { Authorization: `Bearer ${token}` } });
+			setPhieuThue(response.data);
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);

@@ -23,6 +23,7 @@ const TaoPhieuThue = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [thongTinKhachHang, setThongTinKhachHang] = useState("");
     const [donGia, setDonGia] = useState();
+    const [phanTramGiam, setPhanTramGiam] = useState(0);
 
 
     const getHangPhong = async (ngayNhanPhong, ngayTraPhong) => {
@@ -93,6 +94,7 @@ const TaoPhieuThue = () => {
                 ngayDi: ngayTraPhong,
                 idKhachHang: idKhachHang,
                 idPhieuDat: null,
+                phanTramGiam: phanTramGiam,
                 chiTietRequests: []
             }
             try {
@@ -154,6 +156,11 @@ const TaoPhieuThue = () => {
                                         <label htmlFor="exampleFormControlInput1" className="form-label">Ngày kết thúc</label>
                                         <input name='ngay' value={ngayTraPhong} onChange={onChangeNgayTraPhong}
                                             type="date" className="form-control" id="exampleFormControlInput1" />
+                                    </div>
+
+                                    <div className="mb-3">
+                                        <label for="exampleInputPhanTramGiam" className="form-label">Giảm giá tiền phòng(%)</label>
+                                        <input type="number" name='phanTramGiam' value={phanTramGiam} onChange={(e)=>setPhanTramGiam(e.target.value)} placeholder='%' className="form-control" id="exampleInputPhanTramGiam"/>
                                     </div>
 
                                     <button type="submit" className="btn btn-primary">Xác nhận tạo</button>

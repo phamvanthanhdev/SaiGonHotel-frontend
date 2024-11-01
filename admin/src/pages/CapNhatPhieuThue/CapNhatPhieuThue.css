@@ -1,0 +1,357 @@
+#content main.cap-nhat-phieu-thue {
+	width: 100%;
+	padding: 20px 20px;
+    font-size: 14px;
+}
+
+#content main .cap-nhat-phieu-thue-container {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 14px;
+	width: 100%;
+	color: var(--dark);
+}
+#content main .cap-nhat-phieu-thue-container > div {
+	border-radius: 10px;
+	background: var(--light);
+	padding: 14px;
+	overflow-x: auto;
+}
+
+#content main .cap-nhat-phieu-thue-container .order {
+	flex-grow: 1;
+	flex-basis: 800px;
+}
+#content main .cap-nhat-phieu-thue-container .order table {
+	width: 100%;
+	border-collapse: collapse;
+    margin-top: 20px;
+}
+#content main .cap-nhat-phieu-thue-container .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+#content main .cap-nhat-phieu-thue-container .order table td {
+	padding: 16px 0;
+}
+#content main .cap-nhat-phieu-thue-container .order table tr td:first-child {
+	display: flex;
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
+}
+#content main .cap-nhat-phieu-thue-container .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+#content main .cap-nhat-phieu-thue-container .order table tbody tr:hover {
+	background: var(--grey);
+}
+#content main .cap-nhat-phieu-thue-container .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+#content main .cap-nhat-phieu-thue-container .order table tr td .status.completed {
+	background: var(--blue);
+}
+#content main .cap-nhat-phieu-thue-container .order table tr td .status.process {
+	background: var(--yellow);
+}
+#content main .cap-nhat-phieu-thue-container .order table tr td .status.pending {
+	background: var(--orange);
+}
+
+
+#content main .cap-nhat-phieu-thue-container .todo {
+	flex-grow: 1;
+	flex-basis: 300px;
+}
+#content main .cap-nhat-phieu-thue-container .todo .todo-list {
+	width: 100%;
+}
+#content main .cap-nhat-phieu-thue-container .todo .todo-list li {
+	width: 100%;
+	margin-bottom: 8px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 15px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .todo-list li p {
+    margin-bottom: unset;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .todo-list li .bx {
+	cursor: pointer;
+}
+#content main .cap-nhat-phieu-thue-container .todo .todo-list li.completed {
+	border-left: 10px solid var(--blue);
+}
+#content main .cap-nhat-phieu-thue-container .todo .todo-list li.not-completed {
+	border-left: 10px solid var(--orange);
+}
+#content main .cap-nhat-phieu-thue-container .todo .todo-list li:last-child {
+	margin-bottom: 0;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .phieu-thue{
+	position: relative;
+	padding-bottom: 30px;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .phieu-thue .information ul{
+    margin-top: 20px;
+	padding-left: unset;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .phieu-thue .information ul li {
+	width: 100%;
+	/* margin-bottom: 16px; */
+	background: unset;
+	border-radius: 10px;
+	padding: 5px 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .phieu-thue .btnThueThem{
+	font-size: 15px;
+	/* border: 1px solid lightgray; */
+	padding: 12px;
+	background-color: var(--grey);
+	border-radius: 50%;
+	position: absolute;
+	right: 50%;
+	bottom: 0;
+	cursor: pointer;
+	color: gray;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .head .info{
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: 10px;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .cap-nhat-phieu-thue-phieuthue{
+	border: 1px solid lightgray;
+	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+	border-radius: 7px;
+	padding: 20px 20px;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .cap-nhat-phieu-thue-phieuthue .date{
+	width: 100%;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: 20px;
+	margin-bottom: 1rem;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .cap-nhat-phieu-thue-phieuthue .date input{
+	width: max-content;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .cap-nhat-phieu-thue-phieuthue .date p{
+	margin: auto 0;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .cap-nhat-phieu-thue-phieuthue .tienGiamGia{
+	width: 100%;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: 20px;
+	margin-bottom: 1rem;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .cap-nhat-phieu-thue-phieuthue .tienGiamGia input{
+	width: max-content;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .cap-nhat-phieu-thue-phieuthue .tienGiamGia p{
+	margin: auto 0;
+}
+
+
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list{
+	border: 1px solid lightgray;
+	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+	border-radius: 7px;
+	padding: 20px 20px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li{
+	width: 100%;
+	margin-bottom: 8px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 15px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	padding-bottom: unset;
+}
+
+
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list .icon{
+	font-size: 0.8rem;
+	color: gray;
+	cursor: pointer;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list{
+	border: 1px solid lightgray;
+	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+	border-radius: 7px;
+	padding: 20px 20px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list{
+	margin-bottom: 10px;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li{
+	width: 100%;
+	margin-bottom: 8px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 15px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	padding-bottom: unset;
+}
+
+/* */
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li p {
+	flex-shrink: 0;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li p.icon {
+	width: 20px;
+	text-align: center;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li p:nth-child(2) {
+	width: 150px;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li p:nth-child(3),
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li p:nth-child(4),
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li p:nth-child(5),
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li p:nth-child(6) {
+	width: 80px;
+	text-align: right;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list li p:nth-child(7){
+	width: 150px;
+	text-align: center;
+}
+
+
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li p {
+	flex-shrink: 0;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li p.icon {
+	width: 20px;
+	text-align: center;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li p:nth-child(2) {
+	width: 150px;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li p:nth-child(3),
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li p:nth-child(4),
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li p:nth-child(5),
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li p:nth-child(6) {
+	width: 80px;
+	text-align: right;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .dichvu-list li p:nth-child(7){
+	width: 150px;
+	text-align: center;
+}
+
+/* */
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list .icon{
+	font-size: 0.8rem;
+	color: gray;
+	cursor: pointer;
+}
+
+#content main .cap-nhat-phieu-thue-container .order .phuthu-list input{
+	width: max-content;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .dichvu .todo-list {
+	margin-top: 10px;
+
+	height: max(50vh, 330px);
+    overflow-x: auto;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .phuthu .todo-list {
+	margin-top: 10px;
+
+	height: max(50vh, 330px);
+    overflow-x: auto;
+}
+
+
+
+#content main.cap-nhat-phieu-thue .cap-nhat-phieu-thue-container .todo .dichvu .todo-list .content{
+	width: 150px;
+}
+
+#content main.cap-nhat-phieu-thue .cap-nhat-phieu-thue-container .todo .phuthu .todo-list .content{
+	width: 150px;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .phieu-thue .input-giam-gia{
+    display: flex;
+    align-items: center;
+	justify-content: space-between;
+    gap: 20px;
+    margin: 10px 0 20px 0;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .phieu-thue .input-giam-gia input{
+    width: 250px;
+}
+
+#content main .cap-nhat-phieu-thue-container .todo .phieu-thue .input-giam-gia label{
+    margin-bottom: 0;
+}

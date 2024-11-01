@@ -102,6 +102,24 @@ const Sidebar = () => {
 						<span className="text">Quản lý phụ thu</span>
 					</a>
 				</li>
+				<li onClick={() => navigate("/quan-ly-phieu-dat")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý phiếu đặt</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/quan-ly-phieu-thue")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý phiếu thuê</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/thong-ke-tan-suat")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Thống kê tần suất</span>
+					</a>
+				</li>
 			</ul>
 			<ul className="side-menu">
 				<li>

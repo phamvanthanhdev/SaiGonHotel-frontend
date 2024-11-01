@@ -20,6 +20,7 @@ const TraPhong = () => {
             const response = await axios.post(url + "/api/phieu-thue/thong-tin-tra-phong", phongTra,
                 { headers: { Authorization: `Bearer ${token}` } });
             setData(response.data.result);
+            setPhanTramGiamGia(response.data.result.phanTramGiam);
         } catch (error) {
             console.log(error.message);
             toast.error(error.message);
@@ -45,7 +46,7 @@ const TraPhong = () => {
         const dataRequest = {
             idPhieuThue: data.idPhieuThue,
             tienTamUng: data.tienTamUng,
-            phanTramGiam: phanTramGiamGia,
+            // phanTramGiam: phanTramGiamGia,
             thucThu: tinhTienKhachTra(),
             tongThu: data.tongTien,
             idChiTietPhieuThues: phongTra.idChiTietPhieuThues
@@ -204,8 +205,9 @@ const TraPhong = () => {
                                             <p>{data.tongTienPhong.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                         </li>
                                         <li>
-                                            <p>Giảm giá tiền phòng(%)</p>
-                                            <input onChange={(e) => setPhanTramGiamGia(e.target.value)} value={phanTramGiamGia} className='form-control giam-gia' type="number" placeholder='%' />
+                                            <p>Giảm giá tiền phòng: </p>
+                                            {/* <input onChange={(e) => setPhanTramGiamGia(e.target.value)} value={phanTramGiamGia} className='form-control giam-gia' type="number" placeholder='%' /> */}
+                                            <p>{phanTramGiamGia}%</p>
                                         </li>
                                         <li>
                                             <p>Tiền được giảm</p>

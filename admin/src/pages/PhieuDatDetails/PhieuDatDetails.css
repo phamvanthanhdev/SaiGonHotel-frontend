@@ -1,7 +1,32 @@
-#content main .table-data .order button{
+#content .phieu-dat{
+    padding: 0 24px;
+}
+
+#content .phieu-dat .table-data .order button{
     margin-right: 10px;
 }
 
 .phieudat-details {
     font-size: 13px;
 }
+
+.input-phan-tram-giam{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 10px 0;
+}
+
+.input-phan-tram-giam input{
+    width: 200px;
+}
+
+.input-phan-tram-giam label{
+    margin-bottom: 0;
+}
+
+#content .phieu-dat .table-data .todo {
+    flex-grow: 1;
+    flex-basis: 600px;
+}
+
