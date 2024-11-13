@@ -1,0 +1,95 @@
+.tai-khoan-popup{
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: #00000090;
+    display: grid;
+}
+
+.tai-khoan-popup-container{
+    place-self: center;
+    width: max(25vw, 330px);
+    color: #808080;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 35px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    animation: fadeIn 0.5s;
+}
+
+.tai-khoan-popup-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+}
+
+.tai-khoan-popup-title h2{
+    font-size: 25px;
+}
+
+.tai-khoan-popup-title .close{
+    width: 16px;
+    cursor: pointer;
+}
+
+.tai-khoan-popup-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.tai-khoan-popup-inputs input,
+.tai-khoan-popup-inputs select{
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+}
+.tai-khoan-popup-container button{
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    background-color: var(--blue);
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.tai-khoan-popup-condition{
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    margin-top: -15px;
+}
+
+.tai-khoan-popup-container .capNhat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.tai-khoan-popup-container .capNhat button{
+    width: 100%;
+    
+}
+
+.tai-khoan-popup-container .capNhat .btnXoa{
+    background-color: tomato;
+}
+
+.tai-khoan-popup-condition input{
+    margin-top: 5px;
+}
+
+.tai-khoan-popup p span{
+    color: var(--blue);
+    font-weight: 500;
+    cursor: pointer;
+}

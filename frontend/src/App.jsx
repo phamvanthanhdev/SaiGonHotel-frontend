@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ResultPayment from './pages/ResultPayment/ResultPayment'
 import OrderDetails from './pages/OrderDetails/OrderDetails'
 import ResultPaymentAfter from './pages/ResultPaymentAfter/ResultPaymentAfter'
+import MyProfile from './pages/MyProfile/MyProfile'
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -37,6 +38,7 @@ function App() {
           <Route path='/result-payment' element={<ResultPayment />} />
           <Route path='/result-payment-after' element={<ResultPaymentAfter />} />
           <Route path='/order-details/:id' element={<OrderDetails />} />
+          <Route path='/my-profile' element={<MyProfile />} />
         </Routes>
         <Footer />
       </div>

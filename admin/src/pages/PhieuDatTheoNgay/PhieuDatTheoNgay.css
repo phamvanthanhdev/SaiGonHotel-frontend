@@ -64,7 +64,8 @@
 	border-bottom: 1px solid var(--grey);
 }
 #content .phieudat-theongay .table-data .order table td {
-    
+	cursor: pointer;
+    font-size: 14px;
 	padding: 20px 0;
 }
 #content .phieudat-theongay .table-data .order table tr td:first-child {

@@ -15,6 +15,27 @@
     width: 100%;
 }
 
+.nav-paging .pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.nav-paging .pagination li{
+    list-style: none;
+    cursor: pointer;
+    padding: 5px;
+    background-color: white;
+}
+
+.nav-paging .pagination li .selected{
+    border-radius: 3px;
+    padding: 7px;
+    color: white;
+    background-color: rgb(0, 102, 255);
+}
+
 
 
 

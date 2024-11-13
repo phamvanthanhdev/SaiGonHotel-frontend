@@ -4,6 +4,23 @@
     font-size: 14px;
 }
 
+#content .quan-ly-phieu-thue .search-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	grid-gap: 14px;
+	width: 100%;
+	background: var(--light);
+	margin-bottom: 20px;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+#content .quan-ly-phieu-thue .search-container button{
+	margin-top: 28px;
+	width: 500px;
+}
+
 #content main .quan-ly-phieu-thue-container {
 	display: flex;
 	flex-wrap: wrap;
@@ -51,6 +68,14 @@
 
 #content main .quan-ly-phieu-thue-container .order table tr th:first-child {
 	padding-left: 26px;
+}
+
+#content main .quan-ly-phieu-thue-container .order table tr td span{
+	color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+	font-style: italic;
+	font-size: 13px;
 }
 
 #content main .quan-ly-phieu-thue-container .order table td img {

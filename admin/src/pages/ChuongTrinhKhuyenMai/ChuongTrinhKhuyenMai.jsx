@@ -167,10 +167,12 @@ const ChuongTrinhKhuyenMai = () => {
                                                         <td>{index+1}. </td>
                                                         <td>{item.tenHangPhong}</td>
                                                         <td>{item.phanTramGiam} %</td>
-                                                        <td>{item.dangApDung ? item.tienGiam.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) : "- - VND"}</td>
+                                                        {/* <td>{item.dangApDung ? item.tienGiam.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) : "- - VND"}</td> */}
+                                                        <td>{item.tienGiam.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                         <td>{item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                        <td>{item.dangApDung ? item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) : "- - VND"}</td>
-                                                        <td>{item.dangApDung ? 'Đang áp dụng' : 'Không áp dụng'}</td>
+                                                        {/* <td>{item.dangApDung ? item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) : "- - VND"}</td> */}
+                                                        <td>{item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+                                                        <td>{item.trangThai}</td>
                                                     </tr>
                                                 )
                                             })

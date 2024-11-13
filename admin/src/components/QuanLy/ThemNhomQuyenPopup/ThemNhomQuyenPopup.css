@@ -1,0 +1,95 @@
+.them-nhom-quyen-popup{
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: #00000090;
+    display: grid;
+}
+
+.them-nhom-quyen-popup-container{
+    place-self: center;
+    width: max(25vw, 330px);
+    color: #808080;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 35px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    animation: fadeIn 0.5s;
+}
+
+.them-nhom-quyen-popup-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+}
+
+.them-nhom-quyen-popup-title h2{
+    font-size: 25px;
+}
+
+.them-nhom-quyen-popup-title .close{
+    width: 16px;
+    cursor: pointer;
+}
+
+.them-nhom-quyen-popup-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.them-nhom-quyen-popup-inputs input,
+.them-nhom-quyen-popup-inputs select{
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+}
+.them-nhom-quyen-popup-container button{
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    background-color: var(--blue);
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.them-nhom-quyen-popup-condition{
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    margin-top: -15px;
+}
+
+.them-nhom-quyen-popup-container .capNhat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.them-nhom-quyen-popup-container .capNhat button{
+    width: 100%;
+    
+}
+
+.them-nhom-quyen-popup-container .capNhat .btnXoa{
+    background-color: tomato;
+}
+
+.them-nhom-quyen-popup-condition input{
+    margin-top: 5px;
+}
+
+.them-nhom-quyen-popup p span{
+    color: var(--blue);
+    font-weight: 500;
+    cursor: pointer;
+}

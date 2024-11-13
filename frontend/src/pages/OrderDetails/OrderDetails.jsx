@@ -11,12 +11,13 @@ import axios from 'axios';
 import { StoreContext } from '../../context/StoreContext';
 import * as XLSX from 'xlsx';
 import { toast } from 'react-toastify'
+import TamUngPopup from '../../components/TamUngPopup/TamUngPopup';
 
 const OrderDetails = () => {
   const id = useParams().id;
-
   const { url, token, convertDateShow } = useContext(StoreContext);
   const [order, setOrder] = useState();
+  const [showTamUngPopup, setShowTamUngPopup] = useState(false);
 
   const fetchOrder = async () => {
     try {
@@ -78,47 +79,12 @@ const OrderDetails = () => {
     }
   }
 
-  // const handleUpdate = () => {
-  //   const dataKhachHang = excelData.map((khachHang) => ({
-  //     cmnd: khachHang.CCCD,
-  //     hoTen: khachHang['Họ và tên'],
-  //     sdt: khachHang.SĐT,
-  //     email: khachHang.Email,
-  //     diaChi: khachHang['Địa chỉ']
-  //   }));
-
-  //   const formData = {
-  //     idPhieuDat: id,
-  //     khachHangs: dataKhachHang
-  //   }
-
-  //   sendDataKhachHang(formData);
-  // }
-
-  // const sendDataKhachHang = async (formData) => {
-  //   try {
-  //     const response = await axios.post(url + "/api/phieu-dat/khach-hang/cap-nhat", formData, { headers: { Authorization: `Bearer ${token}` } });
-  //     if (response.data.code === 200) {
-  //       toast.success("Cập nhật thông tin thành công");
-  //       setSuccessMessage("Cập nhật thông tin thành công");
-  //       setErrorMessage("");
-  //     } else {
-  //       toast.error(response.data.message);
-  //       setErrorMessage(response.data.message);
-  //       setSuccessMessage("");
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //     setErrorMessage(response.data.message);
-  //     setSuccessMessage("");
-  //   }
-  // }
 
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-    
+
     let fileTypes = ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv'];
     let selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -169,162 +135,130 @@ const OrderDetails = () => {
   };
 
 
-  // // Huy dat phong
-  // const handleHuyDat = async () => {
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`
-  //     },
-  //     params: {
-  //       id: id
-  //     }
-  //   };
+  const onClickThanhToan = () => {
+    setShowTamUngPopup(true);
+  }
 
-  //   try {
-  //     const response = await axios.post(url + "/api/phieu-dat/huy-dat", null, config);
-  //     if (response.data.code == 200) {
-  //       toast.success("Hủy đặt phòng thành công");
-  //       setOrder(prevState => ({
-  //         ...prevState,
-  //         trangThaiHuy: true
-  //       }));
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error(response.data.message);
-  //   }
-  // }
-
-  // // Thanh toán sau đặt
-  // const handlePaymentAfter = async () => {
-  //   const config = {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`
-  //     },
-  //     params: {
-  //       idPhieuDat: id
-  //     }
-  //   };
-
-  //   try {
-  //     const response = await axios.post(url + "/api/payment/create_payment/after", null, config);
-  //     if (response.data.status === "OK") {
-  //       window.location.href = response.data.url;
-  //     } else {
-  //       toast.error("Lỗi đặt phòng. Vui lòng thử lại!");
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //   }
-  // }
 
   return (
-    <div>
-      {order &&
-        <div className="detailsContainer">
-          <div className="detailsWrapper">
-            <div className="detailsDetails">
-              <div className="detailsDetailsTexts">
-                <h1 className="detailsTitle">Chi tiết đơn đặt phòng</h1>
-                <p className="detailsDesc">Mã đơn đặt phòng: {order.idPhieuDat}</p>
-                <p className="detailsDesc">Ngày nhận phòng: {convertDateShow(order.ngayBatDau)}</p>
-                <p className="detailsDesc">Ngày trả phòng: {convertDateShow(order.ngayTraPhong)}</p>
-                <p className="detailsDesc">Đã thanh toán trước: {order.tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                <p className="detailsDesc">Đại diện đặt phòng: {order.hoTen}</p>
-                <p className="detailsDesc">Trạng thái:
-                  {order.trangThaiHuy === 0 && <span> Đang chờ xử lý</span>}
-                  {order.trangThaiHuy === 1 && <span> Đã hoàn tất</span>}
-                  {order.trangThaiHuy === 2 && <span> Đã hủy</span>}
-                </p>
-                <p className="detailsDesc">Lưu ý tới nhân viên: {order.ghiChu}</p>
-                <p className="hotelDesc">Thời gian đặt phòng: {convertDateShow(order.ngayTao)}</p>
+    <>
+      {showTamUngPopup &&
+        <TamUngPopup
+          setShowTamUngPopup={setShowTamUngPopup}
+          idPhieuDat={order.idPhieuDat}
+          tongTien={order.tongTien}
+        />
+      }
+      <div>
+        {order &&
+          <div className="detailsContainer">
+            <div className="detailsWrapper">
+              <div className="detailsDetails">
+                <div className="detailsDetailsTexts">
+                  <h1 className="detailsTitle">Chi tiết đơn đặt phòng</h1>
+                  <p className="detailsDesc">Mã đơn đặt phòng: {order.idPhieuDat}</p>
+                  <p className="detailsDesc">Ngày nhận phòng: {convertDateShow(order.ngayBatDau)}</p>
+                  <p className="detailsDesc">Ngày trả phòng: {convertDateShow(order.ngayTraPhong)}</p>
+                  <p className="detailsDesc">Đã thanh toán trước: {order.tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                  {order.thongBao && <span className="thongBao">{order.thongBao} <span onClick={onClickThanhToan} className='thanhToanNgay'>Tạm ứng ngay</span></span>}
 
-                <div className={` ${order.trangThaiHuy !== 0 ? 'disable' : 'upload'}`}>
-                  <h3>Cập nhật thông tin khách hàng</h3>
-                  <form onSubmit={handleSubmit}>
-                    <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} />
-                    <button type="button" onClick={handleFileSubmit}>Xem trước</button>
-                    <button type="submit">Tải lên</button>
-                  </form>
-                  {
-                    successMessage &&
-                    <p className='successMessage'>{successMessage}</p>
-                  }
-                  {
-                    errorMessage &&
-                    <p className='errorMessage'>{errorMessage}</p>
-                  }
+                  <p className="detailsDesc">Đại diện đặt phòng: {order.hoTen}</p>
+                  <p className="detailsDesc">Trạng thái:
+                    {order.trangThaiHuy === 0 && <span> Đang chờ xử lý</span>}
+                    {order.trangThaiHuy === 1 && <span> Đã hoàn tất</span>}
+                    {order.trangThaiHuy === 2 && <span> Đã hủy</span>}
+                  </p>
+                  {order.trangThaiHuy === 2 && <p className="detailsDesc">Tiền hoàn trả: {order.tienTra.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>}
+                  <p className="detailsDesc">Lưu ý tới nhân viên: {order.ghiChu}</p>
+                  <p className="hotelDesc">Thời gian đặt phòng: {convertDateShow(order.ngayTao)}</p>
 
-                  {/* view data */}
-                  <div className="viewer">
-                    {excelData ? (
-                      <div className="table-responsive">
-                        <table className="table">
+                  <div className={` ${order.trangThaiHuy !== 0 ? 'disable' : 'upload'}`}>
+                    <h3>Cập nhật thông tin khách hàng</h3>
+                    <form onSubmit={handleSubmit}>
+                      <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} />
+                      <button type="button" onClick={handleFileSubmit}>Xem trước</button>
+                      <button type="submit">Tải lên</button>
+                    </form>
+                    {
+                      successMessage &&
+                      <p className='successMessage'>{successMessage}</p>
+                    }
+                    {
+                      errorMessage &&
+                      <p className='errorMessage'>{errorMessage}</p>
+                    }
 
-                          <thead>
-                            <tr>
-                              {Object.keys(excelData[0]).map((key) => (
-                                <th key={key}>{key}</th>
-                              ))}
-                            </tr>
-                          </thead>
+                    {/* view data */}
+                    <div className="viewer">
+                      {excelData ? (
+                        <div className="table-responsive">
+                          <table className="table">
 
-                          <tbody>
-                            {excelData.map((individualExcelData, index) => (
-                              <tr key={index}>
-                                {Object.keys(individualExcelData).map((key) => (
-                                  <td key={key}>{individualExcelData[key]}</td>
+                            <thead>
+                              <tr>
+                                {Object.keys(excelData[0]).map((key) => (
+                                  <th key={key}>{key}</th>
                                 ))}
                               </tr>
-                            ))}
-                          </tbody>
+                            </thead>
 
-                        </table>
-                      </div>
-                    ) : (
-                      <div>Chưa có tập tin nào được tải lên!</div>
-                    )}
+                            <tbody>
+                              {excelData.map((individualExcelData, index) => (
+                                <tr key={index}>
+                                  {Object.keys(individualExcelData).map((key) => (
+                                    <td key={key}>{individualExcelData[key]}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+
+                          </table>
+                        </div>
+                      ) : (
+                        <div>Chưa có tập tin nào được tải lên!</div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
 
 
 
-              <div className="detailsDetailsPrice">
-                <h1>Danh sách phòng</h1>
+                <div className="detailsDetailsPrice">
+                  <h1>Danh sách phòng</h1>
 
-                <div className='roomsContainer'>
-                  {order.chiTietResponses.map((item, index) => {
-                    return (
-                      <div key={index} className='rooms'>
-                        <img src={`data:image/png;base64, ${item.hinhAnh}`} alt="" />
-                        <p>{item.soLuong} x {item.tenHangPhong}</p>
-                        <p>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                      </div>
-                    )
-                  })}
+                  <div className='roomsContainer'>
+                    {order.chiTietResponses.map((item, index) => {
+                      return (
+                        <div key={index} className='rooms'>
+                          <img src={`data:image/png;base64, ${item.hinhAnh}`} alt="" />
+                          <p>{item.soLuong}x {item.tenHangPhong}</p>
+                          {/* <p>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p> */}
+                          <p>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                        </div>
+                      )
+                    })}
 
-                </div>
+                  </div>
 
-                {/* <span>
+                  {/* <span>
                 Located in the real heart of Krakow, this property has an
                 excellent location score of 9.8!
               </span> */}
-                <h2>
-                  <b>{order.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b>
-                </h2>
-                {/* <button onClick={handlePaymentAfter} className={`paymentBtn ${order.trangThaiHuy === 2 ? 'invalid' : ''}`}>Thanh toán</button> */}
-                {/* <button onClick={handleHuyDat} className={`cancelBtn ${order.trangThaiHuy === 2 ? 'invalid' : ''}`}>Hủy đơn</button> */}
+                  <h2>
+                    <b>{order.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b>
+                  </h2>
+                  {/* <button onClick={handlePaymentAfter} className={`paymentBtn ${order.trangThaiHuy === 2 ? 'invalid' : ''}`}>Thanh toán</button> */}
+                  {/* <button onClick={handleHuyDat} className={`cancelBtn ${order.trangThaiHuy === 2 ? 'invalid' : ''}`}>Hủy đơn</button> */}
+                </div>
               </div>
             </div>
-          </div>
 
-          <MailList />
-        </div>
-      }
-    </div>
+            <MailList />
+          </div>
+        }
+      </div>
+    </>
   );
 }
 

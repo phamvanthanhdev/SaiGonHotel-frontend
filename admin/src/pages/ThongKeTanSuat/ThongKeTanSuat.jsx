@@ -13,6 +13,8 @@ const ThongKeTanSuat = () => {
     const [ngayBatDau, setNgayBatDau] = useState(format(new Date(), "yyyy-MM-dd"));
     const [ngayKetThuc, setNgayKetThuc] = useState(format(new Date(), "yyyy-MM-dd"));
     const [data, setData] = useState([]);
+    const [soNgayThongKe, setSoNgayThongKe] = useState(0);
+    const [showThongKeNgay, setShowThongKeNgay] = useState(false);
 
     const getThongKeTanSuat = async () => {
         try {
@@ -23,6 +25,8 @@ const ThongKeTanSuat = () => {
             const response = await axios.get(url + "/api/chi-tiet/thong-ke-tan-suat", config);
             if (response.data.code) {
                 setData(response.data.result);
+                if(response.data.result.length > 0)
+                    setSoNgayThongKe(response.data.result[0].soNgayThongKe)
             } else {
                 toast.error(response.data.message);
             }
@@ -46,6 +50,10 @@ const ThongKeTanSuat = () => {
     //     const dayDifference = timeDifference / (1000 * 3600 * 24);
     //     return Math.round(dayDifference);
     // };
+
+    const onClickShowThongKeNgay = ()=>{
+        setShowThongKeNgay(!showThongKeNgay);
+    }
 
     return (
         <>
@@ -80,10 +88,10 @@ const ThongKeTanSuat = () => {
                             </div>
                             <div className="order">
                                 <div className="head">
-                                    <h3>Thông kê tần suất</h3>
+                                    <h3>Thông kê tần suất sử dụng phòng</h3>
                                     {/* <button className='btn btn-primary'>Tạo báo cáo</button> */}
                                 </div>
-                                {/* <p>Tổng số ngày: {calculateDateDifference(new Date(), new Date())}</p> */}
+                                <p>Số ngày thống kê: {soNgayThongKe}</p>
                                 <table>
                                     <thead>
                                         <tr>
@@ -98,18 +106,19 @@ const ThongKeTanSuat = () => {
                                             ? data.map((item, index) => {
                                                 return (
                                                     <>
-                                                        <tr key={index}>
+                                                        <tr onClick={onClickShowThongKeNgay} key={index}>
                                                             <td>{index + 1}.</td>
                                                             <td>{item.tenHangPhong}</td>
                                                             <td>{item.tanSuat}</td>
                                                             <td>{item.tiLe}</td>
                                                         </tr>
                                                         {
+                                                            showThongKeNgay &&
                                                             item.tanSuatThuePhongs.map((item, index) => {
                                                                 return (
                                                                     <tr className='tan-suat-phong' key={index}>
                                                                         <td></td>
-                                                                        <td>{item.maPhong}</td>
+                                                                        <td>Phòng {item.maPhong}</td>
                                                                         <td>{item.tanSuat}</td>
                                                                         <td>{item.tiLe}</td>
                                                                     </tr>
@@ -122,12 +131,12 @@ const ThongKeTanSuat = () => {
                                             : <p>Loading...</p>
                                         }
 
-                                        <tr className='tong-tan-suat'>
+                                        {/* <tr className='tong-tan-suat'>
                                             <td></td>
                                             <td>Tổng cộng</td>
                                             <td>{tinhTongTanSuat()}</td>
                                             <td>{100}</td>
-                                        </tr>
+                                        </tr> */}
                                     </tbody>
                                 </table>
                             </div>

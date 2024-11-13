@@ -34,14 +34,27 @@
 	border-bottom: 1px solid var(--grey);
 }
 #content main .cap-nhat-phieu-thue-container .order table td {
+	font-size: 13px;
 	padding: 16px 0;
 }
+
 #content main .cap-nhat-phieu-thue-container .order table tr td:first-child {
 	display: flex;
 	align-items: center;
 	grid-gap: 12px;
 	padding-left: 6px;
+	cursor: pointer;
+	color: blue;
+	text-decoration: underline;
+	
 }
+
+/* #content main .cap-nhat-phieu-thue-container .order table tr .highlight{
+	cursor: pointer;
+	color: blue;
+	text-decoration: underline;
+} */
+
 #content main .cap-nhat-phieu-thue-container .order table td img {
 	width: 36px;
 	height: 36px;

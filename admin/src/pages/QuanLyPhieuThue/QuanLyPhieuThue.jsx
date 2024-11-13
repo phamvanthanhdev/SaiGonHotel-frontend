@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { format } from "date-fns";
 
 const QuanLyPhieuThue = () => {
     const navigate = useNavigate();
@@ -14,11 +15,19 @@ const QuanLyPhieuThue = () => {
     const pageSize = 5; // Số phần tử trong 1 trang
     const [currentPage, setCurrentPage] = useState(0); // Số trang
     const [totalPage, setTotalPage] = useState(0);
+    const [dataFilter, setDataFilter] = useState({
+        luaChon: 0, // 0 không lọc, 1 lọc theo ngày bắt đầu, 2 - ngày kết thúc, 3 ngày tạo
+        ngayBatDauLoc: format(new Date(), "yyyy-MM-dd"),
+        ngayKetThucLoc: format(new Date(), "yyyy-MM-dd"),
+        tenKhachHang: "", 
+        noiDung: "" //Mã đặt phòng
+    })
+    const [isFilter, setIsFilter] = useState(false);
 
     const getTongTrang = async () => {
         try {
             const config = {
-                params: {pageSize },
+                params: { pageSize },
                 headers: { Authorization: `Bearer ${token}` }
             }
             const response = await axios.get(url + "/api/phieu-thue/tong-trang", config
@@ -60,9 +69,34 @@ const QuanLyPhieuThue = () => {
         }
     }, [token])
 
-    const onClickPage = (currentPage)=>{
+    const onClickPage = (currentPage) => {
         setCurrentPage(currentPage);
         getPhieuThues(currentPage);
+    }
+
+    const onChangeHandle = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setDataFilter(data => ({ ...data, [name]: value }));
+    }
+
+    const onClickFilter = async () => {
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+            const response = await axios.post(url + "/api/phieu-thue/filter", dataFilter, config
+            );
+            if (response.data.code === 200) {
+                setPhieuThues(response.data.result);
+                setIsFilter(true);
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.log(error.message);
+            console.log(error.response.data.message);
+        }
     }
 
     return (
@@ -72,6 +106,45 @@ const QuanLyPhieuThue = () => {
                 <section id="content" className={isExpand && 'expand'}>
                     <Navbar />
                     <main className='quan-ly-phieu-thue'>
+                        <div className="search-container">
+                        <div className="col-md-2">
+                                <label htmlFor="idSelectGioiTinh" className="form-label">Lựa chọn ngày</label>
+                                <select name='luaChon' value={dataFilter.luaChon} onChange={onChangeHandle}
+                                    id='idSelectGioiTinh' className="form-select" aria-label="Default select example">
+                                    <option value={0}>Không</option>
+                                    <option value={1}>Ngày nhận phòng</option>
+                                    <option value={2}>Ngày trả phòng</option>
+                                    <option value={3}>Ngày đặt</option>
+                                </select>
+                            </div>
+                            <div className="col-md-2">
+                                <label htmlFor="idSelectGioiTinh" className="form-label">Từ ngày</label>
+                                <input name='ngayBatDauLoc' value={dataFilter.luaChon !== 0 ? dataFilter.ngayBatDauLoc : ''} onChange={onChangeHandle}
+                                    type="date" className="form-control" id="noiDung"
+                                    disabled={dataFilter.luaChon !== 0 ? false : true} />
+                            </div>
+
+                            <div className="col-md-2">
+                                <label htmlFor="idSelectGioiTinh" className="form-label">Đến ngày</label>
+                                <input name='ngayKetThucLoc' value={dataFilter.luaChon !== 0 ? dataFilter.ngayKetThucLoc : ''} onChange={onChangeHandle}
+                                    type="date" className="form-control" id="noiDung"
+                                    disabled={dataFilter.luaChon !== 0 ? false : true} />
+                            </div>
+
+                            <div className="col-md-2">
+                                <label htmlFor="idSelectGioiTinh" className="form-label">Tên khách hàng</label>
+                                <input name='tenKhachHang' value={dataFilter.tenKhachHang} onChange={onChangeHandle}
+                                    type="text" className="form-control" id="tenKhachHang" placeholder="Nhập tên khách hàng" required />
+                            </div>
+
+                            <div className="col-md-2">
+                                <label htmlFor="idSelectGioiTinh" className="form-label">Mã phiếu thuê</label>
+                                <input name='noiDung' value={dataFilter.noiDung} onChange={onChangeHandle}
+                                    type="text" className="form-control" id="noiDung" placeholder="Nhập mã phiếu tìm kiếm" required />
+                            </div>
+                            
+                            <button onClick={() => onClickFilter()} className='btn btn-primary btnFilter'>Tìm kiếm</button>
+                        </div>
                         <div className="quan-ly-phieu-thue-container">
                             <div className="order">
                                 <div className="head">
@@ -110,14 +183,20 @@ const QuanLyPhieuThue = () => {
                                                                 <td>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                                 <td>{item.tenNhanVien}</td>
                                                                 <td>{convertDateShow(item.ngayTao)}</td>
-                                                                <td>{item.idPhieuDat ? "Có đặt trước" : "Không đặt trước"}</td>
-                                                                <td><button onClick={()=>navigate("/cap-nhat-phieu-thue/"+item.idPhieuThue)} className='btn btn-primary'>Chi tiết</button></td>
+                                                                <td>
+                                                                    {item.idPhieuDat ? "Có đặt trước " : "Không đặt trước"}
+                                                                    {item.idPhieuDat && <span onClick={() => navigate("/cap-nhat-phieu-dat/" + item.idPhieuDat)}>Xem</span>}
+                                                                </td>
+                                                                <td>
+                                                                    <button onClick={() => navigate("/cap-nhat-phieu-thue/" + item.idPhieuThue)} className='btn btn-primary'>Chi tiết</button>
+                                                                </td>
                                                             </tr>
                                                         )
                                                     })
                                                 }
                                             </tbody>
                                         </table>
+                                        {!isFilter &&
                                         <nav className='nav-paging' aria-label="Page navigation example">
                                             <ul class="pagination">
                                                 <li class="page-item">
@@ -143,6 +222,7 @@ const QuanLyPhieuThue = () => {
                                                 </li>
                                             </ul>
                                         </nav>
+                                        }
                                     </>
                                     : <p className='error'>Không có hạng phòng nào</p>}
                             </div>

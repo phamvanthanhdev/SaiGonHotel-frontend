@@ -100,7 +100,8 @@ const ChiTietThayDoiGiaPhong = () => {
                                                             <td>{item.giaCapNhat.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{convertDateShow(item.ngayApDung)}</td>
                                                             <td>{convertDateShow(item.ngayCapNhat)}</td>
-                                                            <td>{item.dangApDung ? 'Đang áp dụng': 'Không áp dụng'}</td>
+                                                            {/* <td>{item.dangApDung ? 'Đang áp dụng': 'Không áp dụng'}</td> */}
+                                                            <td>{item.trangThai}</td>
                                                             <td>{item.tenNhanVien}</td>
                                                             <td><button onClick={()=>onClickCapNhatThayDoiGiaPhong(item.idHangPhong, item.idNhanVien, item.ngayCapNhat)} className='btn btn-primary'>Cập nhật</button></td>
                                                         </tr>

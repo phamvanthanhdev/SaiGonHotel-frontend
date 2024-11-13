@@ -32,6 +32,15 @@ import ThongKeTanSuat from './pages/ThongKeTanSuat/ThongKeTanSuat';
 import QuanLyPhieuDat from './pages/QuanLyPhieuDat/QuanLyPhieuDat';
 import QuanLyPhieuThue from './pages/QuanLyPhieuThue/QuanLyPhieuThue';
 import CapNhatPhieuThue from './pages/CapNhatPhieuThue/CapNhatPhieuThue';
+import QuanLyTrangThai from './pages/QuanLyTrangThai/QuanLyTrangThai';
+import QuanLyKhachHang from './pages/QuanLyKhachHang/QuanLyKhachHang';
+import ThemKhachHang from './pages/ThemKhachHang/ThemKhachHang';
+import CapNhatKhachHang from './pages/CapNhatKhachHang/CapNhatKhachHang';
+import QuanLyNhanVien from './pages/QuanLyNhanVien/QuanLyNhanVien';
+import ThemNhanVien from './pages/ThemNhanVien/ThemNhanVien';
+import CapNhatNhanVien from './pages/CapNhatNhanVien/CapNhatNhanVien';
+import QuanLyTaiKhoan from './pages/QuanLyTaiKhoan/QuanLyTaiKhoan';
+import CapNhatPhieuDat from './pages/CapNhatPhieuDat/CapNhatPhieuDat';
 
 function App() {
  
@@ -71,6 +80,15 @@ function App() {
             <Route path='/quan-ly-phieu-dat' element={<QuanLyPhieuDat />}/>
             <Route path='/quan-ly-phieu-thue' element={<QuanLyPhieuThue />}/>
             <Route path="/cap-nhat-phieu-thue/:id" element={<CapNhatPhieuThue />} />
+            <Route path="/quan-ly-trang-thai" element={<QuanLyTrangThai />} />
+            <Route path="/quan-ly-khach-hang" element={<QuanLyKhachHang />} />
+            <Route path="/them-khach-hang" element={<ThemKhachHang />} />
+            <Route path="/cap-nhat-khach-hang/:id" element={<CapNhatKhachHang />} />
+            <Route path="/quan-ly-nhan-vien" element={<QuanLyNhanVien />} />
+            <Route path="/them-nhan-vien" element={<ThemNhanVien />} />
+            <Route path="/cap-nhat-nhan-vien/:id" element={<CapNhatNhanVien />} />
+            <Route path="/quan-ly-tai-khoan" element={<QuanLyTaiKhoan />} />
+            <Route path="/cap-nhat-phieu-dat/:id" element={<CapNhatPhieuDat />} />
             <Route path='/thong-ke-tan-suat' element={<ThongKeTanSuat />}/>
           </Routes>
         {/* </section> */}

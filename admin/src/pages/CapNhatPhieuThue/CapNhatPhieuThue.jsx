@@ -3,12 +3,13 @@ import './CapNhatPhieuThue.css'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import Navbar from '../../components/Navbar/Navbar'
 import { StoreContext } from '../../context/StoreContext'
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSliders, faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { format } from "date-fns";
+import CapNhatChiTietPhieuThuePopup from '../../components/QuanLy/CapNhatChiTietPhieuThuePopup/CapNhatChiTietPhieuThuePopup'
 
 const CapNhatPhieuThue = () => {
     const navigate = useNavigate();
@@ -19,12 +20,35 @@ const CapNhatPhieuThue = () => {
     const [chiTietPhieuThues, setChiTietPhieuThues] = useState([]);
     const [chiTietDichVus, setChiTietDichVus] = useState([]);
     const [chiTietPhuThus, setChiTietPhuThus] = useState([]);
+    const [data, setData] = useState({
+        idPhieuThue: null,
+        ngayNhanPhong: null,
+        ngayTraPhong: null,
+        phanTramGiam: null
+    })
+    const [showCapNhatChiTietPhieuThuePopup, setShowCapNhatChiTietPhieuThuePopup] = useState(false);
+    const [idChiTietPhieuThue, setIdChiTietPhieuThue] = useState();
+    const [ngayNhanPhong, setNgayNhanPhong] = useState();
+    const [ngayTraPhong, setNgayTraPhong] = useState();
+    const [tienGiamGia, setTienGiamGia] = useState();
+
+    const onChangeHandle = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setData(data => ({ ...data, [name]: value }));
+    }
 
     const fetchPhieuThue = async () => {
         try {
             const response = await axios.get(url + `/api/phieu-thue/cap-nhat/${idPhieuThue}`,
                 { headers: { Authorization: `Bearer ${token}` } });
             setPhieuThue(response.data);
+            setData({
+                idPhieuThue: response.data.idPhieuThue,
+                ngayNhanPhong: response.data.ngayDen,
+                ngayTraPhong: response.data.ngayDi,
+                phanTramGiam: response.data.phanTramGiam
+            })
         } catch (error) {
             console.log(error.message);
             toast.error(error.message);
@@ -52,54 +76,88 @@ const CapNhatPhieuThue = () => {
     }, [token])
 
     const fetchChiTietDichVus = async () => {
-    	try {
+        try {
             const config = {
-                params: {idPhieuThue},
+                params: { idPhieuThue },
                 headers: { Authorization: `Bearer ${token}` }
             }
-    		const response = await axios.get(url + `/api/dich-vu/chi-tiet/phieu-thue`, config);
-            if(response.data.code === 200)
-    		    setChiTietDichVus(response.data.result);
+            const response = await axios.get(url + `/api/dich-vu/chi-tiet/phieu-thue`, config);
+            if (response.data.code === 200)
+                setChiTietDichVus(response.data.result);
             else
                 toast.error(response.data.message);
-    	} catch (error) {
-    		console.log(error.message);
-    		toast.error(error.message);
-    	}
+        } catch (error) {
+            console.log(error.message);
+            toast.error(error.message);
+        }
     }
 
     const fetchChiTietPhuThus = async () => {
-    	try {
+        try {
             const config = {
-                params: {idPhieuThue},
+                params: { idPhieuThue },
                 headers: { Authorization: `Bearer ${token}` }
             }
-    		const response = await axios.get(url + `/api/phu-thu/chi-tiet/phieu-thue`, config);
-            if(response.data.code === 200)
-    		    setChiTietPhuThus(response.data.result);
+            const response = await axios.get(url + `/api/phu-thu/chi-tiet/phieu-thue`, config);
+            if (response.data.code === 200)
+                setChiTietPhuThus(response.data.result);
             else
                 toast.error(response.data.message);
-    	} catch (error) {
-    		console.log(error.message);
-    		toast.error(error.message);
-    	}
+        } catch (error) {
+            console.log(error.message);
+            toast.error(error.message);
+        }
     }
 
     const xoaPhieuThue = async () => {
-    	try {
+        try {
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
             }
-    		const response = await axios.delete(url + `/api/phieu-thue/` + idPhieuThue, config);
-            if(response.data.code === 200){
-    		    toast.success("Xóa phiếu thuê thành công");
+            const response = await axios.delete(url + `/api/phieu-thue/` + idPhieuThue, config);
+            if (response.data.code === 200) {
+                toast.success("Xóa phiếu thuê thành công");
                 navigate("/quan-ly-phieu-thue");
-            }else
+            } else
                 toast.error(response.data.message);
-    	} catch (error) {
-    		console.log(error.message);
-    		toast.error(error.response.data.message);
-    	}
+        } catch (error) {
+            console.log(error.message);
+            toast.error(error.response.data.message);
+        }
+    }
+
+    const capNhapPhieuThue = async () => {
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+            const response = await axios.put(url + "/api/phieu-thue/cap-nhat", data, config);
+            if (response.data.code === 200) {
+                setPhieuThue(response.data.result);
+                setData({
+                    idPhieuThue: response.data.result.idPhieuThue,
+                    ngayNhanPhong: response.data.result.ngayDen,
+                    ngayTraPhong: response.data.result.ngayDi,
+                    phanTramGiam: response.data.result.phanTramGiam
+                })
+                toast.success("Cập nhật phiếu thuê thành công");
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.log(error.message);
+            toast.error(error.response.data.message);
+        }
+    }
+
+    const onClickCapNhatChiTiet = (idChiTietPhieuThue, ngayNhanPhong,  ngayTraPhong, tienGiamGia, daThanhToan)=>{
+        if(!daThanhToan){
+            setIdChiTietPhieuThue(idChiTietPhieuThue);
+            setNgayNhanPhong(ngayNhanPhong);
+            setNgayTraPhong(ngayTraPhong);
+            setTienGiamGia(tienGiamGia);
+            setShowCapNhatChiTietPhieuThuePopup(true);
+        }
     }
 
 
@@ -109,6 +167,18 @@ const CapNhatPhieuThue = () => {
             <div className='app'>
                 <section id="content" className={isExpand && 'expand'}>
                     <Navbar />
+                    {showCapNhatChiTietPhieuThuePopup&&
+                    <CapNhatChiTietPhieuThuePopup
+                        setShowCapNhatChiTietPhieuThuePopup={setShowCapNhatChiTietPhieuThuePopup}
+                        setPhieuThue={setPhieuThue}
+                        idPhieuThue={idPhieuThue}
+                        setChiTietPhieuThues={setChiTietPhieuThues}
+                        idChiTietPhieuThue={idChiTietPhieuThue}
+                        ngayNhanPhong={ngayNhanPhong}
+                        ngayTraPhong={ngayTraPhong}
+                        tienGiamGia={tienGiamGia}
+                    />
+                    }
                     <main className='cap-nhat-phieu-thue'>
                         {phieuThue &&
                             <div className="cap-nhat-phieu-thue-container">
@@ -122,8 +192,22 @@ const CapNhatPhieuThue = () => {
                                         <div className="information">
                                             <ul>
                                                 <li>
-                                                    <p>Lưu trú:</p>
-                                                    <p>từ {convertDateShow(phieuThue.ngayDen)} đến {convertDateShow(phieuThue.ngayDi)}</p>
+                                                    <p>Ngày nhận phòng:</p>
+                                                    <div className="mb-3">
+                                                        <input name='ngayNhanPhong' value={data.ngayNhanPhong}
+                                                            onChange={onChangeHandle}
+                                                            type="date" className="form-control" id="exampleFormControlInput1"
+                                                            disabled={phieuThue.trangThai !== 0} />
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <p>Ngày trả phòng:</p>
+                                                    <div className="mb-3">
+                                                        <input name='ngayTraPhong' value={data.ngayTraPhong}
+                                                            onChange={onChangeHandle}
+                                                            type="date" className="form-control" id="exampleFormControlInput1" 
+                                                            disabled={phieuThue.trangThai !== 0}/>
+                                                    </div>
                                                 </li>
                                                 <li>
                                                     <p>Tổng tiền phòng:</p>
@@ -155,10 +239,22 @@ const CapNhatPhieuThue = () => {
                                                 </li> */}
                                                 <li>
                                                     <p>Phần trăm giảm:</p>
-                                                    <p>{phieuThue.phanTramGiam}%</p>
+                                                    <p>
+                                                        <div className="mb-3">
+                                                            <input name='phanTramGiam' value={data.phanTramGiam}
+                                                                onChange={onChangeHandle}
+                                                                type="number" className="form-control" id="exampleFormControlInput1" placeholder='%'
+                                                                disabled={phieuThue.trangThai !== 0} />
+                                                        </div>
+                                                    </p>
                                                 </li>
                                                 <li>
-                                                    <button onClick={()=>xoaPhieuThue()} className='btn btn-danger'>Xóa phiếu thuê</button>
+                                                    <button onClick={() => capNhapPhieuThue()} 
+                                                    className='btn btn-primary'
+                                                    disabled={phieuThue.trangThai !== 0}>Cập nhật</button>
+                                                    <button onClick={() => xoaPhieuThue()} 
+                                                    className='btn btn-danger'
+                                                    disabled={chiTietPhieuThues.length > 0}>Xóa phiếu</button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -171,7 +267,6 @@ const CapNhatPhieuThue = () => {
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th></th>
                                                 <th>Tên hạng phòng</th>
                                                 <th>Mã phòng</th>
                                                 <th>Ngày nhận phòng</th>
@@ -186,9 +281,8 @@ const CapNhatPhieuThue = () => {
                                             {
                                                 chiTietPhieuThues.map((item, index) => {
                                                     return (
-                                                        <tr key={index}>
-                                                            <td>{index+1}.</td>
-                                                            <td>{item.tenHangPhong}</td>
+                                                        <tr onClick={()=>onClickCapNhatChiTiet(item.idChiTietPhieuThue, item.ngayDen,  item.ngayDi, item.tienGiamGia, item.daThanhToan)} key={index}>
+                                                            <td className='highlight'>{item.tenHangPhong}</td>
                                                             <td>{item.maPhong}</td>
                                                             <td>{convertDateShow(item.ngayDen)}</td>
                                                             <td>{convertDateShow(item.ngayDi)}</td>
@@ -196,6 +290,7 @@ const CapNhatPhieuThue = () => {
                                                             <td>{item.tienGiamGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{item.tongTienPhong.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{item.daThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
+                                                            
                                                         </tr>
                                                     )
                                                 })
@@ -206,7 +301,7 @@ const CapNhatPhieuThue = () => {
                                     <table>
                                         <thead>
                                             <tr>
-                                                
+
                                                 <th>Tên dịch vụ/phụ thu</th>
                                                 <th>Số lượng</th>
                                                 <th>Đơn giá</th>
@@ -221,37 +316,37 @@ const CapNhatPhieuThue = () => {
                                                 chiTietDichVus.map((item, index) => {
                                                     return (
                                                         <tr key={index}>
-                                                            
+
                                                             <td>{item.tenDichVu}</td>
                                                             <td>{item.soLuong}</td>
                                                             <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{item.maPhong}</td>
                                                             <td>{convertDateShow(item.ngayTao)}</td>
-                                                            <td>{item.daThanhToan ? 'Đã thanh toán': 'Chưa thanh toán'}</td>
+                                                            <td>{item.daThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
                                                         </tr>
                                                     )
                                                 })
                                             }
                                             {chiTietPhuThus.map((item, index) => {
-                                                    return (
-                                                        <tr key={index}>
-                                                            
-                                                            <td>{item.noiDung}</td>
-                                                            <td>{item.soLuong}</td>
-                                                            <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{item.maPhong}</td>
-                                                            <td>{convertDateShow(item.ngayTao)}</td>
-                                                            <td>{item.daThanhToan ? 'Đã thanh toán': 'Chưa thanh toán'}</td>
-                                                        </tr>
-                                                    )
-                                                })}
+                                                return (
+                                                    <tr key={index}>
+
+                                                        <td>{item.noiDung}</td>
+                                                        <td>{item.soLuong}</td>
+                                                        <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+                                                        <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+                                                        <td>{item.maPhong}</td>
+                                                        <td>{convertDateShow(item.ngayTao)}</td>
+                                                        <td>{item.daThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
+                                                    </tr>
+                                                )
+                                            })}
                                         </tbody>
                                     </table>
 
 
-                                    
+
                                 </div>
 
                             </div>

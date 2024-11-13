@@ -10,28 +10,27 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 
 const QuanLyTrangThai = () => {
-    const navigate = useNavigate();
-    const [idTrangThai, setIdTrangThai] = useState(id);
     const { url, token, isExpand, convertDateShow } = useContext(StoreContext);
-    const [trangThai, setTrangThai] = useState();
     const [trangThais, setTrangThais] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isCapNhat, setIsCapNhat] = useState("");
+    const [idTrangThai, setIdTrangThai] = useState("");
+    const [data, setData] = useState({
+        tenTrangThai: ""
+    })
 
-    const getTrangThaiById = async () => {
-        try {
-            const response = await axios.get(url + `/api/phieu-thue/cap-nhat/${idTrangThai}`,
-                { headers: { Authorization: `Bearer ${token}` } });
-            setTrangThai(response.data);
-        } catch (error) {
-            console.log(error.message);
-            toast.error(error.message);
-        }
+
+    const onChangeHandle = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setData(data => ({ ...data, [name]: value }));
     }
 
     const fetchTrangThais = async () => {
         try {
-            const response = await axios.get(url + `/api/trang-thai/cap-nhat/${idTrangThai}`,
+            const response = await axios.get(url + `/api/trang-thai/all`,
                 { headers: { Authorization: `Bearer ${token}` } });
-            setTrangThai(response.data);
+            setTrangThais(response.data);
         } catch (error) {
             console.log(error.message);
             toast.error(error.message);
@@ -44,23 +43,85 @@ const QuanLyTrangThai = () => {
         }
     }, [token])
 
-    const xoaTrangThai = async () => {
+    const themTrangThai = async () => {
     	try {
             const config = {
                 headers: { Authorization: `Bearer ${token}` }
             }
-    		const response = await axios.delete(url + `/api/phieu-thue/` + idTrangThai, config);
+    		const response = await axios.post(url + `/api/trang-thai/`, data, config);
             if(response.data.code === 200){
-    		    toast.success("Xóa trạng thái thành công");
-                navigate("/quan-ly-phieu-thue");
-            }else
+    		    toast.success("Thêm trạng thái thành công");
+                fetchTrangThais();
+            }else{
                 toast.error(response.data.message);
+            }
+    	} catch (error) {
+    		console.log(error.message);
+            setErrorMessage(error.response.data.message);
+    		toast.error(error.response.data.message);
+    	}
+    }
+
+    const capNhatTrangThai = async () => {
+    	try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+    		const response = await axios.put(url + `/api/trang-thai/` + idTrangThai, data, config);
+            if(response.data.code === 200){
+    		    toast.success("Cập nhật trạng thái thành công");
+                fetchTrangThais();
+            }else{
+                setErrorMessage(response.data.message);
+                toast.error(response.data.message);
+            }
     	} catch (error) {
     		console.log(error.message);
     		toast.error(error.response.data.message);
     	}
     }
 
+    const xoaTrangThai = async (idTrangThai) => {
+    	try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+    		const response = await axios.delete(url + `/api/trang-thai/` + idTrangThai, config);
+            if(response.data.code === 200){
+    		    toast.success("Xóa trạng thái thành công");
+                fetchTrangThais();
+            }else{
+                toast.error(response.data.message);
+            }
+    	} catch (error) {
+    		console.log(error.message);
+            setErrorMessage(error.response.data.message);
+    		toast.error(error.response.data.message);
+    	}
+    }
+
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        if(isCapNhat)
+            capNhatTrangThai();
+        else
+            themTrangThai();
+    }
+
+    const onHandleThemChecked = (e) => {
+        if(e.target.checked)
+            setIsCapNhat(false);
+    }
+
+    const onHandleCapNhatChecked = (e) => {
+        if(e.target.checked)
+            setIsCapNhat(true);
+    }
+
+    const onClickCapNhat = (idTrangThai, tenTrangThai)=>{
+        setIdTrangThai(idTrangThai);
+        setData(data => ({ ...data, 'tenTrangThai': tenTrangThai }));
+    }
 
     return (
         <>
@@ -68,153 +129,78 @@ const QuanLyTrangThai = () => {
             <div className='app'>
                 <section id="content" className={isExpand && 'expand'}>
                     <Navbar />
-                    <main className='cap-nhat-phieu-thue'>
-                        {TrangThai &&
-                            <div className="cap-nhat-phieu-thue-container">
-                                <div className="todo">
-                                    <div className="phieu-thue">
-                                        <div className="head">
-                                            <h3>Thông tin phiếu thuê - {idTrangThai}</h3>
-                                            <i className='bx bx-plus' ></i>
-                                            <i className='bx bx-filter' ></i>
-                                        </div>
-                                        <div className="information">
-                                            <ul>
-                                                <li>
-                                                    <p>Lưu trú:</p>
-                                                    <p>từ {convertDateShow(TrangThai.ngayDen)} đến {convertDateShow(TrangThai.ngayDi)}</p>
-                                                </li>
-                                                <li>
-                                                    <p>Tổng tiền phòng:</p>
-                                                    <p>{TrangThai.tongTienPhong.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                                </li>
-                                                <li>
-                                                    <p>Tổng tiền dịch vụ:</p>
-                                                    <p>{TrangThai.tongTienDichVu.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                                </li>
-                                                <li>
-                                                    <p>Tổng tiền phụ thu:</p>
-                                                    <p>{TrangThai.tongTienPhuThu.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                                </li>
-                                                <li>
-                                                    <p>Tiền tạm ứng:</p>
-                                                    <p>{TrangThai.tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                                </li>
-                                                <li>
-                                                    <p>Tiền tiền tất cả:</p>
-                                                    <p>{TrangThai.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                                </li>
-                                                <li>
-                                                    <p>Giảm giá tiền phòng:</p>
-                                                    <p>{TrangThai.tienDuocGiam.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                                </li>
-                                                {/* <li>
-                                                    <p>Tiền phải trả:</p>
-                                                    <p>{TrangThai.tienPhaiTra.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                                </li> */}
-                                                <li>
-                                                    <p>Phần trăm giảm:</p>
-                                                    <p>{TrangThai.phanTramGiam}%</p>
-                                                </li>
-                                                <li>
-                                                    <button onClick={()=>xoaTrangThai()} className='btn btn-danger'>Xóa phiếu thuê</button>
-                                                </li>
-                                            </ul>
-                                        </div>
+                    <main className='trang-thai'>
 
+                        <div className="trang-thai-container">
+                            <div className="todo">
+                                <div className="phieu-thue">
+                                    <div className="head">
+                                        <h3>Thông tin trạng thái</h3>
+                                        <i className='bx bx-plus' ></i>
+                                        <i className='bx bx-filter' ></i>
                                     </div>
+                                    <div className="information">
+                                        <form onSubmit={onSubmitHandler}>
+                                            {errorMessage && <p className='error'>{errorMessage}</p>}
+                                            <div class="form-check">
+                                                <input onChange={onHandleThemChecked} class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked/>
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    Thêm mới
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input onChange={onHandleCapNhatChecked} class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                    Cập nhật
+                                                </label>
+                                            </div>
+                                            <div className="mb-3">
+                                                <label htmlFor="exampleFormControlInputTenTrangThai" className="form-label">Tên trạng thái</label>
+                                                <input onChange={onChangeHandle} name='tenTrangThai' value={data.tenTrangThai} type="text" className="form-control" id="exampleFormControlInputTenTrangThai" placeholder="Nhập tên trạng thái" required />
+                                            </div>
 
-                                </div>
-
-                                <div className="order">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Tên hạng phòng</th>
-                                                <th>Mã phòng</th>
-                                                <th>Ngày nhận phòng</th>
-                                                <th>Ngày trả phòng</th>
-                                                <th>Đơn giá</th>
-                                                <th>Giảm giá</th>
-                                                <th>Tiền phòng</th>
-                                                <th>Trạng thái</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                chiTietTrangThais.map((item, index) => {
-                                                    return (
-                                                        <tr key={index}>
-                                                            <td>{index+1}.</td>
-                                                            <td>{item.tenHangPhong}</td>
-                                                            <td>{item.maPhong}</td>
-                                                            <td>{convertDateShow(item.ngayDen)}</td>
-                                                            <td>{convertDateShow(item.ngayDi)}</td>
-                                                            <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{item.tienGiamGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{item.tongTienPhong.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{item.daThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                
-                                                <th>Tên dịch vụ/phụ thu</th>
-                                                <th>Số lượng</th>
-                                                <th>Đơn giá</th>
-                                                <th>Tổng tiền</th>
-                                                <th>Phòng sử dụng</th>
-                                                <th>Ngày tạo</th>
-                                                <th>Trạng thái</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                chiTietDichVus.map((item, index) => {
-                                                    return (
-                                                        <tr key={index}>
-                                                            
-                                                            <td>{item.tenDichVu}</td>
-                                                            <td>{item.soLuong}</td>
-                                                            <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{item.maPhong}</td>
-                                                            <td>{convertDateShow(item.ngayTao)}</td>
-                                                            <td>{item.daThanhToan ? 'Đã thanh toán': 'Chưa thanh toán'}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                            {chiTietPhuThus.map((item, index) => {
-                                                    return (
-                                                        <tr key={index}>
-                                                            
-                                                            <td>{item.noiDung}</td>
-                                                            <td>{item.soLuong}</td>
-                                                            <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
-                                                            <td>{item.maPhong}</td>
-                                                            <td>{convertDateShow(item.ngayTao)}</td>
-                                                            <td>{item.daThanhToan ? 'Đã thanh toán': 'Chưa thanh toán'}</td>
-                                                        </tr>
-                                                    )
-                                                })}
-                                        </tbody>
-                                    </table>
-
-
-                                    
+                                            <button type="submit" className="btn btn-primary">Xác nhận</button>
+                                        </form>
+                                    </div>
                                 </div>
 
                             </div>
-                        }
+
+                            <div className="order">
+                                <div className="head">
+                                    <h3>Danh sách trạng thái</h3>
+                                    <i className='bx bx-plus' ></i>
+                                    <i className='bx bx-filter' ></i>
+                                </div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Mã trạng thái</th>
+                                            <th>Tên trạng thái</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            trangThais.map((item, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{item.idTrangThai}</td>
+                                                        <td>{item.tenTrangThai}</td>
+                                                        <td>
+                                                            <button onClick={()=>onClickCapNhat(item.idTrangThai, item.tenTrangThai)} className='btn btn-primary'>Cập nhật</button>
+                                                            <button onClick={() => {if(window.confirm('Bạn có chắc chắn muốn xóa trạng thái này?')){xoaTrangThai(item.idTrangThai)};}} className='btn btn-danger'>Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
                     </main>
                 </section>
             </div>

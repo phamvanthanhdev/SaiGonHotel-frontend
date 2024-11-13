@@ -111,6 +111,7 @@ const PhieuDatTheoNgay = () => {
                       <th>Số điện thoại</th>
                       <th>Tạm ứng</th>
                       <th>Tổng tiền</th>
+                      <th>Ngày tạo</th>
                       <th>Trạng thái</th>
                     </tr>
                   </thead>
@@ -125,6 +126,7 @@ const PhieuDatTheoNgay = () => {
                             <td>{item.sdt}</td>
                             <td>{item.tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                             <td>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+                            <td>{convertDateShow(item.ngayTao)}</td>
                             <td>
                               {item.trangThai === 0 && <span className="status process">Chờ xử lý</span>}
                               {item.trangThai === 1 && <span className="status completed">Đã hoàn tất</span>}

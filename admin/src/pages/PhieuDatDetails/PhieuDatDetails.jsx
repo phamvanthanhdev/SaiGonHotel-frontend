@@ -47,6 +47,7 @@ const PhieuDatDetails = () => {
         try {
             const response = await axios.post(url + "/api/phieu-dat/chi-tiet/xoa", data, { headers: { Authorization: `Bearer ${token}` } });
             if(response.data.code === 200){
+                toast.success("Xóa thành công")
                 getPhieuDat();
             }else{
                 toast.error(response.data.message);
@@ -57,8 +58,9 @@ const PhieuDatDetails = () => {
 
     }
 
-    const handleRemove = (idHangPhong) =>{
+    const handleRemove = (idHangPhong, idChiTietPhieuDat) =>{
         const data = {
+            idChiTietPhieuDat: idChiTietPhieuDat,
             idHangPhong: idHangPhong,
             idPhieuDat: phieuDat.idPhieuDat,
             soLuong: 1,
@@ -185,7 +187,7 @@ const PhieuDatDetails = () => {
                                                 <p>x{item.soLuong}</p>
                                                 <p>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                                 <p>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                                <FontAwesomeIcon onClick={()=>handleRemove(item.idHangPhong)} className='bx' icon={faXmark} />
+                                                <FontAwesomeIcon onClick={()=>handleRemove(item.idHangPhong, item.idChiTietPhieuDat)} className='bx' icon={faXmark} />
                                             </li>
                                         )
                                     })}

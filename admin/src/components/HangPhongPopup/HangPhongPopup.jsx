@@ -5,6 +5,7 @@ import axios from 'axios';
 import { faXmark, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const HangPhongPopup = ({ setShowHangPhongPopup, ngayNhanPhong, ngayTraPhong, idPhieuDat, setPhieuDat, trangThai }) => {
     const navigate = useNavigate();
@@ -78,6 +79,7 @@ const HangPhongPopup = ({ setShowHangPhongPopup, ngayNhanPhong, ngayTraPhong, id
             try {
                 const response = await axios.post(url + "/api/phieu-dat/chi-tiet/bo-sung", dataRequest, { headers: { Authorization: `Bearer ${token}` } });
                 if (response.data.code === 200) {
+                    toast.success("Thêm thành công")
                     refreshPhieuDat();
                     setShowHangPhongPopup(false);
                 } else {

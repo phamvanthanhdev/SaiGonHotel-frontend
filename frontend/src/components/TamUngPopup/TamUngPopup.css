@@ -1,0 +1,123 @@
+.tam-ung-popup{
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: #00000090;
+    display: grid;
+}
+
+.tam-ung-popup-container{
+    place-self: center;
+    margin-bottom: 200px;
+    width: max(23vw, 330px);
+    color: #808080;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    animation: fadeIn 0.5s;
+}
+
+.tam-ung-popup-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    /* margin-bottom: 10px; */
+}
+
+.tam-ung-popup-title img{
+    width: 16px;
+    cursor: pointer;
+}
+
+.tam-ung-popup-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tam-ung-popup-inputs label{
+    margin-top: 10px;
+}
+
+.tam-ung-popup-inputs input{
+    outline: none;
+    border: 1px solid #c9c9c9;
+    /* margin: 10px 0; */
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.tam-ung-popup-inputs select{
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+
+.tam-ung-popup-container{
+    position: relative;
+}
+
+.tam-ung-popup-container button{
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    background-color: #0071c2;
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.tam-ung-popup-condition{
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    margin-top: -15px;
+}
+
+.tam-ung-popup-condition input{
+    margin-top: 5px;
+}
+
+.tam-ung-popup p span{
+    color: tomato;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.tam-ung-popup-container span{
+    color: tomato;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.tam-ung-popup-container .close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 25px;
+    color: #c9c9c9;
+}
+
+.errorMessage{
+    color: red;
+}
+
+.successMessage{
+    color: green;
+}
+
+.tam-ung-popup .oneRow{
+    display: flex;
+    gap: 10px;
+}
+
+

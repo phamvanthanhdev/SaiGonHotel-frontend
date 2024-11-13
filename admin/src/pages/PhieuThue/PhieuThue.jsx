@@ -116,6 +116,20 @@ const PhieuThue = () => {
 		}
 	}
 
+	const layPhongDaChon = (idHangPhong, donGia)=>{
+		const phongDaChons = chiTietPhieuThues.filter(chiTiet => (chiTiet.idHangPhong === idHangPhong && chiTiet.donGia === donGia));
+		let maPhong = "";
+		for (let i = 0; i < phongDaChons.length; i++) {
+			if(i == phongDaChons.length - 1)
+				maPhong += phongDaChons[i].maPhong;
+			else
+				maPhong += phongDaChons[i].maPhong+", ";
+		}
+		console.log(maPhong);
+		
+		return maPhong;
+	}
+
 
 	return (
 		<>
@@ -147,6 +161,7 @@ const PhieuThue = () => {
 											<th>Hạng phòng</th>
 											<th>Số lượng</th>
 											<th>Giá phòng</th>
+											<th>Mã phòng</th>
 											<th>Hành động</th>
 										</tr>
 									</thead>
@@ -162,6 +177,7 @@ const PhieuThue = () => {
 														{item.soLuong} phòng
 													</td>
 													<td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+													<td>{layPhongDaChon(item.idHangPhong, item.donGia) ? layPhongDaChon(item.idHangPhong, item.donGia) : 'Chưa chọn'}</td>
 													<td>
 														<button
 															onClick={() => openSoDoPopup(item.idHangPhong, item.donGia)}

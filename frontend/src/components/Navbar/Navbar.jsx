@@ -63,6 +63,7 @@ const Navbar = ({ setShowLogin }) => {
               <span><FontAwesomeIcon icon={faUser} /></span>
               <div className="dropdown-content">
                 <p onClick={() => navigate("/my-orders")}>Phiếu đặt</p>
+                <p onClick={() => navigate("/my-profile")}>Cá nhân</p>
                 <hr />
                 <p onClick={logout}>Đăng xuất</p>
               </div>

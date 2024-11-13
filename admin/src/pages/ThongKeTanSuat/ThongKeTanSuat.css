@@ -63,7 +63,7 @@
 
 #content .tan-suat .table-data .order {
 	flex-grow: 1;
-	flex-basis: 800px;
+	flex-basis: 700px;
 }
 #content .tan-suat .table-data .order table {
 	width: 100%;
@@ -76,7 +76,7 @@
 	border-bottom: 1px solid var(--grey);
 }
 #content .tan-suat .table-data .order table td {
-    
+    cursor: pointer;
 	padding: 20px 0;
 }
 #content .tan-suat .table-data .order table tr td:first-child {

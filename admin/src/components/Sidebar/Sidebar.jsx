@@ -114,6 +114,30 @@ const Sidebar = () => {
 						<span className="text">Quản lý phiếu thuê</span>
 					</a>
 				</li>
+				<li onClick={() => navigate("/quan-ly-trang-thai")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý trạng thái</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/quan-ly-khach-hang")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý khách hàng</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/quan-ly-nhan-vien")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý nhân viên</span>
+					</a>
+				</li>
+				<li onClick={() => navigate("/quan-ly-tai-khoan")}>
+					<a className=''>
+						<FontAwesomeIcon className='bx' icon={faGauge} />
+						<span className="text">Quản lý tài khoản</span>
+					</a>
+				</li>
 				<li onClick={() => navigate("/thong-ke-tan-suat")}>
 					<a className=''>
 						<FontAwesomeIcon className='bx' icon={faGauge} />

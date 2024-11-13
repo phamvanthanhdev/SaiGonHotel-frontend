@@ -248,7 +248,7 @@ const Book = () => {
                                         onChange={handleCheckboxChange}
                                         id="payAfter"
                                         type="radio" name="pay" value="pay-after" required />
-                                    <label htmlFor="payAfter"> Thanh toán khi nhận phòng</label>
+                                    <label htmlFor="payAfter"> Tạm ứng sau</label>
                                 </div>
 
                                 <div className="input-checkbox">
@@ -257,7 +257,7 @@ const Book = () => {
                                         onChange={handleCheckboxChange}
                                         id="payAll"
                                         type="radio" name="pay" value="pay-all" required />
-                                    <label htmlFor="payAll"> Thanh toán toàn bộ</label>
+                                    <label htmlFor="payAll"> Tạm ứng toàn bộ</label>
                                 </div>
 
                                 <div className="input-checkbox">
@@ -266,7 +266,7 @@ const Book = () => {
                                         onChange={handleCheckboxChange}
                                         id="paySome"
                                         type="radio" name="pay" value="pay-some" required />
-                                    <label htmlFor="paySome"> Thanh toán một phần</label>
+                                    <label htmlFor="paySome"> Tạm ứng một phần</label>
                                 </div>
 
                                 <div className="input-box">

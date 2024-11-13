@@ -1,0 +1,365 @@
+#content main.tai-khoan {
+	width: 100%;
+	padding: 20px 20px;
+    font-size: 14px;
+}
+
+#content main .tai-khoan-container {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 14px;
+	width: 100%;
+	color: var(--dark);
+}
+#content main .tai-khoan-container > div {
+	border-radius: 10px;
+	background: var(--light);
+	padding: 14px;
+	overflow-x: auto;
+}
+
+#content main .tai-khoan-container .order {
+	flex-grow: 1;
+	flex-basis: 800px;
+}
+#content main .tai-khoan-container .order table {
+	width: 100%;
+	border-collapse: collapse;
+    margin-top: 20px;
+}
+#content main .tai-khoan-container .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+#content main .tai-khoan-container .order table td {
+    cursor: pointer;
+	padding: 16px 0;
+}
+#content main .tai-khoan-container .order table tr td:first-child {
+	/* display: flex; */
+	/* align-items: center; */
+	/* grid-gap: 12px; */
+	padding-left: 16px;
+}
+
+#content main .tai-khoan-container .order table tr td:last-child button{
+	margin: 0 8px;
+}
+
+#content main .tai-khoan-container .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+#content main .tai-khoan-container .order table tbody tr:hover {
+	background: var(--grey);
+}
+#content main .tai-khoan-container .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+#content main .tai-khoan-container .order table tr td .status.completed {
+	background: var(--blue);
+}
+#content main .tai-khoan-container .order table tr td .status.process {
+	background: var(--yellow);
+}
+#content main .tai-khoan-container .order table tr td .status.pending {
+	background: var(--orange);
+}
+
+
+#content main .tai-khoan-container .todo {
+	flex-grow: 1;
+	flex-basis: 300px;
+}
+#content main .tai-khoan-container .todo .todo-list {
+	width: 100%;
+}
+#content main .tai-khoan-container .todo .todo-list li {
+	width: 100%;
+	margin-bottom: 8px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 15px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+}
+
+#content main .tai-khoan-container .todo .todo-list li p {
+    margin-bottom: unset;
+}
+
+#content main .tai-khoan-container .todo .todo-list li .bx {
+	cursor: pointer;
+}
+#content main .tai-khoan-container .todo .todo-list li.completed {
+	border-left: 10px solid var(--blue);
+}
+#content main .tai-khoan-container .todo .todo-list li.not-completed {
+	border-left: 10px solid var(--orange);
+}
+#content main .tai-khoan-container .todo .todo-list li:last-child {
+	margin-bottom: 0;
+}
+
+#content main .tai-khoan-container .todo .phieu-thue{
+	position: relative;
+	padding-bottom: 30px;
+}
+
+#content main .tai-khoan-container .todo .phieu-thue .information {
+	margin: 25px 0;
+}
+
+#content main .tai-khoan-container .todo .phieu-thue .btnThueThem{
+	font-size: 15px;
+	/* border: 1px solid lightgray; */
+	padding: 12px;
+	background-color: var(--grey);
+	border-radius: 50%;
+	position: absolute;
+	right: 50%;
+	bottom: 0;
+	cursor: pointer;
+	color: gray;
+}
+
+#content main .tai-khoan-container .order .head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#content main .tai-khoan-container .order .head .info{
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: 10px;
+}
+
+#content main .tai-khoan-container .order .tai-khoan-phieuthue{
+	border: 1px solid lightgray;
+	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+	border-radius: 7px;
+	padding: 20px 20px;
+}
+
+#content main .tai-khoan-container .order .tai-khoan-phieuthue .date{
+	width: 100%;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: 20px;
+	margin-bottom: 1rem;
+}
+
+#content main .tai-khoan-container .order .tai-khoan-phieuthue .date input{
+	width: max-content;
+}
+
+#content main .tai-khoan-container .order .tai-khoan-phieuthue .date p{
+	margin: auto 0;
+}
+
+#content main .tai-khoan-container .order .tai-khoan-phieuthue .tienGiamGia{
+	width: 100%;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: 20px;
+	margin-bottom: 1rem;
+}
+
+#content main .tai-khoan-container .order .tai-khoan-phieuthue .tienGiamGia input{
+	width: max-content;
+}
+
+#content main .tai-khoan-container .order .tai-khoan-phieuthue .tienGiamGia p{
+	margin: auto 0;
+}
+
+
+#content main .tai-khoan-container .order .dichvu-list{
+	border: 1px solid lightgray;
+	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+	border-radius: 7px;
+	padding: 20px 20px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+#content main .tai-khoan-container .order .dichvu-list li{
+	width: 100%;
+	margin-bottom: 8px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 15px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	padding-bottom: unset;
+}
+
+
+#content main .tai-khoan-container .order .dichvu-list .icon{
+	font-size: 0.8rem;
+	color: gray;
+	cursor: pointer;
+}
+
+#content main .tai-khoan-container .order .phuthu-list{
+	border: 1px solid lightgray;
+	box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+	border-radius: 7px;
+	padding: 20px 20px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+#content main .tai-khoan-container .order .phuthu-list{
+	margin-bottom: 10px;
+}
+
+#content main .tai-khoan-container .order .phuthu-list li{
+	width: 100%;
+	margin-bottom: 8px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 15px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	padding-bottom: unset;
+}
+
+/* */
+
+#content main .tai-khoan-container .order .phuthu-list li p {
+	flex-shrink: 0;
+}
+
+#content main .tai-khoan-container .order .phuthu-list li p.icon {
+	width: 20px;
+	text-align: center;
+}
+
+#content main .tai-khoan-container .order .phuthu-list li p:nth-child(2) {
+	width: 150px;
+}
+
+#content main .tai-khoan-container .order .phuthu-list li p:nth-child(3),
+#content main .tai-khoan-container .order .phuthu-list li p:nth-child(4),
+#content main .tai-khoan-container .order .phuthu-list li p:nth-child(5),
+#content main .tai-khoan-container .order .phuthu-list li p:nth-child(6) {
+	width: 80px;
+	text-align: right;
+}
+
+#content main .tai-khoan-container .order .phuthu-list li p:nth-child(7){
+	width: 150px;
+	text-align: center;
+}
+
+
+#content main .tai-khoan-container .order .dichvu-list li p {
+	flex-shrink: 0;
+}
+
+#content main .tai-khoan-container .order .dichvu-list li p.icon {
+	width: 20px;
+	text-align: center;
+}
+
+#content main .tai-khoan-container .order .dichvu-list li p:nth-child(2) {
+	width: 150px;
+}
+
+#content main .tai-khoan-container .order .dichvu-list li p:nth-child(3),
+#content main .tai-khoan-container .order .dichvu-list li p:nth-child(4),
+#content main .tai-khoan-container .order .dichvu-list li p:nth-child(5),
+#content main .tai-khoan-container .order .dichvu-list li p:nth-child(6) {
+	width: 80px;
+	text-align: right;
+}
+
+#content main .tai-khoan-container .order .dichvu-list li p:nth-child(7){
+	width: 150px;
+	text-align: center;
+}
+
+/* */
+
+#content main .tai-khoan-container .order .phuthu-list .icon{
+	font-size: 0.8rem;
+	color: gray;
+	cursor: pointer;
+}
+
+#content main .tai-khoan-container .order .phuthu-list input{
+	width: max-content;
+}
+
+#content main .tai-khoan-container .todo .dichvu .todo-list {
+	margin-top: 10px;
+
+	height: max(50vh, 330px);
+    overflow-x: auto;
+}
+
+#content main .tai-khoan-container .todo .phuthu .todo-list {
+	margin-top: 10px;
+
+	height: max(50vh, 330px);
+    overflow-x: auto;
+}
+
+
+
+#content main .tai-khoan .tai-khoan-container .todo .dichvu .todo-list .content{
+	width: 150px;
+}
+
+#content main .tai-khoan .tai-khoan-container .todo .phuthu .todo-list .content{
+	width: 150px;
+}
+
+#content main .tai-khoan-container .todo .phieu-thue .input-giam-gia{
+    display: flex;
+    align-items: center;
+	justify-content: space-between;
+    gap: 20px;
+    margin: 10px 0 20px 0;
+}
+
+#content main .tai-khoan-container .todo .phieu-thue .input-giam-gia input{
+    width: 250px;
+}
+
+#content main .tai-khoan-container .todo .phieu-thue .input-giam-gia label{
+    margin-bottom: 0;
+}
+
+.nav-paging{
+    margin-top: 20px;
+    z-index: 1 !important;
+}
+
+.nav-paging li{
+    cursor: pointer;
+}
+
+.nav-paging .selected{
+    color: white !important;
+    background-color: var(--blue);
+}
