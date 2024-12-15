@@ -117,13 +117,13 @@ const List = () => {
               <div className="lsOptions">
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
-                    Giá thấp nhất <small>(mỗi đêm)</small>
+                    Giá thấp nhất <small>(/đêm)</small>
                   </span>
                   <input onChange={onChangeHandle} name='giaMin' type="number" className="lsOptionInput" />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
-                    Giá cao nhất <small>(mỗi đêm)</small>
+                    Giá cao nhất <small>(/đêm)</small>
                   </span>
                   <input onChange={onChangeHandle} name='giaMax' type="number" className="lsOptionInput" />
                 </div>

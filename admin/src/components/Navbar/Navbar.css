@@ -125,4 +125,13 @@
 #content nav #switch-mode:checked + .switch-mode::before {
 	left: calc(100% - (25px - 4px) - 2px);
 }
+
+#content nav label{
+	font-size: 13px;
+}
+
+#content nav .bx {
+	cursor: pointer;
+	color: var(--dark);
+}
 /* NAVBAR */

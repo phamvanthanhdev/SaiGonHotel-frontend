@@ -143,7 +143,7 @@ const QuanLyPhieuDat = () => {
                             </div>
 
                             <div className="col-md-2">
-                                <label htmlFor="idSelectGioiTinh" className="form-label">Mã phiếu đặt</label>
+                                <label htmlFor="idSelectGioiTinh" className="form-label">Mã phiếu đặt hoặc CCCD</label>
                                 <input name='noiDung' value={dataFilter.noiDung} onChange={onChangeHandle}
                                     type="text" className="form-control" id="noiDung" placeholder="Nhập nội dung tìm kiếm" required />
 

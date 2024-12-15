@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const navigate = useNavigate();
-    const { url, token, setToken } = useContext(StoreContext);
+    const { url, token, setToken, introspect, getThongTinNhanVienDangNhap } = useContext(StoreContext);
     const [data, setData] = useState({
         tenDangNhap: "",
         matKhau: ""
@@ -34,6 +34,8 @@ const Login = () => {
                 localStorage.setItem("token", response.data.result.token);
                 setErrorMessage("");
                 navigate("/")
+                introspect(localStorage.getItem("token"));
+                getThongTinNhanVienDangNhap(localStorage.getItem("token"));
             } else {
                 setErrorMessage(response.data.message);
                 setSuccessMessage("");

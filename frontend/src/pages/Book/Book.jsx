@@ -5,6 +5,7 @@ import axios from 'axios'
 import { StoreContext } from '../../context/StoreContext'
 import { format } from "date-fns";
 import { toast } from 'react-toastify'
+import LoadingPopup from '../../components/LoadingPopup/LoadingPopup'
 
 const Book = () => {
     const { url, hangPhong, cartItems, setCartItems, getTotalCartAmount, ngayNhanPhong, ngayTraPhong, calculateDateDifference } = useContext(StoreContext);
@@ -32,6 +33,7 @@ const Book = () => {
     })
     const [errorMessage, setErrorMessage] = useState("");
     const [cccd, setCccd] = useState();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleCheckboxChange = (e) => {
         setTypePayment(e.target.value);
@@ -61,10 +63,27 @@ const Book = () => {
             dataDatPhong.tienTamUng = 0;
         }
 
-        const chiTietRequests = Object.entries(cartItems).map(([idHangPhong, soLuong]) => ({
-            idHangPhong: parseInt(idHangPhong),
-            soLuong: soLuong
-        }));
+        // const chiTietRequests = Object.entries(cartItems).map(([idHangPhong, soLuong]) => ({
+        //     idHangPhong: parseInt(idHangPhong),
+        //     soLuong: soLuong
+        // }));
+        const chiTietRequests = Object.entries(cartItems).map(([idHangPhong, soLuong]) => {
+            // Tìm hạng phòng trong danh sách hangPhong
+            const hangPhongItem = hangPhong.find(item => item.idHangPhong === parseInt(idHangPhong));
+            
+
+            if(hangPhongItem){
+                // Lấy đơn giá từ hạng phòng (nếu tìm thấy)
+                const donGia = hangPhongItem.phanTramGiam > 0 ? hangPhongItem.giaKhuyenMai : hangPhongItem.giaGoc; 
+
+                // Trả về đối tượng với field mới "donGia"
+                return {
+                    idHangPhong: parseInt(idHangPhong),
+                    soLuong: soLuong,
+                    donGia: donGia
+                };
+            }
+        });
         dataDatPhong.chiTietRequests = chiTietRequests;
         dataDatPhong.ghiChu = dataKhachHang.ghiChu;
 
@@ -74,7 +93,7 @@ const Book = () => {
             phieuDat: dataDatPhong
         }
 
-        if (typePayment === "pay-after") {
+        if (typePayment === "pay-after") {          
             datPhongKhachSan(formData);
         } else {
             datPhongKhachSanPayment(formData);
@@ -85,6 +104,7 @@ const Book = () => {
 
     const datPhongKhachSanPayment = async (formData) => {
         try {
+            setIsLoading(true); // Bắt đầu loading
             const response = await axios.post(url + "/api/payment/create_payment", formData);
             if (response.data.status === "OK") {
                 setCartItems([]);
@@ -95,11 +115,14 @@ const Book = () => {
         } catch (error) {
             console.log(error.message);
             toast.error("Lỗi đặt phòng. Vui lòng thử lại!");
+        }finally {
+            setIsLoading(false); // Kết thúc loading
         }
     }
 
     const datPhongKhachSan = async (formData) => {
         try {
+            setIsLoading(true); // Bắt đầu loading
             const response = await axios.post(url + "/api/phieu-dat/dat-phong", formData)
             if (response.data.code === 200) {
                 setCartItems([]);
@@ -110,6 +133,8 @@ const Book = () => {
         } catch (error) {
             console.log(error.message);
             toast.error("Lỗi đặt phòng. Vui lòng thử lại!");
+        }finally {
+            setIsLoading(false); // Kết thúc loading
         }
     }
 
@@ -146,24 +171,18 @@ const Book = () => {
             console.log(error.message);
             setErrorMessage(error.response.data.message);
         }
-
-        // axios.get(url + "/api/khach-hang/tim-kiem-cccd", {params : {cccd: dataKhachHang.cmnd}})
-        // .then(response => {
-        //     return response.data
-        // })
-        // .then(data => {
-        //     console.log(data)
-        //     setDataKhachHang(data)
-        // })
-        // .catch(error => {
-        //     console.log(error.response.data.error)
-        // })
     }
 
     return (
+        <>
+        {isLoading &&
+            <LoadingPopup/>
+        }
         <div className='book'>
             {/* <Header type="list" /> */}
+            
             <div className="bookContainer">
+                
                 <div className="bookWrapper">
                     <div className="book-list">
                         <div className='title'>
@@ -283,7 +302,7 @@ const Book = () => {
                                     <label>Lưu ý cho nhân viên</label>
                                     <textarea onChange={(e) => onChangeHandle(e)} name='ghiChu' value={dataKhachHang.ghiChu} type="text" placeholder='Nhập lưu ý' required />
                                 </div>
-                                <button type='submit' className='bookBtn'>Bước tiếp theo</button>
+                                <button type='submit' className='bookBtn'>Hoàn tất</button>
                             </form>
 
                         </div>
@@ -292,6 +311,7 @@ const Book = () => {
             </div>
 
         </div>
+        </>
     )
 }
 

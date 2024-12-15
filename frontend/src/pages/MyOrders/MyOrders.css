@@ -11,31 +11,75 @@
     margin-top: 40px;
 }
 
-.orderResult{
+.orderResult {
     width: 100%;
 }
 
-.nav-paging .pagination{
+.nav-paging .pagination {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
 }
 
-.nav-paging .pagination li{
+.nav-paging .pagination li {
     list-style: none;
     cursor: pointer;
     padding: 5px;
     background-color: white;
 }
 
-.nav-paging .pagination li .selected{
+.nav-paging .pagination li .selected {
     border-radius: 3px;
     padding: 7px;
     color: white;
     background-color: rgb(0, 102, 255);
 }
 
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-gap: 0px;
+    width: 100%;
+    background: var(--light);
+    margin-bottom: 30px;
+    /* padding: 20px; */
+    border-radius: 10px;
+}
 
 
+.myOrder label{
+    /* margin-bottom: 10px; */
+    font-size: 13px;
+}
 
+.myOrder input {
+    outline: none;
+    border: 1px solid #c9c9c9;
+    /* margin: 10px 0; */
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.myOrder select {
+    outline: none;
+    margin-top: 10px;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.search-container button {
+    margin-top: 24px;
+    width: 200px;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    background-color: #0071c2;
+    font-size: 15px;
+    cursor: pointer;
+
+}

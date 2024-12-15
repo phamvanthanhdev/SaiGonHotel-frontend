@@ -94,10 +94,10 @@ const LoginPopup = ({ setShowLogin }) => {
                     <input onChange={onChangeHandler} value={data.tenDangNhap} name='tenDangNhap' type="text" placeholder='Tên đăng nhập' required />
                     <input onChange={onChangeHandler} name='matKhau' value={data.matKhau} type="password" placeholder='Mật khẩu' required />
                 </div>
-                <button type='submit'>{currState === "Sign Up" ? "Create account" : "Login"}</button>
+                <button type='submit'>{currState === "Sign Up" ? "Tạo tài khoản" : "Đăng nhập"}</button>
                 <div className="login-popup-condition">
                     <input type="checkbox" required />
-                    <p>Bằng cách tiếp tục, tôi đồng ý với các điều khoản sử dụng và chính sách bảo mật.</p>
+                    <p>Tôi đồng ý với các điều khoản sử dụng và chính sách bảo mật.</p>
                 </div>
                 {currState === "Login"
                     ? <p>Tạo tài khoản mới? <span onClick={() => setCurrState("Sign Up")}>Click here</span></p>

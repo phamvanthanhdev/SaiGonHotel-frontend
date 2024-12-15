@@ -1,4 +1,4 @@
-.cap-nhat-chi-tiet-phieu-dat-popup{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup{
     position: absolute;
     z-index: 100;
     width: 100%;
@@ -7,7 +7,7 @@
     display: grid;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-container{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-container{
     place-self: center;
     width: max(25vw, 330px);
     color: #808080;
@@ -19,38 +19,39 @@
     border-radius: 8px;
     font-size: 14px;
     animation: fadeIn 0.5s;
+    margin-bottom: 100px;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-title{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-title{
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: black;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-title h2{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-title h2{
     font-size: 25px;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-title .close{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-title .close{
     width: 16px;
     cursor: pointer;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-inputs{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-inputs{
     display: flex;
     flex-direction: column;
     gap: 20px
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-inputs input,
-.cap-nhat-chi-tiet-phieu-dat-popup-inputs select{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-inputs input,
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-inputs select{
     outline: none;
     border: 1px solid #c9c9c9;
     padding: 10px;
     border-radius: 4px;
 }
-.cap-nhat-chi-tiet-phieu-dat-popup-container button{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-container button{
     border: none;
     padding: 10px;
     border-radius: 4px;
@@ -61,34 +62,34 @@
 
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-condition{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-condition{
     display: flex;
     align-items: start;
     gap: 8px;
     margin-top: -15px;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-container .capNhat{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-container .capNhat{
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-container .capNhat button{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-container .capNhat button{
     width: 100%;
     
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-container .capNhat .btnXoa{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-container .capNhat .btnXoa{
     background-color: tomato;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup-condition input{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup-condition input{
     margin-top: 5px;
 }
 
-.cap-nhat-chi-tiet-phieu-dat-popup p span{
+.cap-nhat-chi-tiet-dichvu-phuthu-popup p span{
     color: var(--blue);
     font-weight: 500;
     cursor: pointer;

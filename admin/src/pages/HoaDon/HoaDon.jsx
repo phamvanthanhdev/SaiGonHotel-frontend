@@ -47,6 +47,31 @@ const HoaDon = () => {
         setShowHoaDonPopup(true);
     } 
 
+    const downloadCsv = () => {
+        axios({
+          url: url + '/api/hoa-don/export-csv',
+          method: 'GET',
+          responseType: 'blob',
+          headers: {Authorization: `Bearer ${token}`},
+          params: {ngay}
+        })
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+    
+            link.setAttribute('download', 'hoaDonNgay.csv');
+
+            document.body.appendChild(link);
+            link.click();
+    
+            link.parentNode.removeChild(link);
+          })
+          .catch((error) => {
+            console.error('Error downloading the file', error);
+          });
+      };
+
     return (
         <>
             <Sidebar />
@@ -80,7 +105,7 @@ const HoaDon = () => {
                             <div className="order">
                                 <div className="head">
                                     <h3>Hóa đơn theo ngày</h3>
-                                    <button className='btn btn-primary'>Tạo báo cáo</button>
+                                    <button onClick={downloadCsv} className='btn btn-primary'>Download</button>
                                 </div>
                                 <div className="note">
                                     <p>(*)Lưu ý tiền dịch vụ và phụ thu không bao gồm phần thanh toán trước</p>

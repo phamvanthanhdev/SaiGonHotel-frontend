@@ -135,7 +135,8 @@ const PhieuDatDetails = () => {
                     setShowHuyPhongPopup={setShowHuyPhongPopup} 
                     idPhieuDat={phieuDat.idPhieuDat}
                     tienTamUng={phieuDat.tienTamUng}
-                    setPhieuDat={setPhieuDat}/>: <></>}
+                    setPhieuDat={setPhieuDat}
+                    type={0}/>: <></>}
                     <main className='phieu-dat'>
                         {phieuDat &&
                         <div className="table-data">
@@ -161,7 +162,7 @@ const PhieuDatDetails = () => {
                                         <input value={phanTramGiam} onChange={(e)=>setPhanTramGiam(e.target.value)} name='phanTramGiam' type="number" className="form-control" id="exampleFormControlInputPhanTramGiam" placeholder="%" />
                                     </div>
                                     <p>Tiền được giảm: {tinhTienGiamGia().toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
-                                    <p>Tiền phải trả: {tinhTienPhaiTra().toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
+                                    {/* <p>Tiền phải trả: {tinhTienPhaiTra().toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p> */}
                                     <p>Người đại diện: {tenNguoiDaiDien}</p>
                                     {errorMessage && <p className='error'>{errorMessage}</p>}
                                     <div className="btn">

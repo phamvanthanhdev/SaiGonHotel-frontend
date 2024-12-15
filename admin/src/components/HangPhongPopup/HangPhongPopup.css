@@ -10,6 +10,7 @@
 .login-popup-container{
     place-self: center;
     /* width: max(25vw, 330px); */
+    width: max(80vw, 200px);
     width: max-content;
     color: #808080;
     background-color: white;
@@ -20,6 +21,9 @@
     border-radius: 8px;
     font-size: 14px;
     animation: fadeIn 0.5s;
+
+    height: max(70vh, 330px);
+    overflow-x: auto;
 }
 
 .login-popup-title{

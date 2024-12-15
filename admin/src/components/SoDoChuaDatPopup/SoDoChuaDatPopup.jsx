@@ -40,7 +40,7 @@ const SoDoChuaDatPopup = ({setShowSodoPopup, ngayNhanPhong, ngayTraPhong, donGia
         <div className='sodo-chuadat-popup'>
             <form action="" className="sodo-chuadat-popup-container">
                 <div className="sodo-chuadat-popup-title">
-                    <h2>Chọn phòng</h2>
+                    <h2>Xem phòng trống</h2>
                     <FontAwesomeIcon onClick={() => setShowSodoPopup(false)} className="close" icon={faXmark} />
                 </div>
                 <div className="rooms">

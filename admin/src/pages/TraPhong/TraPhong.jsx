@@ -218,7 +218,7 @@ const TraPhong = () => {
                                             <p>{tinhTienKhachTra().toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                         </li>
                                         <li>
-                                            <div class="form-check">
+                                            {/* <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked />
                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                     Tiền mặt
@@ -229,7 +229,7 @@ const TraPhong = () => {
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     Chuyển khoản
                                                 </label>
-                                            </div>
+                                            </div> */}
                                         </li>
                                         <button onClick={traPhong} type='button' className='btn btn-primary'>Hoàn thành</button>
                                     </ul>

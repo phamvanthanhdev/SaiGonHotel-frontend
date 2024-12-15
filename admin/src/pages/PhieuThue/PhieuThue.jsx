@@ -161,7 +161,7 @@ const PhieuThue = () => {
 											<th>Hạng phòng</th>
 											<th>Số lượng</th>
 											<th>Giá phòng</th>
-											<th>Mã phòng</th>
+											{phieuDat && <th>Mã phòng</th>}
 											<th>Hành động</th>
 										</tr>
 									</thead>
@@ -201,7 +201,8 @@ const PhieuThue = () => {
 													<td>{item.phanTramGiam > 0 
 														? item.giaKhuyenMai.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
 														: item.giaGoc.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
-														}</td>
+														}
+													</td>
 													<td>
 														<button
 															onClick={() => openSoDoPopup(item.idHangPhong, item.phanTramGiam > 0 ? item.giaKhuyenMai : item.giaGoc)}

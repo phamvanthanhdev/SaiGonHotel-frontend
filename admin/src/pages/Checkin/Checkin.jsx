@@ -134,6 +134,7 @@ const Checkin = () => {
                                                     <th>Mã phiếu đặt</th>
                                                     <th>Thời gian</th>
                                                     <th>Tổng giá trị</th>
+                                                    <th>Ngày đặt</th>
                                                     <th>Trạng thái</th>
                                                 </tr>
                                             </thead>
@@ -144,12 +145,13 @@ const Checkin = () => {
                                                             <td>{item.idPhieuDat}</td>
                                                             <td>{convertDateShow(item.ngayBatDau)} đến {convertDateShow(item.ngayTraPhong)}</td>
                                                             <td>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
+                                                            <td>{convertDateShow(item.ngayTao)}</td>
                                                             <td>
                                                                 {item.trangThaiHuy === 0 && <span className="status process"> Chờ xử lý</span>}
                                                                 {item.trangThaiHuy === 1 && <span className="status completed">Hoàn thành</span>}
                                                                 {item.trangThaiHuy === 2 && <span className="status pending">Đã hủy</span>}
                                                             </td>
-
+                                                            
                                                         </tr>
                                                     )
                                                 })}

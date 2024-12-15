@@ -10,7 +10,10 @@ import TrangThaiPhongPopup from '../../components/TrangThaiPhongPopup/TrangThaiP
 
 const SoDoPhong = () => {
     const navigate = useNavigate();
-    const { url, token, isExpand, convertDateShow } = useContext(StoreContext);
+    const { url, token, isExpand, convertDateShow, role } = useContext(StoreContext);
+    if(role === "MANAGER"){
+        navigate("/doanh-thu");
+    }
     const [phongSapXeps, setPhongSapXeps] = useState([]);
 
     const [showTrangThaiPopup, setShowTrangThaiPopup] = useState(false);
@@ -80,7 +83,7 @@ const SoDoPhong = () => {
                                         <button onClick={() => navigate("/tao-phieu-thue")} className='btn btn-primary'>Tạo phiếu thuê</button>
                                     </li>
                                     <li>
-                                        <button className='btn btn-primary'>Đặt phòng</button>
+                                        <button onClick={() => navigate("/dat-phong")} className='btn btn-primary'>Đặt phòng</button>
                                     </li>
                                 </ul>
                             </div>

@@ -41,6 +41,7 @@ import ThemNhanVien from './pages/ThemNhanVien/ThemNhanVien';
 import CapNhatNhanVien from './pages/CapNhatNhanVien/CapNhatNhanVien';
 import QuanLyTaiKhoan from './pages/QuanLyTaiKhoan/QuanLyTaiKhoan';
 import CapNhatPhieuDat from './pages/CapNhatPhieuDat/CapNhatPhieuDat';
+import DatPhong from './pages/DatPhong/DatPhong';
 
 function App() {
  
@@ -52,7 +53,7 @@ function App() {
         <section id="content"> */}
           {/* <Navbar/> */}
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<SoDoPhong />} />
             <Route path="/login" element={<Login />} />
             <Route path="/check-in" element={<Checkin />} />
             <Route path="/phieu-dat/:id" element={<PhieuDatDetails />} />
@@ -64,6 +65,7 @@ function App() {
             <Route path="/hoa-don" element={<HoaDon />} />
             <Route path="/doanh-thu" element={<DoanhThu />} />
             <Route path="/tao-phieu-thue" element={<TaoPhieuThue />} />
+            <Route path="/dat-phong" element={<DatPhong />} />
             <Route path="/in-hoa-don" element={<InHoaDon />} />
             <Route path="/khach-hang-upload" element={<KhachHangUpload />} />
             <Route path='/khach-thue' element={<KhachThue />}/>

@@ -10,6 +10,8 @@ const StoreContextProvider = (props) => {
     const [token, setToken] = useState("");
     const [isExpand, setIsExpand] = useState(false);
     const navigate = useNavigate();
+    const [role, setRole] = useState();
+    const [nhanVien, setNhanVien] = useState();
 
     const introspect = async(token) => {
         try {
@@ -18,6 +20,23 @@ const StoreContextProvider = (props) => {
             }
             const response = await axios.post(url + "/api/tai-khoan/introspect", formData);
             if(!response.data.result.valid){
+                navigate("/login");
+            }else{
+                setRole(response.data.result.role);
+            }
+        } catch (error) {
+            console.log(response.data);
+            console.log(error.message);
+        }
+    }
+
+    const getThongTinNhanVienDangNhap = async(token) => {
+        try {
+            const response = await axios.get(url + "/api/nhan-vien/dang-nhap", {headers: {Authorization: `Bearer ${token}`}});
+            if(response.data.code === 200){
+                setNhanVien(response.data.result);
+            }else{
+                console.log(response.data.message);
                 navigate("/login");
             }
         } catch (error) {
@@ -35,6 +54,7 @@ const StoreContextProvider = (props) => {
         if(localStorage.getItem("token")){
             setToken(localStorage.getItem("token"));
             introspect(localStorage.getItem("token"));
+            getThongTinNhanVienDangNhap(localStorage.getItem("token"));
         }
     }, [])
     
@@ -45,7 +65,10 @@ const StoreContextProvider = (props) => {
         isExpand,
         setIsExpand,
         introspect,
-        convertDateShow
+        convertDateShow,
+        role,
+        nhanVien,
+        getThongTinNhanVienDangNhap
     }
 
 

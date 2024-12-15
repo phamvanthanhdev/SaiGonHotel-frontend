@@ -26,7 +26,7 @@ const DoanhThu = () => {
     const [type, setType] = useState("theo-ngay")
     const [inBaoCao, setInBaoCao] = useState(false);
     const [nhanVien, setNhanVien] = useState();
-    const [nam, setNam] = useState();
+    const [nam, setNam] = useState(2010);
     // const [tongDoanhThuNgay, setTongDoanhThuNgay] = useState(0); 
 
     const contentRef = useRef(null);
@@ -268,8 +268,8 @@ const DoanhThu = () => {
                                 </div>
                                 <div className="order">
                                     <div className="head">
-                                        <h3>Doanh thu theo ngày</h3>
-                                        <button onClick={() => setInBaoCao(true)} className='btn btn-primary'>Tạo báo cáo</button>
+                                        <h3>Thống kê doanh thu</h3>
+                                        {/* <button onClick={() => setInBaoCao(true)} className='btn btn-primary'>Tạo báo cáo</button> */}
                                     </div>
                                     <p>Tổng doanh thu: {type === "theo-ngay" ? tinhTongDoanhThuNgay().toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) 
                                                             : type === "theo-thang" ? tinhTongDoanhThuThang().toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) 

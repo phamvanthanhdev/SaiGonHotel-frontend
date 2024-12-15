@@ -124,6 +124,7 @@ const HoaDonDetailsPopup = ({ setShowHoaDonPopup, soHoaDon }) => {
                                         <th>Đơn giá</th>
                                         <th>Thành tiền</th>
                                         <th>Thời gian</th>
+                                        <th>Phòng sử dụng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -136,6 +137,7 @@ const HoaDonDetailsPopup = ({ setShowHoaDonPopup, soHoaDon }) => {
                                                 <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                 <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                 <td>{convertDateShow(item.ngayTao)}</td>
+                                                <td>{item.maPhong}</td>
                                             </tr>
                                         )
                                     })}
@@ -148,6 +150,7 @@ const HoaDonDetailsPopup = ({ setShowHoaDonPopup, soHoaDon }) => {
                                                 <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                 <td>{(item.soLuong * item.donGia).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                 <td>{convertDateShow(item.ngayTao)}</td>
+                                                <td>{item.maPhong}</td>
                                             </tr>
                                         )
                                     })}

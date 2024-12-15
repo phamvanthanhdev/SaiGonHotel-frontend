@@ -111,3 +111,17 @@
 	width: calc(100% - 60px);
 	left: 60px;
 }
+
+#sidebar .side-menu li.disable a span{
+	color: gray;
+	/* position: relative; */
+}
+
+#sidebar .side-menu li.disable a .bx{
+	color: gray;
+}
+
+#sidebar .side-menu .title{
+	font-size: 12px;
+	font-style: italic;
+}

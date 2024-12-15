@@ -126,7 +126,7 @@ const ThemDichVuPhuThuPopup = ({ setShowDichVuPhuThuPopup, idDichVuPhuThu, tenDi
                 </div>
                 <div className="dichvu-phuthu-popup-inputs">
                     <input onChange={onChangeHandler} value={data.soLuong} name='soLuong' type="number" placeholder='Số lượng' required />
-                    <input onChange={onChangeHandler} name='donGia' value={data.donGia} type="number" placeholder='Đơn giá' required />
+                    <input disabled name='donGia' value={data.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} type="text" placeholder='Đơn giá' required />
                     <select onChange={onChangeHandler} name="daThanhToan" id="">
                         <option value="false">Chưa thanh toán</option>
                         <option value="true">Đã thanh toán</option>

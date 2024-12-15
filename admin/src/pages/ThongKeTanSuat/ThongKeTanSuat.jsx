@@ -24,9 +24,15 @@ const ThongKeTanSuat = () => {
             }
             const response = await axios.get(url + "/api/chi-tiet/thong-ke-tan-suat", config);
             if (response.data.code) {
-                setData(response.data.result);
-                if(response.data.result.length > 0)
+                const updatedData = response.data.result.map(item => ({
+                    ...item,
+                    isShowRoom: false
+                }));
+                setData(updatedData);
+                // setData(response.data.result);
+                if(response.data.result.length > 0){
                     setSoNgayThongKe(response.data.result[0].soNgayThongKe)
+                }
             } else {
                 toast.error(response.data.message);
             }
@@ -53,6 +59,17 @@ const ThongKeTanSuat = () => {
 
     const onClickShowThongKeNgay = ()=>{
         setShowThongKeNgay(!showThongKeNgay);
+    }
+
+    const onClickShowRoom = (idHangPhong)=>{
+        const updatedData = data.map((item) =>
+            item.idHangPhong === idHangPhong
+                ? { ...item, isShowRoom: !item.isShowRoom }
+                : item
+        );
+        setData(updatedData);
+        console.log(updatedData);
+        
     }
 
     return (
@@ -106,14 +123,14 @@ const ThongKeTanSuat = () => {
                                             ? data.map((item, index) => {
                                                 return (
                                                     <>
-                                                        <tr onClick={onClickShowThongKeNgay} key={index}>
+                                                        <tr onClick={()=>onClickShowRoom(item.idHangPhong)} key={index}>
                                                             <td>{index + 1}.</td>
                                                             <td>{item.tenHangPhong}</td>
                                                             <td>{item.tanSuat}</td>
                                                             <td>{item.tiLe}</td>
                                                         </tr>
                                                         {
-                                                            showThongKeNgay &&
+                                                            item.isShowRoom &&
                                                             item.tanSuatThuePhongs.map((item, index) => {
                                                                 return (
                                                                     <tr className='tan-suat-phong' key={index}>
@@ -128,7 +145,7 @@ const ThongKeTanSuat = () => {
                                                     </>
                                                 )
                                             })
-                                            : <p>Loading...</p>
+                                            : <p>Vui lòng chọn thời gian.</p>
                                         }
 
                                         {/* <tr className='tong-tan-suat'>

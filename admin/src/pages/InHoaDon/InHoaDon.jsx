@@ -107,7 +107,7 @@ const InHoaDon = () => {
                                 <div className="price">
                                     <p>Tiền tạm ứng: {tienTamUng.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
                                     <p>Phần trăm giảm: {phanTramGiam}%</p>
-                                    <h4>Tổng tiền: {tongThu !== thucThu && <small><del>{tongThu}</del></small>} {thucThu.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</h4>
+                                    <h4>Tổng tiền: {thucThu.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</h4>
                                 </div>
                                 <div className="note">
                                     <p>(*)Lưu ý tiền dịch vụ và phụ thu không bao gồm phần thanh toán trước</p>

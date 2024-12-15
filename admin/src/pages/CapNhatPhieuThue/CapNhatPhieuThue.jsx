@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 import { format } from "date-fns";
 import CapNhatChiTietPhieuThuePopup from '../../components/QuanLy/CapNhatChiTietPhieuThuePopup/CapNhatChiTietPhieuThuePopup'
+import CapNhatChiTietDVPTPopup from '../../components/QuanLy/CapNhatChiTietDVPTPopup/CapNhatChiTietDVPTPopup'
 
 const CapNhatPhieuThue = () => {
     const navigate = useNavigate();
@@ -31,6 +32,15 @@ const CapNhatPhieuThue = () => {
     const [ngayNhanPhong, setNgayNhanPhong] = useState();
     const [ngayTraPhong, setNgayTraPhong] = useState();
     const [tienGiamGia, setTienGiamGia] = useState();
+    // data cap nhat chi tiet dich vu, phu thu
+    const [idChiTietSuDungDichVu, setIdChiTietSuDungDichVu]= useState();
+    const [idChiTietPhuThu, setIdChiTietPhuThu] = useState();
+    const [idDichVu, setIdDichVu] = useState();
+    const [idPhuThu, setIdPhuThu] = useState();
+    const [noiDung, setNoiDung] = useState();
+    const [soLuong, setSoLuong] = useState();
+    const [showCapNhatChiTietDVPTPopup, setShowCapNhatChiTietDVPTPopup] = useState(false);
+
 
     const onChangeHandle = (event) => {
         const name = event.target.name;
@@ -160,6 +170,21 @@ const CapNhatPhieuThue = () => {
         }
     }
 
+    const onClickCapNhatDVPT = (idChiTietSuDungDichVu, idChiTietPhuThu, idChiTietPhieuThue, idDichVu, idPhuThu, noiDung, daThanhToan, soLuong)=>{
+        if(!daThanhToan){
+            setIdDichVu(idDichVu);
+            setIdPhuThu(idPhuThu);
+            setNoiDung(noiDung);
+            setSoLuong(soLuong);
+            setIdChiTietPhieuThue(idChiTietPhieuThue);
+            setIdChiTietSuDungDichVu(idChiTietSuDungDichVu);
+            console.log(idChiTietPhuThu);
+            
+            setIdChiTietPhuThu(idChiTietPhuThu);
+            setShowCapNhatChiTietDVPTPopup(true);
+        }
+    }
+
 
     return (
         <>
@@ -177,6 +202,21 @@ const CapNhatPhieuThue = () => {
                         ngayNhanPhong={ngayNhanPhong}
                         ngayTraPhong={ngayTraPhong}
                         tienGiamGia={tienGiamGia}
+                    />
+                    }
+                    {showCapNhatChiTietDVPTPopup&&
+                    <CapNhatChiTietDVPTPopup
+                        setShowCapNhatChiTietDVPTPopup={setShowCapNhatChiTietDVPTPopup}
+                        idChiTietSuDungDichVu={idChiTietSuDungDichVu}
+                        idChiTietPhuThu={idChiTietPhuThu}
+                        idChiTietPhieuThue={idChiTietPhieuThue}
+                        idDichVu={idDichVu}
+                        idPhuThu={idPhuThu}
+                        noiDung={noiDung}
+                        soLuong={soLuong}
+                        setChiTietDichVus={setChiTietDichVus}
+                        setChiTietPhuThus={setChiTietPhuThus}
+                        idPhieuThue={idPhieuThue}
                     />
                     }
                     <main className='cap-nhat-phieu-thue'>
@@ -252,9 +292,9 @@ const CapNhatPhieuThue = () => {
                                                     <button onClick={() => capNhapPhieuThue()} 
                                                     className='btn btn-primary'
                                                     disabled={phieuThue.trangThai !== 0}>Cập nhật</button>
-                                                    <button onClick={() => xoaPhieuThue()} 
+                                                    {/* <button onClick={() => xoaPhieuThue()} 
                                                     className='btn btn-danger'
-                                                    disabled={chiTietPhieuThues.length > 0}>Xóa phiếu</button>
+                                                    disabled={chiTietPhieuThues.length > 0}>Xóa phiếu</button> */}
                                                 </li>
                                             </ul>
                                         </div>
@@ -315,8 +355,7 @@ const CapNhatPhieuThue = () => {
                                             {
                                                 chiTietDichVus.map((item, index) => {
                                                     return (
-                                                        <tr key={index}>
-
+                                                        <tr onClick={()=>onClickCapNhatDVPT(item.idChiTietSuDungDichVu, null, item.idChiTietPhieuThue, item.idDichVu, null, item.tenDichVu, item.daThanhToan, item.soLuong)} key={index}>
                                                             <td>{item.tenDichVu}</td>
                                                             <td>{item.soLuong}</td>
                                                             <td>{item.donGia.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
@@ -330,7 +369,7 @@ const CapNhatPhieuThue = () => {
                                             }
                                             {chiTietPhuThus.map((item, index) => {
                                                 return (
-                                                    <tr key={index}>
+                                                    <tr onClick={()=>onClickCapNhatDVPT(null, item.idChiTietPhuThu, item.idChiTietPhieuThue, null, item.idPhuThu, item.noiDung, item.daThanhToan, item.soLuong)} key={index}>
 
                                                         <td>{item.noiDung}</td>
                                                         <td>{item.soLuong}</td>

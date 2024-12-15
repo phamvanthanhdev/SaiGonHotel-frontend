@@ -132,48 +132,41 @@ const ChiTietPhieuThue = () => {
 		fetchChiTietPhieuThueById(idChiTiet);
 	}
 
-	const xoaChiTietSuDungDichVu = async (idDichVu, soLuongXoa, donGia) => {
-		const dataDichVu = {
-			"idDichVu": idDichVu,
-			"idChiTietPhieuThue": chiTiet.idChiTietPhieuThue,
-			"soLuong": -soLuongXoa,
-			"donGia": donGia
-		}
-
+	const xoaChiTietSuDungDichVu = async (idChiTietSuDungDichVu) => {
 		try {
-			const response = await axios.post(url + "/api/chi-tiet/dich-vu", dataDichVu,
-				{ headers: { Authorization: `Bearer ${token}` } });
-
-			toast.success("Xóa chi tiết dịch vụ thành công")
-			setChiTietDichVus(response.data);
-			//refresh
-			refreshChiTietPhieuThue(chiTiet.idChiTietPhieuThue);
-			refreshChiTietPhieuThues();
-			fetchPhieuThue();
+			const response = await axios.delete(url + "/api/chi-tiet/dich-vu",
+				{ 	params: {idChiTietSuDungDichVu},
+					headers: { Authorization: `Bearer ${token}` } });
+			
+			if(response.data.code === 200){
+				toast.success("Xóa chi tiết dịch vụ thành công")
+				//refresh
+				fetchChiTietDichVus(chiTiet.idChiTietPhieuThue);
+				refreshChiTietPhieuThue(chiTiet.idChiTietPhieuThue);
+				refreshChiTietPhieuThues();
+				fetchPhieuThue();
+			}
 		} catch (error) {
-			console.log(error.message);
+			console.log(error.response.data.message);
 			toast.error(error.message);
 		}
 	}
 
-	const xoaChiTietPhuThu = async (idPhuThu, soLuongXoa, donGia) => {
-		const dataPhuThu = {
-			"idPhuThu": idPhuThu,
-			"idChiTietPhieuThue": chiTiet.idChiTietPhieuThue,
-			"soLuong": -soLuongXoa,
-			"donGia": donGia
-		}
-
+	const xoaChiTietPhuThu = async (idChiTietPhuThu) => {
 		try {
-			const response = await axios.post(url + "/api/chi-tiet/phu-thu", dataPhuThu,
-				{ headers: { Authorization: `Bearer ${token}` } });
-
-			toast.success("Xóa chi tiết phụ thu thành công")
-			setChiTietPhuThus(response.data);
-			//refresh
-			refreshChiTietPhieuThue(chiTiet.idChiTietPhieuThue);
-			refreshChiTietPhieuThues();
-			fetchPhieuThue();
+			const response = await axios.delete(url + "/api/chi-tiet/phu-thu",
+				{ 
+					params: {idChiTietPhuThu},
+					headers: { Authorization: `Bearer ${token}` } 
+				});
+			if(response.data.code){
+				toast.success("Xóa chi tiết phụ thu thành công")
+				//refresh
+				fetchChiTietPhuThus(chiTiet.idChiTietPhieuThue);
+				refreshChiTietPhieuThue(chiTiet.idChiTietPhieuThue);
+				refreshChiTietPhieuThues();
+				fetchPhieuThue();
+			}
 		} catch (error) {
 			console.log(error.message);
 			toast.error(error.message);
@@ -501,9 +494,13 @@ const ChiTietPhieuThue = () => {
 												{chiTietDichVus.map((item, index) => {
 													return (
 														<li key={index}>
-															<p><FontAwesomeIcon
-																onClick={() => xoaChiTietSuDungDichVu(item.idDichVu, item.soLuong, item.donGia)}
-																className="icon" icon={faTrashCan} /></p>
+															<p>
+																{!item.daThanhToan &&
+																<FontAwesomeIcon
+																onClick={() => {if(window.confirm('Bạn có chắc chắn muốn xóa chi tiết sử dụng dịch vụ này?')){xoaChiTietSuDungDichVu(item.idChiTietSuDungDichVu);}}}
+																className="icon" icon={faTrashCan} />
+																}
+															</p>
 															<p>{item.tenDichVu}</p>
 															{/* <p><FontAwesomeIcon className="icon" icon={faMinus} />&nbsp;&nbsp;{item.soLuong}&nbsp;&nbsp;<FontAwesomeIcon className="icon" icon={faPlus} /></p> */}
 															<p>{item.soLuong}</p>
@@ -523,9 +520,12 @@ const ChiTietPhieuThue = () => {
 												{chiTietPhuThus.map((item, index) => {
 													return (
 														<li key={index}>
-															<p><FontAwesomeIcon
-																onClick={() => xoaChiTietPhuThu(item.idPhuThu, item.soLuong, item.donGia)}
-																className="icon" icon={faTrashCan} /></p>
+															<p>
+																{!item.daThanhToan &&
+																<FontAwesomeIcon
+																onClick={() => {if(window.confirm('Bạn có chắc chắn muốn xóa chi tiết sử dụng phụ thu này?')){xoaChiTietPhuThu(item.idChiTietPhuThu);}}}																className="icon" icon={faTrashCan} />
+																}
+															</p>
 															<p>{item.noiDung}</p>
 															{/* <p><FontAwesomeIcon className="icon" icon={faMinus} />&nbsp;&nbsp;{item.soLuong}&nbsp;&nbsp;<FontAwesomeIcon className="icon" icon={faPlus} /></p> */}
 															<p>{item.soLuong}</p>

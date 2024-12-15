@@ -10,24 +10,28 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 import { format } from "date-fns";
 import CapNhatChiTietPhieuDatPopup from '../../components/QuanLy/CapNhatChiTietPhieuDatPopup/CapNhatChiTietPhieuDatPopup'
+import HuyPhongPopup from '../../components/HuyPhongPopup/HuyPhongPopup'
 
 const CapNhatPhieuDat = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [idPhieuDat, setIdPhieuDat] = useState(id);
-    const { url, token, isExpand, convertDateShow } = useContext(StoreContext);
+    const { url, token, isExpand, convertDateShow, role } = useContext(StoreContext);
     const [phieuDat, setPhieuDat] = useState();
     const [showCapNhatChiTietPhieuDatPopup, setShowCapNhatChiTietPhieuDatPopup] = useState(false);
     const [idHangPhong, setIdHangPhong] = useState();
     const [soLuong, setSoLuong] = useState();
     const [donGia, setDonGia] = useState();
     const [idChiTietPhieuDat, setIdChiTietPhieuDat] = useState();
+    const [showHuyPhongPopup, setShowHuyPhongPopup] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const [data, setData] = useState({
         idPhieuDat: null,
         ngayNhanPhong: null,
         ngayTraPhong: null,
-        tienTra: null
+        tienTra: null,
+        trangThaiHuy: null
     })
 
     const onChangeHandle = (event) => {
@@ -45,7 +49,8 @@ const CapNhatPhieuDat = () => {
                 idPhieuDat: response.data.idPhieuDat,
                 ngayNhanPhong: response.data.ngayBatDau,
                 ngayTraPhong: response.data.ngayTraPhong,
-                tienTra: response.data.trangThaiHuy === 2 ? response.data.tienTra : null
+                tienTra: response.data.trangThaiHuy === 2 ? response.data.tienTra : null,
+                trangThaiHuy: response.data.trangThaiHuy
             })
         } catch (error) {
             console.log(error.message);
@@ -95,6 +100,26 @@ const CapNhatPhieuDat = () => {
         }
     }
 
+    const khoiPhucPhieuDat = async () => {
+        try {
+            const config = {
+                headers: { Authorization: `Bearer ${token}` }
+            }
+            const response = await axios.put(url + "/api/phieu-dat/khoi-phuc/"+phieuDat.idPhieuDat, null, config);
+            if (response.data.code === 200) {
+                setPhieuDat(response.data.result);
+                toast.success("Khôi phục phiếu đặt thành công");
+                setErrorMessage("");
+            } else {
+                setErrorMessage(response.data.message);
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            console.log(error.message);
+            toast.error(error.response.data.message);
+        }
+    }
+
     const onClickCapNhat = (idChiTietPhieuDat, idHangPhong, soLuong, donGia) => {
         if (phieuDat.trangThaiHuy === 0) {
             setIdChiTietPhieuDat(idChiTietPhieuDat);
@@ -123,6 +148,13 @@ const CapNhatPhieuDat = () => {
                         />
                     }
                     <Navbar />
+                    {showHuyPhongPopup ? <HuyPhongPopup 
+                    setShowHuyPhongPopup={setShowHuyPhongPopup} 
+                    idPhieuDat={phieuDat.idPhieuDat}
+                    tienTamUng={phieuDat.tienTamUng}
+                    setCapNhatPhieuDat={setPhieuDat}
+                    setDataCapNhat={setData}
+                    type={1}/>: <></>}
                     <main className='cap-nhat-phieu-dat'>
                         {phieuDat &&
                             <div className="cap-nhat-phieu-dat-container">
@@ -178,21 +210,42 @@ const CapNhatPhieuDat = () => {
                                                     {phieuDat.trangThaiHuy === 0 && <p>Chờ xử lý</p>}
                                                     {phieuDat.trangThaiHuy === 1 && <p>Đã hoàn tất</p>}
                                                     {phieuDat.trangThaiHuy === 2 && <p>Đã hủy</p>}
+
+                                                    {/* <div className="col-md-6">
+                                                        <select disabled={phieuDat.trangThaiHuy !== 2} name='trangThaiHuy' value={data.trangThaiHuy}
+                                                            onChange={onChangeHandle} 
+                                                            id='idSelectGioiTinh' className="form-select">
+                                                            <option value={0}>Chờ xác nhận</option>
+                                                            <option value={1}>Đã hoàn tất</option>
+                                                            <option value={2}>Đã hủy</option>
+                                                        </select>
+                                                    </div> */}
                                                 </li>
                                                 {phieuDat.trangThaiHuy === 2 &&
                                                     <li>
                                                         <p>Tiền hoàn trả</p>
                                                         <div className="mb-3">
-                                                            <input name='tienTra' value={data.tienTra}
+                                                            <input disabled={role !== "ADMIN"} name='tienTra' value={data.tienTra}
                                                                 onChange={onChangeHandle}
                                                                 type="number" className="form-control" id="exampleFormControlInput1" />
                                                         </div>
                                                     </li>
                                                 }
 
-                                                <button disabled={phieuDat.trangThaiHuy === 1} onClick={() => capNhapPhieuDat()} className='btn btn-primary'>Cập nhật</button>
-                                                <button disabled={phieuDat.trangThaiHuy === 1 || (phieuDat.trangThaiHuy === 0 && phieuDat.tienTamUng > 0)} 
-                                                    onClick={() => { if (window.confirm('Bạn có chắc chắn muốn xóa phiếu đặt này?')) { xoaPhieuDat() }; }} className='btn btn-danger'>Xóa phiếu đặt</button>
+                                                {errorMessage && <li><p className='error'>{errorMessage}</p></li>}
+
+                                                <button disabled={phieuDat.trangThaiHuy !== 0} onClick={() => { if (window.confirm('Bạn có chắc chắn muốn cập nhật phiếu đặt này?')) { capNhapPhieuDat() }; }} className='btn btn-primary'>Cập nhật</button>
+                                                {phieuDat.trangThaiHuy === 2 &&
+                                                <button
+                                                    onClick={() => { if (window.confirm('Bạn có chắc chắn muốn khôi phục phiếu đặt này?')) { khoiPhucPhieuDat() }; }} 
+                                                    className='btn btn-primary'>Khôi phục</button>
+                                                }
+
+                                                {phieuDat.trangThaiHuy === 0 &&
+                                                <button
+                                                    onClick={() => setShowHuyPhongPopup(true)} 
+                                                    className='btn btn-danger'>Hủy đặt</button>
+                                                }
 
                                             </ul>
                                         </div>
@@ -231,7 +284,7 @@ const CapNhatPhieuDat = () => {
                                                             <td>{item.soNgayThue} ngày</td>
                                                             <td>{item.tongTien.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</td>
                                                             <td>{phieuDat.trangThaiHuy === 0 ? item.soLuongTrong : '--'} phòng</td>
-                                                            <td><button disabled={phieuDat.trangThaiHuy !== 0} onClick={() => onClickCapNhat(item.idChiTietPhieuDat ,item.idHangPhong, item.soLuong, item.donGia)} className='btn btn-primary'>Cập nhật</button></td>
+                                                            <td><button disabled={phieuDat.trangThaiHuy !== 0} onClick={() => onClickCapNhat(item.idChiTietPhieuDat, item.idHangPhong, item.soLuong, item.donGia)} className='btn btn-primary'>Cập nhật</button></td>
                                                         </tr>
                                                     )
                                                 })

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const HuyPhongPopup = ({ setShowHuyPhongPopup, idPhieuDat, tienTamUng, setPhieuDat }) => {
+const HuyPhongPopup = ({ setShowHuyPhongPopup, idPhieuDat, tienTamUng, setPhieuDat, setCapNhatPhieuDat, setDataCapNhat, type }) => {
     const { url, token } = useContext(StoreContext);
     const [errorMessage, setErrorMessage] = useState("");
     const [data, setData] = useState({
@@ -29,7 +29,10 @@ const HuyPhongPopup = ({ setShowHuyPhongPopup, idPhieuDat, tienTamUng, setPhieuD
                     { headers: { Authorization: `Bearer ${token}` } });
                 if (response.data.code === 200) {
                     toast.success("Hủy phiếu đặt phòng thành công");
-                    getPhieuDat();
+                    if(type === 0)
+                        refreshPhieuDat();
+                    if(type === 1)
+                        refreshCapNhatPhieuDat();
                     setShowHuyPhongPopup(false);
                     setErrorMessage("");
                 } else {
@@ -42,10 +45,28 @@ const HuyPhongPopup = ({ setShowHuyPhongPopup, idPhieuDat, tienTamUng, setPhieuD
         }
     }
 
-    const getPhieuDat = async () => {
+    const refreshPhieuDat = async () => {
         try {
             const response = await axios.get(url + `/api/phieu-dat/details/${idPhieuDat}`, { headers: { Authorization: `Bearer ${token}` } });
             setPhieuDat(response.data);
+        } catch (error) {
+            console.log(error.message);
+            toast.error(error.message);
+        }
+    }
+
+    const refreshCapNhatPhieuDat = async () => {
+        try {
+            const response = await axios.get(url + `/api/phieu-dat/cap-nhat/${idPhieuDat}`,
+                { headers: { Authorization: `Bearer ${token}` } });
+            setCapNhatPhieuDat(response.data);
+            setDataCapNhat({
+                idPhieuDat: response.data.idPhieuDat,
+                ngayNhanPhong: response.data.ngayBatDau,
+                ngayTraPhong: response.data.ngayTraPhong,
+                tienTra: response.data.trangThaiHuy === 2 ? response.data.tienTra : null,
+                trangThaiHuy: response.data.trangThaiHuy
+            })
         } catch (error) {
             console.log(error.message);
             toast.error(error.message);

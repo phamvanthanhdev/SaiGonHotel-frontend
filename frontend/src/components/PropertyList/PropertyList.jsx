@@ -20,7 +20,7 @@ const PropertyList = ({ kieuPhong }) => {
                         />
                         <div className="pListTitles">
                             <h1>{item.tenKieuPhong}</h1>
-                            <h2>{item.soLuong} phòng</h2>
+                            <h2>{item.soLuong} hạng phòng</h2>
                         </div>
                     </div>
                 )
